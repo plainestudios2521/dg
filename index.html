@@ -362,7 +362,7 @@ function setView(v){
 }
 
 collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);pinned.add('14204');render();setView('tree');
-setTimeout(()=>{zoom=2;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
+setTimeout(()=>{zoom=1.1;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
 </script>
 </body>
 </html>
