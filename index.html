@@ -338,14 +338,7 @@ let hvT={},aH=new Set(),preHvZ=null,preHvPX=null,preHvPY=null;
 let hvLock=false,hvLockT=null;
 function lockHv(ms){
   hvLock=true;clearTimeout(hvLockT);
-  hvLockT=setTimeout(()=>{
-    hvLock=false;
-    aH.forEach(hId=>{
-      const w=document.querySelector(`[data-id="${hId}"]`);
-      const li=w?.closest('li');
-      if(li&&!li.matches(':hover'))hvOut(hId);
-    });
-  },ms);
+  hvLockT=setTimeout(()=>{hvLock=false},ms);
 }
 
 function estimateExpandedSize(id){
@@ -383,6 +376,7 @@ function centerAndFit(id){
 
 function hvIn(id){
   if(pinned.has(id)||hvLock)return;
+  if(aH.has(id)){clearTimeout(hvT[id]);return;}
   hTip(id);
   clearTimeout(hvT[id]);
   hvT[id]=setTimeout(()=>{
