@@ -102,10 +102,12 @@ if (isset($_GET['api'])) {
             'id'       => $newId,
             'name'     => $input['name'] ?? 'New Person',
             'title'    => $input['title'] ?? '',
-            'email'    => '',
-            'mobile'   => '',
-            'phone'    => '',
-            'image'    => null,
+            'email'       => '',
+            'mobile'      => '',
+            'phone'       => '',
+            'birthday'    => '',
+            'anniversary' => '',
+            'image'       => null,
             'children' => [],
             'duties'   => []
         ];
@@ -273,8 +275,10 @@ function updateNode(array &$nodes, string $id, array $input): bool {
             $n['name']   = $input['name']   ?? $n['name'];
             $n['title']  = $input['title']  ?? $n['title'];
             $n['email']  = $input['email']  ?? $n['email'];
-            $n['mobile'] = $input['mobile'] ?? $n['mobile'];
-            $n['phone']  = $input['phone']  ?? $n['phone'];
+            $n['mobile']      = $input['mobile'] ?? $n['mobile'];
+            $n['phone']       = $input['phone']  ?? $n['phone'];
+            $n['birthday']    = $input['birthday'] ?? ($n['birthday'] ?? '');
+            $n['anniversary'] = $input['anniversary'] ?? ($n['anniversary'] ?? '');
             if (array_key_exists('image', $input)) $n['image'] = $input['image'];
             if (array_key_exists('duties', $input)) $n['duties'] = $input['duties'];
             return true;
@@ -444,6 +448,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .form-group label{display:block;font-size:12px;font-weight:600;color:var(--text-sec);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .form-group input[type="text"],
 .form-group input[type="email"],
+.form-group input[type="date"],
 .form-group select{width:100%;padding:9px 12px;border:1.5px solid var(--green-200);border-radius:8px;font-size:14px;font-family:inherit;transition:border-color .2s;background:white}
 .form-group input:focus,.form-group select:focus{outline:none;border-color:var(--green-500)}
 .form-group textarea{width:100%;padding:9px 12px;border:1.5px solid var(--green-200);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;min-height:60px;transition:border-color .2s}
@@ -761,6 +766,16 @@ function renderEditForm() {
         <input type="text" id="fPhone" value="${escHtml(n.phone || '')}" oninput="fmtPhoneInput(this)">
       </div>
     </div>
+    <div style="display:flex;gap:12px">
+      <div class="form-group" style="flex:1">
+        <label for="fBirthday">Birthday</label>
+        <input type="date" id="fBirthday" value="${escHtml(n.birthday || '')}">
+      </div>
+      <div class="form-group" style="flex:1">
+        <label for="fAnniversary">Anniversary</label>
+        <input type="date" id="fAnniversary" value="${escHtml(n.anniversary || '')}">
+      </div>
+    </div>
     <div class="form-group">
       <label for="fParent">Reports To</label>
       <select id="fParent">${parentOpts}</select>
@@ -859,6 +874,8 @@ async function savePerson() {
     email: document.getElementById('fEmail').value,
     mobile: document.getElementById('fMobile').value,
     phone: document.getElementById('fPhone').value,
+    birthday: document.getElementById('fBirthday').value,
+    anniversary: document.getElementById('fAnniversary').value,
     image: document.getElementById('photoUrl').value || null,
     duties: collectDuties()
   };

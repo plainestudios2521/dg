@@ -140,6 +140,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .modal-contact{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
 .modal-contact a{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--green-800);text-decoration:none;font-weight:500;background:var(--green-50);padding:6px 12px;border-radius:8px;border:1px solid var(--green-200);transition:all .2s}
 .modal-contact a:hover{background:var(--green-100);border-color:var(--green-400)}
+.modal-date{display:flex;align-items:center;gap:6px;font-size:15px;color:var(--green-800);font-weight:500;background:var(--green-50);padding:6px 12px;border-radius:8px;border:1px solid var(--green-200)}
 .modal-duties{border-top:1.5px solid var(--green-100);padding-top:18px}
 .modal-duties-title{font-weight:700;font-size:15px;color:var(--green-700);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
 .modal-duty{margin-bottom:14px}
@@ -213,8 +214,9 @@ const isC=n=>!isD(n)&&(n.name.includes('Crew')||(n.name.includes('Snow')&&n.name
 const hI=n=>n.image&&n.image!=='NULL';
 const ini=name=>{if(DN.includes(name))return name[0];return name.split(/[\s-]+/).filter(w=>w!=='Open'&&w.length>1).slice(0,2).map(w=>w[0]).join('')||'?'};
 const cnt=n=>{let c=0;if(n.children){c+=n.children.length;n.children.forEach(x=>c+=cnt(x))}return c};
-const hCo=n=>n.email||n.mobile||n.phone;
+const hCo=n=>n.email||n.mobile||n.phone||n.birthday||n.anniversary;
 const fmtPhone=s=>{if(!s)return s;const d=s.replace(/\D/g,'');if(d.length===10)return`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;if(d.length===11&&d[0]==='1')return`(${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;return s};
+const fmtDate=s=>{if(!s)return'';const[y,m,d]=s.split('-').map(Number);const mn=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return mn[m-1]+' '+d};
 const av=n=>hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}" onerror="this.parentElement.innerHTML='<span class=\\'avatar-initials\\'>${esc(ini(n.name))}</span>'">`:`<span class="avatar-initials">${esc(ini(n.name))}</span>`;
 const parentMap={},flat={};
 function bp(ns,p){ns.forEach(n=>{if(p)parentMap[n.id]=p;if(n.children)bp(n.children,n)})}
@@ -349,6 +351,12 @@ function openModal(e,id){
     if(n.email)h+=`<a href="mailto:${esc(n.email)}">✉ ${esc(n.email)}</a>`;
     if(n.mobile)h+=`<a href="tel:${n.mobile.replace(/[^\d+]/g,'')}">📱 ${esc(fmtPhone(n.mobile))}</a>`;
     if(n.phone)h+=`<a href="tel:${n.phone.replace(/[^\d+]/g,'')}">☎ ${esc(fmtPhone(n.phone))}</a>`;
+    h+=`</div>`;
+  }
+  if(n.birthday||n.anniversary){
+    h+=`<div class="modal-contact">`;
+    if(n.birthday)h+=`<span class="modal-date">🎂 ${esc(fmtDate(n.birthday))}</span>`;
+    if(n.anniversary)h+=`<span class="modal-date">💍 ${esc(fmtDate(n.anniversary))}</span>`;
     h+=`</div>`;
   }
   if(duties.length){
