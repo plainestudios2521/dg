@@ -437,7 +437,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .tree-toggle{cursor:pointer;user-select:none;font-size:10px;color:var(--text-sec);width:14px;display:inline-block;text-align:center;flex-shrink:0}
 
 /* ── Main panel ── */
-.main-panel{flex:1;overflow-y:auto;padding:24px 32px;max-width:800px}
+.main-panel{flex:1;overflow-y:auto;padding:24px 32px}
 .main-panel.empty-state{display:flex;align-items:center;justify-content:center;color:var(--text-sec);font-size:15px}
 
 .form-group{margin-bottom:16px}
