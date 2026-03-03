@@ -228,7 +228,7 @@ function fitToScreen(){
   if(!cr)return;
   const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
   const vw=v.clientWidth,vh=v.clientHeight;
-  zoom=Math.min(vw/cw,vh/ch,1.1);
+  zoom=Math.min(vw/cw,vh/ch,.9);
   panX=(vw-cw*zoom)/2;
   panY=20;
   applyTransform();
@@ -377,6 +377,7 @@ function setView(v){
 }
 
 collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();setView('tree');
+setTimeout(()=>{zoom=1.1;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
 </script>
 </body>
 </html>
