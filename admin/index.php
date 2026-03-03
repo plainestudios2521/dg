@@ -361,9 +361,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .topbar-actions{display:flex;gap:8px;align-items:center}
 .topbar .btn{padding:7px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.12);color:white;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
 .topbar .btn:hover{background:rgba(255,255,255,.25)}
-.topbar .btn-publish{background:var(--green-500);border-color:var(--green-400)}
-.topbar .btn-publish:hover{background:var(--green-400)}
-.topbar .status{font-size:12px;color:var(--green-300);margin-right:8px}
 
 /* ── Layout ── */
 .layout{display:flex;height:calc(100vh - 52px)}
@@ -462,8 +459,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <div class="topbar">
   <h1>DG Org Chart Admin</h1>
   <div class="topbar-actions">
-    <span class="status" id="statusText"></span>
-    <button class="btn btn-publish" onclick="doPublish()">Publish</button>
     <a href="?logout" class="btn">Logout</a>
   </div>
 </div>
@@ -750,7 +745,12 @@ async function savePerson() {
     if (!mData.ok) { toast(mData.error || 'Move failed', 'error'); return; }
   }
 
-  toast('Saved', 'success');
+  // Auto-publish
+  const pRes = await fetch('?api=publish');
+  const pData = await pRes.json();
+  if (!pData.ok) { toast('Saved but publish failed: ' + (pData.error || ''), 'error'); await reload(); return; }
+
+  toast('Saved & published', 'success');
   await reload();
 }
 
@@ -771,7 +771,8 @@ async function deletePerson() {
   const data = await res.json();
   if (data.ok) {
     selectedId = null;
-    toast('Deleted', 'success');
+    await fetch('?api=publish');
+    toast('Deleted & published', 'success');
     await reload();
     document.getElementById('mainPanel').innerHTML = '<span>Select a person from the sidebar to edit</span>';
     document.getElementById('mainPanel').classList.add('empty-state');
@@ -794,7 +795,8 @@ async function addPerson() {
   });
   const data = await res.json();
   if (data.ok) {
-    toast('Person added', 'success');
+    await fetch('?api=publish');
+    toast('Person added & published', 'success');
     await reload();
     selectPerson(data.id);
   } else {
@@ -803,20 +805,6 @@ async function addPerson() {
 }
 
 // ── Publish ──
-async function doPublish() {
-  document.getElementById('statusText').textContent = 'Publishing...';
-  const res = await fetch('?api=publish');
-  const data = await res.json();
-  if (data.ok) {
-    document.getElementById('statusText').textContent = 'Published!';
-    toast('index.html published successfully', 'success');
-  } else {
-    document.getElementById('statusText').textContent = 'Publish failed';
-    toast(data.error || 'Publish failed', 'error');
-  }
-  setTimeout(() => { document.getElementById('statusText').textContent = ''; }, 4000);
-}
-
 // ── Helpers ──
 async function reload() {
   const res = await fetch('?api=load');
