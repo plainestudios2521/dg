@@ -129,20 +129,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree .pinned .nc{border-color:var(--green-500);box-shadow:0 4px 16px rgba(92,184,92,.25)}
 .tree .pinned>.nc .tg{background:var(--green-800)}
 
-@keyframes pulseRing{0%{box-shadow:0 2px 10px var(--shadow),0 0 0 0 rgba(92,184,92,.3)}70%{box-shadow:0 2px 10px var(--shadow),0 0 0 10px rgba(92,184,92,0)}100%{box-shadow:0 2px 10px var(--shadow),0 0 0 0 rgba(92,184,92,0)}}
-.tree .has-kids.is-collapsed>.nc{animation:pulseRing 2.5s ease-out infinite}
-.tree .has-kids.is-collapsed>.nc:hover{animation:none}
-
-.tree .child-wrap{overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1)}
-.tree .child-wrap.hidden{max-height:0;max-width:0;opacity:0;pointer-events:none}
-.tree .child-wrap.visible{max-height:2000px;max-width:2000px;opacity:1;pointer-events:auto}
-.tree .child-wrap.visible>li{animation:childIn .35s cubic-bezier(.4,0,.2,1) both}
-@keyframes childIn{from{opacity:0;transform:translateY(-14px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-.tree .child-wrap.visible>li:nth-child(1){animation-delay:.04s}
-.tree .child-wrap.visible>li:nth-child(2){animation-delay:.08s}
-.tree .child-wrap.visible>li:nth-child(3){animation-delay:.12s}
-.tree .child-wrap.visible>li:nth-child(4){animation-delay:.16s}
-.tree .child-wrap.visible>li:nth-child(5){animation-delay:.2s}
+.tree .child-wrap{transform:scale(.75);transform-origin:center top;opacity:.85;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .3s}
+.tree li:hover>.child-wrap,.tree li.is-pinned>.child-wrap{transform:scale(1);opacity:1}
 
 .contact-tip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(-6px);margin-bottom:16px;z-index:50;background:white;border:1px solid var(--green-200);border-radius:12px;padding:14px 18px;min-width:230px;box-shadow:0 12px 36px rgba(0,0,0,.14);opacity:0;pointer-events:none;transition:all .25s cubic-bezier(.4,0,.2,1);text-align:left}
 .contact-tip.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
@@ -175,7 +163,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
     <button class="btn" onclick="collapseAll()">Collapse All</button>
     <button class="btn" onclick="collapseCrews()">Hide Crews</button>
     <button class="btn" id="fitBtn" style="display:none" onclick="fitToScreen()">Fit to Screen</button>
-    <span class="hint" id="hintText">Hover to peek · Click to pin · Scroll to zoom · Drag to pan</span>
+    <span class="hint" id="hintText">Hover to magnify · Click to lock · Scroll to zoom · Drag to pan</span>
   </div>
 </div>
 
@@ -218,7 +206,7 @@ function applyTransform(){
   document.getElementById('zoomLevel').textContent=Math.round(zoom*100)+'%';
 }
 
-function zoomIn(){zoom=Math.min(zoom*1.2,2);applyTransform()}
+function zoomIn(){zoom=Math.min(zoom*1.2,3);applyTransform()}
 function zoomOut(){zoom=Math.max(zoom/1.2,.2);applyTransform()}
 
 function fitToScreen(){
@@ -260,7 +248,7 @@ document.addEventListener('wheel',e=>{
   const mx=e.clientX-rect.left,my=e.clientY-rect.top;
   const oldZoom=zoom;
   const delta=e.deltaY>0?0.9:1.1;
-  zoom=Math.max(.2,Math.min(2,zoom*delta));
+  zoom=Math.max(.2,Math.min(3,zoom*delta));
   panX=mx-(mx-panX)*(zoom/oldZoom);
   panY=my-(my-panY)*(zoom/oldZoom);
   applyTransform();
@@ -314,9 +302,10 @@ function rT(ns,lv){
     const hk=n.children&&n.children.length>0,ip=pinned.has(n.id),dc=cnt(n),st=hCo(n)||n.title;
     let cl=[`t${lv}`];
     if(isD(n))cl.push('td');if(isC(n))cl.push('tc');if(isO(n))cl.push('to');
-    if(hk)cl.push('has-kids');if(hk&&!ip)cl.push('is-collapsed');if(ip)cl.push('pinned');
-    h+=`<li><div class="${cl.join(' ')}" data-id="${n.id}"`;
-    if(hk)h+=` onmouseenter="hvIn('${n.id}')" onmouseleave="hvOut('${n.id}')" onclick="pin('${n.id}')"`;
+    if(hk)cl.push('has-kids');if(ip)cl.push('pinned');
+    let liCl=[`tl-${lv}`];if(ip)liCl.push('is-pinned');
+    h+=`<li class="${liCl.join(' ')}"><div class="${cl.join(' ')}" data-id="${n.id}"`;
+    if(hk)h+=` onclick="pin('${n.id}')"`;
     if(!hk&&st&&!isD(n))h+=` onmouseenter="sTip('${n.id}')" onmouseleave="hTip('${n.id}')"`;
     h+=`><div class="nc"`;
     if(hk&&st&&!isD(n))h+=` onmouseenter="sTip('${n.id}')" onmouseleave="hTip('${n.id}')"`;
@@ -327,42 +316,38 @@ function rT(ns,lv){
     if(hk)h+=`<div class="tg">${ip?'−':dc}</div>`;
     if(st&&!isD(n))h+=ctip(n);
     h+=`</div></div>`;
-    if(hk)h+=`<ul class="child-wrap ${ip?'visible':'hidden'}" id="cw-${n.id}">${rT(n.children,lv+1)}</ul>`;
+    if(hk)h+=`<ul class="child-wrap" id="cw-${n.id}">${rT(n.children,lv+1)}</ul>`;
     h+=`</li>`;
   });return h;
 }
 
-let hvT={},aH=new Set();
-function hvIn(id){if(pinned.has(id))return;hTip(id);clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e){e.classList.remove('hidden');e.classList.add('visible');aH.add(id)}},150)}
-function hvOut(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('visible');e.classList.add('hidden');aH.delete(id)}},350)}
 function pin(id){
   if(pinned.has(id)){pinned.delete(id);const up=n=>{n.forEach(c=>{pinned.delete(c.id);if(c.children)up(c.children)})};up(flat[id].children||[])}
   else pinned.add(id);renderTree();
 }
-function sTip(id){if(aH.has(id)||pinned.has(id))return;const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
+function sTip(id){if(pinned.has(id))return;const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
 function hTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.remove('show')}
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
 function renderTree(){
   document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
-  aH.forEach(id=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('hidden');e.classList.add('visible')}});
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
 
 function expandAll(){
   if(document.getElementById('treeView').classList.contains('active')){
-    const pa=n=>{n.forEach(x=>{if(x.children&&x.children.length){pinned.add(x.id);pa(x.children)}})};pa(D);renderTree();setTimeout(fitToScreen,100);
+    const pa=n=>{n.forEach(x=>{if(x.children&&x.children.length){pinned.add(x.id);pa(x.children)}})};pa(D);renderTree();
   }else{collapsed.clear();renderList()}
 }
 function collapseAll(){
-  if(document.getElementById('treeView').classList.contains('active')){pinned.clear();aH.clear();renderTree();setTimeout(fitToScreen,100)}
+  if(document.getElementById('treeView').classList.contains('active')){pinned.clear();pinned.add('14204');renderTree()}
   else{const a=n=>{n.forEach(x=>{if(x.children&&x.children.length){collapsed.add(x.id);a(x.children)}})};a(D);collapsed.delete(D[0].id);renderList()}
 }
 function collapseCrews(){
   if(document.getElementById('treeView').classList.contains('active')){
-    pinned.clear();aH.clear();
-    const pt=(ns,l)=>{ns.forEach(n=>{if(n.children&&n.children.length&&!isD(n)&&l<3){pinned.add(n.id);pt(n.children,l+1)}})};pt(D,0);renderTree();setTimeout(fitToScreen,100);
+    pinned.clear();
+    const pt=(ns,l)=>{ns.forEach(n=>{if(n.children&&n.children.length&&!isD(n)&&l<3){pinned.add(n.id);pt(n.children,l+1)}})};pt(D,0);renderTree();
   }else{collapsed.clear();const f=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)f(x.children)})};f(D);renderList()}
 }
 function setView(v){
@@ -377,7 +362,7 @@ function setView(v){
 }
 
 collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);pinned.add('14204');render();setView('tree');
-setTimeout(()=>{zoom=1.1;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
+setTimeout(()=>{zoom=2;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
 </script>
 </body>
 </html>
