@@ -402,7 +402,6 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .photo-actions{display:flex;flex-direction:column;gap:6px}
 .photo-actions .btn-sm{padding:6px 14px;border-radius:6px;border:1px solid var(--green-200);background:white;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;color:var(--text)}
 .photo-actions .btn-sm:hover{background:var(--green-50);border-color:var(--green-400)}
-.photo-url-input{padding:6px 10px;border:1px solid var(--green-200);border-radius:6px;font-size:12px;width:240px}
 
 .duties-section{border-top:1.5px solid var(--green-100);padding-top:16px;margin-top:20px}
 .duties-title{font-size:13px;font-weight:700;color:var(--green-700);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px}
@@ -604,10 +603,7 @@ function renderEditForm() {
           Upload Photo
           <input type="file" accept="image/jpeg,image/png,image/webp" style="display:none" onchange="uploadPhoto(this.files[0])">
         </label>
-        <div style="display:flex;gap:4px;align-items:center">
-          <input type="text" class="photo-url-input" id="photoUrl" placeholder="Or paste image URL" value="${escHtml(imgSrc)}">
-          <button class="btn-sm" onclick="setPhotoUrl()">Set</button>
-        </div>
+        <input type="hidden" id="photoUrl" value="${escHtml(imgSrc)}">
         ${imgSrc ? '<button class="btn-sm" onclick="clearPhoto()" style="color:var(--danger)">Remove Photo</button>' : ''}
       </div>
     </div>
@@ -709,14 +705,6 @@ async function uploadPhoto(file) {
     toast('Photo uploaded', 'success');
   } else {
     toast(data.error || 'Upload failed', 'error');
-  }
-}
-
-function setPhotoUrl() {
-  const url = document.getElementById('photoUrl').value.trim();
-  if (url) {
-    const src = url.startsWith('http') ? url : '../' + url;
-    document.getElementById('photoPreview').innerHTML = '<img src="' + escHtml(src) + '" alt="Photo">';
   }
 }
 
