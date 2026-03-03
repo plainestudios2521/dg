@@ -131,6 +131,24 @@ if (isset($_GET['api'])) {
         exit;
     }
 
+    // ── Reorder (insert before/after a sibling) ──
+    if ($action === 'reorder' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        $input = json_decode(file_get_contents('php://input'), true);
+        $id = $input['id'] ?? null;
+        $targetId = $input['targetId'] ?? null;
+        $position = $input['position'] ?? 'before'; // 'before' or 'after'
+        if (!$id || !$targetId) { http_response_code(400); echo json_encode(['error'=>'Missing id or targetId']); exit; }
+        if ($id === $targetId) { echo json_encode(['ok'=>true]); exit; }
+        $data = loadData();
+        $node = extractNode($data['tree'], $id);
+        if (!$node) { http_response_code(404); echo json_encode(['error'=>'Node not found']); exit; }
+        $inserted = insertNear($data['tree'], $targetId, $node, $position);
+        if (!$inserted) { http_response_code(404); echo json_encode(['error'=>'Target not found']); exit; }
+        saveData($data);
+        echo json_encode(['ok'=>true]);
+        exit;
+    }
+
     // ── Upload photo ──
     if ($action === 'upload' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($_FILES['photo'])) {
@@ -282,6 +300,20 @@ function extractNode(array &$nodes, string $id): ?array {
     return null;
 }
 
+function insertNear(array &$nodes, string $targetId, array $node, string $position): bool {
+    for ($i = 0; $i < count($nodes); $i++) {
+        if ($nodes[$i]['id'] === $targetId) {
+            $pos = $position === 'after' ? $i + 1 : $i;
+            array_splice($nodes, $pos, 0, [$node]);
+            return true;
+        }
+        if (!empty($nodes[$i]['children'])) {
+            if (insertNear($nodes[$i]['children'], $targetId, $node, $position)) return true;
+        }
+    }
+    return false;
+}
+
 function maxId(array $nodes): int {
     $max = 0;
     foreach ($nodes as $n) {
@@ -374,7 +406,9 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .tree-list>ul{padding-left:8px}
 .tree-node{padding:5px 10px;margin:1px 4px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tree-node:hover{background:var(--green-50)}
-.tree-node.drag-over{outline:2px dashed var(--green-500);background:var(--green-50)}
+.tree-node.drag-over-middle{outline:2px dashed var(--green-500);background:var(--green-50)}
+.tree-node.drag-over-top{box-shadow:0 -2px 0 0 var(--green-500)}
+.tree-node.drag-over-bottom{box-shadow:0 2px 0 0 var(--green-500)}
 .tree-node.active{background:var(--green-100);font-weight:600;color:var(--green-800)}
 .tree-node .node-icon{width:20px;height:20px;border-radius:50%;background:var(--green-100);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--green-700);flex-shrink:0}
 .tree-node .node-name{overflow:hidden;text-overflow:ellipsis}
@@ -510,6 +544,19 @@ function renderTree() {
   initDragDrop();
 }
 
+function getDragZone(e, node) {
+  const rect = node.getBoundingClientRect();
+  const y = e.clientY - rect.top;
+  const pct = y / rect.height;
+  if (pct < 0.25) return 'top';
+  if (pct > 0.75) return 'bottom';
+  return 'middle';
+}
+
+function clearDragClasses(node) {
+  node.classList.remove('drag-over-top', 'drag-over-middle', 'drag-over-bottom');
+}
+
 function initDragDrop() {
   document.querySelectorAll('.tree-node[draggable]').forEach(node => {
     node.addEventListener('dragstart', e => {
@@ -519,26 +566,40 @@ function initDragDrop() {
     node.addEventListener('dragover', e => {
       e.preventDefault();
       e.dataTransfer.dropEffect = 'move';
-      node.classList.add('drag-over');
+      clearDragClasses(node);
+      node.classList.add('drag-over-' + getDragZone(e, node));
     });
     node.addEventListener('dragleave', () => {
-      node.classList.remove('drag-over');
+      clearDragClasses(node);
     });
     node.addEventListener('drop', async e => {
       e.preventDefault();
-      node.classList.remove('drag-over');
+      const zone = getDragZone(e, node);
+      clearDragClasses(node);
       const draggedId = e.dataTransfer.getData('text/plain');
       const targetId = node.dataset.id;
       if (draggedId === targetId) return;
-      const res = await fetch('?api=move', {
+
+      let apiUrl, body;
+      if (zone === 'middle') {
+        // Reparent: make child of target
+        apiUrl = '?api=move';
+        body = { id: draggedId, newParentId: targetId };
+      } else {
+        // Reorder: insert before/after target as sibling
+        apiUrl = '?api=reorder';
+        body = { id: draggedId, targetId: targetId, position: zone === 'top' ? 'before' : 'after' };
+      }
+
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: draggedId, newParentId: targetId })
+        body: JSON.stringify(body)
       });
       const data = await res.json();
       if (!data.ok) { toast(data.error || 'Move failed', 'error'); return; }
       await fetch('?api=publish');
-      toast('Moved & published', 'success');
+      toast(zone === 'middle' ? 'Moved under & published' : 'Reordered & published', 'success');
       await reload();
     });
   });
