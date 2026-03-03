@@ -7,7 +7,7 @@
       "email": "jon.stanton@dreamgreener.com",
       "mobile": "412-337-2207",
       "phone": "",
-      "image": "https://dreamgreener.com/wp-content/uploads/2026/01/jon-2.jpg",
+      "image": "data/uploads/jon-2.jpg",
       "children": [
         {
           "id": "14217",
@@ -264,7 +264,7 @@
               "email": "ruth.barahona@dreamgreener.com",
               "mobile": "412.370.5093",
               "phone": "",
-              "image": "https://dreamgreener.com/wp-content/uploads/2024/12/Ruth-B.jpg",
+              "image": "data/uploads/Ruth-B.jpg",
               "children": [],
               "duties": [
                 {
@@ -454,7 +454,7 @@
           "email": "luz.quintanar@dreamgreener.com",
           "mobile": "",
           "phone": "",
-          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/Luz-2025.jpg",
+          "image": "data/uploads/Luz-2025.jpg",
           "children": [
             {
               "id": "14216",
@@ -583,7 +583,7 @@
           "email": "brian.baur@dreamgreener.com",
           "mobile": "412.999.6462",
           "phone": "412.835.1035",
-          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/P1190886-Edit.jpg",
+          "image": "data/uploads/P1190886-Edit.jpg",
           "children": [
             {
               "id": "14233",
@@ -592,7 +592,7 @@
               "email": "erik.mcdowell@dreamgreener.com",
               "mobile": "412.403.8360",
               "phone": "412.835.1035",
-              "image": "https://dreamgreener.com/wp-content/uploads/2025/02/erik.webp",
+              "image": "data/uploads/erik.webp",
               "children": [],
               "duties": [
                 {
@@ -640,7 +640,7 @@
               "email": "gary.wesolowski@dreamgreener.com",
               "mobile": "",
               "phone": "412.835.1035",
-              "image": "https://dreamgreener.com/wp-content/uploads/2025/02/Gary.webp",
+              "image": "data/uploads/Gary.webp",
               "children": [],
               "duties": [
                 {
@@ -700,7 +700,7 @@
               "email": "Vic.hribar@dreamgreener.com",
               "mobile": "412.491.5322",
               "phone": "",
-              "image": "https://dreamgreener.com/wp-content/uploads/2026/01/Vic.jpg",
+              "image": "data/uploads/Vic.jpg",
               "children": [],
               "duties": [
                 {
@@ -831,7 +831,7 @@
           "email": "sherry.presutti@dreamgreener.com",
           "mobile": "",
           "phone": "",
-          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/P1190787-Edit.jpg",
+          "image": "data/uploads/P1190787-Edit.jpg",
           "children": [
             {
               "id": "14298",
@@ -840,7 +840,7 @@
               "email": "",
               "mobile": "",
               "phone": "",
-              "image": "https://dreamgreener.com/wp-content/uploads/2024/08/Ed.jpg",
+              "image": "data/uploads/Ed.jpg",
               "children": [],
               "duties": []
             },
