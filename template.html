@@ -101,6 +101,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree li:only-child>ul::before{height:56px}
 .tree li:only-child>ul{padding-top:56px}
 
+.staff-row{position:relative;display:flex;justify-content:flex-start;gap:3px;align-self:stretch;padding:6px 0;padding-left:calc(50% + 20px)}
+.staff-row::before{content:'';position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--line);transform:translateX(-1px);z-index:0}
+.staff-node{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;padding-top:14px}
+.staff-node::before,.staff-node::after{content:'';position:absolute;top:0;height:14px;border-top:2px solid var(--line)}
+.staff-node::before{left:0;right:50%;border-right:2px solid var(--line)}
+.staff-node::after{left:50%;right:0}
+.staff-node:last-child::after{border:0 none}
+.staff-node:first-child::before{left:-20px}
+.tree .ts .nc{min-width:120px;max-width:155px}
+.tree .ts .ta{height:70px}
+
 .tree .nc{background:white;border:1.5px solid var(--green-200);border-radius:14px;padding:0 0 10px;min-width:130px;max-width:170px;text-align:center;box-shadow:0 2px 10px var(--shadow);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative}
 .tree .nc:hover{box-shadow:0 12px 40px var(--shadow-lg);border-color:var(--green-400);transform:scale(1.8);z-index:50}
 .tree .t0 .nc{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-color:var(--green-700);min-width:170px;max-width:210px}
@@ -300,7 +311,7 @@ document.addEventListener('touchend',()=>{isDragging=false;lastTouchDist=0});
 
 /* ===== LIST VIEW ===== */
 function rL(ns,lv){
-  let h='';ns.forEach(n=>{
+  let h='';ns.filter(n=>!n.hidden).forEach(n=>{
     const hk=n.children&&n.children.length>0,co=collapsed.has(n.id),dc=cnt(n);
     const canOpen=!isD(n)&&(hCo(n)||n.title);
     const eid=esc(n.id);
@@ -316,8 +327,22 @@ function rL(ns,lv){
 }
 
 /* ===== TREE VIEW ===== */
+function rSN(s,lv){
+  const seid=esc(s.id),sst=hCo(s)||s.title;
+  let h=`<div class="staff-node">`;
+  h+=`<div class="t${lv} ts" data-id="${seid}"><div class="nc"`;
+  if(sst)h+=` onclick="openModal(event,'${seid}')"`;
+  h+=`>`;
+  h+=`<div class="ta">${hI(s)?`<img src="${esc(s.image)}" alt="${esc(s.name)}" onerror="this.parentElement.innerHTML='<span>${esc(ini(s.name))}</span>'">`:`<span>${esc(ini(s.name))}</span>`}</div>`;
+  h+=`<div class="tn">${esc(s.name)}</div>`;
+  if(s.title)h+=`<div class="tt">${esc(s.title)}</div>`;
+  h+=`</div></div>`;
+  if(s.children&&s.children.length)h+=`<ul>${rT(s.children,lv+1)}</ul>`;
+  h+=`</div>`;
+  return h;
+}
 function rT(ns,lv){
-  let h='';ns.forEach(n=>{
+  let h='';ns.filter(n=>!n.hidden).forEach(n=>{
     const hk=n.children&&n.children.length>0,st=hCo(n)||n.title;
     const eid=esc(n.id);
     let cl=[`t${lv}`];
@@ -330,7 +355,12 @@ function rT(ns,lv){
     h+=`<div class="tn">${esc(n.name)}</div>`;
     if(n.title)h+=`<div class="tt">${esc(n.title)}</div>`;
     h+=`</div></div>`;
-    if(hk)h+=`<ul>${rT(n.children,lv+1)}</ul>`;
+    if(hk){
+      const sk=n.children.filter(c=>c.staff),rk=n.children.filter(c=>!c.staff);
+      if(sk.length){h+=`<div class="staff-row">`;sk.forEach(s=>{h+=rSN(s,lv+1)});h+=`</div>`}
+      if(rk.length)h+=`<ul>${rT(rk,lv+1)}</ul>`;
+      else if(!sk.length)h+=`<ul>${rT(n.children,lv+1)}</ul>`;
+    }
     h+=`</li>`;
   });return h;
 }

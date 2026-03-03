@@ -279,6 +279,12 @@ function updateNode(array &$nodes, string $id, array $input): bool {
             $n['phone']       = $input['phone']  ?? $n['phone'];
             $n['birthday']    = $input['birthday'] ?? ($n['birthday'] ?? '');
             $n['anniversary'] = $input['anniversary'] ?? ($n['anniversary'] ?? '');
+            if (array_key_exists('staff', $input)) {
+                if ($input['staff']) { $n['staff'] = true; } else { unset($n['staff']); }
+            }
+            if (array_key_exists('hidden', $input)) {
+                if ($input['hidden']) { $n['hidden'] = true; } else { unset($n['hidden']); }
+            }
             if (array_key_exists('image', $input)) $n['image'] = $input['image'];
             if (array_key_exists('duties', $input)) $n['duties'] = $input['duties'];
             return true;
@@ -780,6 +786,16 @@ function renderEditForm() {
       <label for="fParent">Reports To</label>
       <select id="fParent">${parentOpts}</select>
     </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="fStaff" ${n.staff ? 'checked' : ''} style="width:auto">
+      <label for="fStaff" style="margin:0;font-weight:500">Staff Position</label>
+      <span style="font-size:12px;color:#888">(renders to the side in org chart)</span>
+    </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="fHidden" ${n.hidden ? 'checked' : ''} style="width:auto">
+      <label for="fHidden" style="margin:0;font-weight:500">Hidden from org chart</label>
+      <span style="font-size:12px;color:#888">(hides this node and its children from public view)</span>
+    </div>
 
     <div class="duties-section">
       <div class="duties-title">Responsibilities</div>
@@ -876,6 +892,8 @@ async function savePerson() {
     phone: document.getElementById('fPhone').value,
     birthday: document.getElementById('fBirthday').value,
     anniversary: document.getElementById('fAnniversary').value,
+    staff: document.getElementById('fStaff').checked,
+    hidden: document.getElementById('fHidden').checked,
     image: document.getElementById('photoUrl').value || null,
     duties: collectDuties()
   };
