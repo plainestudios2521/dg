@@ -647,6 +647,19 @@ function escHtml(s) {
   return d.innerHTML;
 }
 
+function fmtPhoneInput(el) {
+  let digits = el.value.replace(/\D/g, '');
+  if (digits.length > 10 && digits[0] === '1') digits = digits.slice(1);
+  if (digits.length > 10) digits = digits.slice(0, 10);
+  let formatted = '';
+  if (digits.length > 0) formatted = '(' + digits.slice(0, 3);
+  if (digits.length >= 3) formatted += ') ';
+  if (digits.length > 3) formatted += digits.slice(3, 6);
+  if (digits.length >= 6) formatted += '-';
+  if (digits.length > 6) formatted += digits.slice(6, 10);
+  el.value = formatted;
+}
+
 // ── Select & edit person ──
 function selectPerson(id) {
   selectedId = id;
@@ -715,11 +728,11 @@ function renderEditForm() {
     <div style="display:flex;gap:12px">
       <div class="form-group" style="flex:1">
         <label>Mobile</label>
-        <input type="text" id="fMobile" value="${escHtml(n.mobile || '')}">
+        <input type="text" id="fMobile" value="${escHtml(n.mobile || '')}" oninput="fmtPhoneInput(this)">
       </div>
       <div class="form-group" style="flex:1">
         <label>Office Phone</label>
-        <input type="text" id="fPhone" value="${escHtml(n.phone || '')}">
+        <input type="text" id="fPhone" value="${escHtml(n.phone || '')}" oninput="fmtPhoneInput(this)">
       </div>
     </div>
     <div class="form-group">
@@ -738,6 +751,9 @@ function renderEditForm() {
       <button class="btn-delete" onclick="deletePerson()">Delete Person</button>
     </div>
   `;
+  // Format existing phone values
+  fmtPhoneInput(document.getElementById('fMobile'));
+  fmtPhoneInput(document.getElementById('fPhone'));
 }
 
 function dutyItemHtml(index, heading, desc) {
