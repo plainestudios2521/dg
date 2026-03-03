@@ -335,6 +335,18 @@ function rT(ns,lv){
 }
 
 let hvT={},aH=new Set(),preHvZ=null,preHvPX=null,preHvPY=null;
+let hvLock=false,hvLockT=null;
+function lockHv(ms){
+  hvLock=true;clearTimeout(hvLockT);
+  hvLockT=setTimeout(()=>{
+    hvLock=false;
+    aH.forEach(hId=>{
+      const w=document.querySelector(`[data-id="${hId}"]`);
+      const li=w?.closest('li');
+      if(li&&!li.matches(':hover'))hvOut(hId);
+    });
+  },ms);
+}
 
 function estimateExpandedSize(id){
   const node=flat[id];
@@ -361,6 +373,7 @@ function centerAndFit(id){
   const fitZoom=Math.min((vRect.width-pad*2)/est.w,(vRect.height-pad*2)/est.h,baseZoom);
   const c=canvas();
   if(c)c.style.transition='transform .5s cubic-bezier(.4,0,.2,1)';
+  lockHv(700);
   zoom=fitZoom;
   panX=vRect.width/2-ncCX*zoom;
   panY=vRect.height*0.25-ncCY*zoom;
@@ -369,7 +382,7 @@ function centerAndFit(id){
 }
 
 function hvIn(id){
-  if(pinned.has(id))return;
+  if(pinned.has(id)||hvLock)return;
   hTip(id);
   clearTimeout(hvT[id]);
   hvT[id]=setTimeout(()=>{
@@ -384,7 +397,7 @@ function hvIn(id){
 }
 
 function hvOut(id){
-  if(pinned.has(id))return;
+  if(pinned.has(id)||hvLock)return;
   clearTimeout(hvT[id]);
   hvT[id]=setTimeout(()=>{
     const e=document.getElementById('cw-'+id);
@@ -395,6 +408,7 @@ function hvOut(id){
       if(aH.size===0&&preHvZ!==null){
         const c=canvas();
         if(c)c.style.transition='transform .5s cubic-bezier(.4,0,.2,1)';
+        lockHv(700);
         zoom=preHvZ;panX=preHvPX;panY=preHvPY;
         preHvZ=null;preHvPX=null;preHvPY=null;
         applyTransform();
