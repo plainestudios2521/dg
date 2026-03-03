@@ -152,13 +152,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .modal-layout{display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto}
 .modal-reports-panel{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:4px;animation:modalIn .3s ease-out}
 .modal-reports-panel:empty{display:none}
-.modal-report-card{background:white;border-radius:12px;padding:0;width:130px;min-width:130px;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;transition:all .25s;overflow:hidden;text-align:center;border:1.5px solid var(--green-200);flex-shrink:0}
+.modal-report-card{background:white;border-radius:12px;padding:0;width:130px;min-width:130px;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;transition:all .25s;overflow:visible;text-align:center;border:1.5px solid var(--green-200);flex-shrink:0;position:relative}
 .modal-report-card:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(0,0,0,.25);border-color:var(--green-400)}
 .modal-report-photo{width:100%;height:70px;background:var(--green-100);overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--green-200)}
 .modal-report-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
 .modal-report-photo span{font-size:16px;font-weight:700;color:var(--green-600)}
 .modal-report-name{font-weight:600;font-size:11.5px;color:var(--text);padding:8px 8px 2px;line-height:1.3}
 .modal-report-title{font-size:10px;color:var(--text-sec);padding:0 8px 8px;line-height:1.3}
+.modal-report-badge{position:absolute;top:6px;right:6px;min-width:18px;height:18px;padding:0 5px;background:var(--green-600);color:white;font-size:9px;font-weight:700;border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 
 @media(max-width:640px){.header{padding:12px 10px}.header h1{font-size:16px}.btn{padding:5px 9px;font-size:10px}.list-view{padding:16px 8px 40px}.org-children{padding-left:24px}.org-children::before{left:16px}.person-name{font-size:13px}.avatar{width:36px;height:36px}.hint{display:none!important}}
 </style>
@@ -356,7 +357,7 @@ function openModal(e,id){
   h+=`</div>`;
   document.getElementById('modalContent').innerHTML=h;
   const kids=n.children||[];
-  const rc=c=>`<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div><div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`;
+  const rc=c=>{const dc=cnt(c);return `<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div>${dc?`<div class="modal-report-badge">${dc}</div>`:''}<div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`};
   document.getElementById('modalReportsBelow').innerHTML=kids.map(rc).join('');
   document.getElementById('modalOverlay').classList.add('show');
 }
