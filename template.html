@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Greener — Organizational Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-900:#1a3a1a;--green-800:#2d5a2d;--green-700:#3a7a3a;
+  --green-600:#4a9a4a;--green-500:#5cb85c;--green-400:#7dc87d;
+  --green-300:#a3d9a3;--green-200:#c8e8c8;--green-100:#e8f5e8;
+  --green-50:#f4faf4;--cream:#fdfcf9;
+  --shadow:rgba(26,58,26,.1);--shadow-lg:rgba(26,58,26,.18);
+  --text:#2a2a2a;--text-sec:#6a6a6a;--line:#c5dcc5;
+  --open-color:#b8860b;--open-bg:#fffaf0;--open-border:#e8c888;
+  --dept-bg:#eef6ee;--dept-border:#7dc87d;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);height:100vh;overflow:hidden}
+
+.header{background:linear-gradient(135deg,var(--green-900),var(--green-800),var(--green-700));padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:100;box-shadow:0 4px 24px var(--shadow-lg);flex-wrap:wrap;gap:8px}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{width:38px;height:38px;background:var(--green-500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:white;box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0}
+.header h1{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:white}
+.header-sub{font-size:10px;color:var(--green-300);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.controls{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:white;padding:6px 13px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.25)}
+.view-toggle{display:flex;gap:2px;background:rgba(0,0,0,.2);border-radius:8px;padding:2px;margin-right:4px}
+.view-btn{background:none;border:none;color:rgba(255,255,255,.5);padding:5px 11px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.view-btn.active{background:rgba(255,255,255,.2);color:white}
+.hint{font-size:10px;color:rgba(255,255,255,.4);padding:0 6px;display:none}
+.hint.show{display:block}
+
+/* Zoom controls */
+.zoom-controls{position:fixed;bottom:20px;right:20px;display:none;flex-direction:column;gap:4px;z-index:90}
+.zoom-controls.show{display:flex}
+.zoom-btn{width:40px;height:40px;border-radius:10px;background:white;border:1.5px solid var(--green-200);box-shadow:0 2px 12px var(--shadow);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--green-700);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.zoom-btn:hover{background:var(--green-50);border-color:var(--green-400);transform:scale(1.05)}
+.zoom-level{text-align:center;font-size:10px;color:var(--text-sec);font-weight:600;padding:2px 0}
+
+/* LIST VIEW */
+.list-view{max-width:900px;margin:0 auto;padding:24px 16px 60px;display:none;overflow-y:auto;height:calc(100vh - 64px)}
+.list-view.active{display:block}
+.org-list{list-style:none}
+.org-item-inner{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:3px 0;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
+.org-item-inner:hover{background:var(--green-50)}
+.org-item-inner::before{content:'';position:absolute;left:-12px;top:50%;width:12px;height:2px;background:var(--line)}
+.org-children{list-style:none;padding-left:36px;position:relative;overflow:hidden;max-height:5000px;transition:max-height .35s ease,opacity .25s ease;opacity:1}
+.org-children::before{content:'';position:absolute;left:24px;top:0;bottom:12px;width:2px;background:var(--line)}
+.org-children.collapsed{max-height:0!important;opacity:0;padding:0}
+.avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid var(--green-200);background:var(--green-100);display:flex;align-items:center;justify-content:center}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-initials{font-size:14px;font-weight:700;color:var(--green-600)}
+.person-info{flex:1;min-width:0}
+.person-name{font-weight:600;font-size:14px;color:var(--text);line-height:1.3}
+.person-title{font-size:12px;color:var(--text-sec);font-weight:500;line-height:1.3}
+.toggle-icon{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--green-100);color:var(--green-700);font-size:14px;font-weight:700;transition:all .2s}
+.org-item-inner:hover .toggle-icon{background:var(--green-500);color:white;transform:scale(1.1)}
+.child-badge{font-size:10px;font-weight:700;color:white;background:var(--green-600);padding:1px 7px;border-radius:10px;margin-left:4px;flex-shrink:0}
+.level-0>.org-item-inner{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-radius:14px;padding:16px 20px;margin-bottom:8px}
+.level-0>.org-item-inner .avatar{width:52px;height:52px;border-color:var(--green-500)}
+.level-0>.org-item-inner .person-name{color:white;font-size:16px}
+.level-0>.org-item-inner .person-title{color:var(--green-300)}
+.level-0>.org-item-inner .toggle-icon{background:rgba(255,255,255,.15);color:var(--green-400)}
+.level-0>.org-item-inner::before{display:none}
+.level-1>.org-item-inner{background:white;border:1.5px solid var(--green-200);box-shadow:0 2px 8px var(--shadow);border-radius:12px;padding:12px 16px;margin-bottom:4px}
+.level-1>.org-item-inner .avatar{width:46px;height:46px;border-color:var(--green-400)}
+.level-1>.org-item-inner::before{display:none}
+.is-department>.org-item-inner{background:var(--dept-bg);border:2px dashed var(--dept-border);border-radius:10px;padding:8px 14px}
+.is-department .person-name{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--green-700)}
+.is-department .avatar{width:32px;height:32px;border-color:var(--dept-border);border-style:dashed}
+.is-department .avatar-initials{font-size:11px;color:var(--green-700)}
+.is-open>.org-item-inner{border:1.5px dashed var(--open-border);background:var(--open-bg)}
+.is-open .person-title{color:var(--open-color)}
+.is-crew>.org-item-inner{padding:6px 12px}
+.is-crew .avatar{width:32px;height:32px}
+.is-crew .person-name{font-size:12px}
+.is-crew .avatar-initials{font-size:10px}
+
+/* TREE VIEW — pannable viewport */
+.tree-view{display:none;width:100%;height:calc(100vh - 64px);overflow:hidden;position:relative;cursor:grab;background:var(--cream);background-image:radial-gradient(circle,var(--green-200) .5px,transparent .5px);background-size:24px 24px}
+.tree-view:active{cursor:grabbing}
+.tree-view.active{display:block}
+
+.tree-canvas{transform-origin:0 0;transition:transform .1s ease-out;position:absolute;padding:60px 80px}
+
+.tree{display:flex;flex-direction:column;align-items:center}
+.tree ul{display:flex;justify-content:center;list-style:none;padding-top:28px;position:relative;gap:3px}
+.tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:28px;z-index:1}
+.tree li:hover{z-index:10}
+.tree li::before,.tree li::after{content:'';position:absolute;top:0;width:50%;height:28px;border-top:2px solid var(--line)}
+.tree li::before{right:50%;border-right:2px solid var(--line)}
+.tree li::after{left:50%;border-left:2px solid var(--line)}
+.tree li:first-child::before,.tree li:last-child::after{border:0 none}
+.tree li:only-child::before,.tree li:only-child::after{border:0 none}
+.tree li:only-child{padding-top:0}
+.tree>ul>li{padding-top:0}
+.tree>ul>li::before,.tree>ul>li::after{border:0 none}
+.tree ul::before{content:'';position:absolute;top:0;left:50%;width:2px;height:28px;background:var(--line)}
+.tree>ul::before{display:none}
+.tree li:only-child>ul::before{height:56px}
+.tree li:only-child>ul{padding-top:56px}
+
+.tree .nc{background:white;border:1.5px solid var(--green-200);border-radius:14px;padding:0 0 10px;min-width:130px;max-width:170px;text-align:center;box-shadow:0 2px 10px var(--shadow);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative}
+.tree .nc:hover{box-shadow:0 12px 40px var(--shadow-lg);border-color:var(--green-400);transform:scale(1.8);z-index:50}
+.tree .t0 .nc{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-color:var(--green-700);min-width:170px;max-width:210px}
+.tree .t0 .tn{color:white;font-size:15px}
+.tree .t0 .tt{color:var(--green-300)}
+.tree .t1 .nc{background:linear-gradient(135deg,var(--green-50),white);border-color:var(--green-400);min-width:140px}
+.tree .td .nc{background:var(--dept-bg);border:2px dashed var(--dept-border);min-width:80px;padding:8px 10px}
+.tree .td .tn{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--green-700);margin:0}
+.tree .to .nc{background:var(--open-bg);border-color:var(--open-border);border-style:dashed}
+.tree .tc .nc{min-width:100px;max-width:140px}
+.tree .tc .tn{font-size:11px}
+.tree .ta{width:100%;height:85px;border-radius:12px 12px 0 0;margin:0;overflow:hidden;border:none;border-bottom:1.5px solid var(--green-200);background:var(--green-100);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.tree .t0 .ta{height:100px}
+.tree .nc:hover .ta{opacity:.92}
+.tree .tc .ta{height:60px}
+.tree .ta img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.tree .ta span{font-size:18px;font-weight:700;color:var(--green-600)}
+.tree .tc .ta span{font-size:13px}
+.tree .tn{font-weight:600;font-size:12.5px;color:var(--text);line-height:1.3;margin:10px 12px 0}
+.tree .tt{font-size:10.5px;color:var(--text-sec);font-weight:500;margin:3px 12px 0}
+
+
+/* DETAIL MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-overlay.show{display:flex}
+.modal-card{background:white;border-radius:16px;width:100%;max-width:600px;max-height:85vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,.25);position:relative;animation:modalIn .25s ease-out}
+@keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.85);border:none;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.15);transition:all .2s}
+.modal-close:hover{background:white;transform:scale(1.1)}
+.modal-photo{width:100%;height:360px;background:var(--green-100);border-radius:16px 16px 0 0;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.modal-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.modal-photo span{font-size:48px;font-weight:700;color:var(--green-600)}
+.modal-body{padding:24px 28px 28px}
+.modal-name{font-family:'Playfair Display',serif;font-weight:700;font-size:22px;color:var(--text);margin-bottom:2px}
+.modal-title{font-size:14px;color:var(--text-sec);font-weight:500;margin-bottom:4px}
+.modal-reports{font-size:12px;color:var(--text-sec);margin-bottom:20px}
+.modal-reports strong{color:var(--text);font-weight:600}
+.modal-contact{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.modal-contact a{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--green-800);text-decoration:none;font-weight:500;background:var(--green-50);padding:6px 12px;border-radius:8px;border:1px solid var(--green-200);transition:all .2s}
+.modal-contact a:hover{background:var(--green-100);border-color:var(--green-400)}
+.modal-duties{border-top:1.5px solid var(--green-100);padding-top:18px}
+.modal-duties-title{font-weight:700;font-size:13px;color:var(--green-700);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px}
+.modal-duty{margin-bottom:14px}
+.modal-duty:last-child{margin-bottom:0}
+.modal-duty h4{font-weight:600;font-size:14px;color:var(--text);margin-bottom:3px}
+.modal-duty p{font-size:13px;color:var(--text-sec);line-height:1.5}
+.modal-layout{display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto}
+.modal-reports-panel{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:4px;animation:modalIn .3s ease-out}
+.modal-reports-panel:empty{display:none}
+.modal-report-card{background:white;border-radius:12px;padding:0;width:130px;min-width:130px;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;transition:all .25s;overflow:visible;text-align:center;border:1.5px solid var(--green-200);flex-shrink:0;position:relative}
+.modal-report-card:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(0,0,0,.25);border-color:var(--green-400)}
+.modal-report-photo{width:100%;height:70px;background:var(--green-100);overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--green-200);border-radius:10px 10px 0 0}
+.modal-report-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.modal-report-photo span{font-size:16px;font-weight:700;color:var(--green-600)}
+.modal-report-name{font-weight:600;font-size:11.5px;color:var(--text);padding:8px 8px 2px;line-height:1.3}
+.modal-report-title{font-size:10px;color:var(--text-sec);padding:0 8px 8px;line-height:1.3}
+.modal-report-badge{position:absolute;top:6px;right:6px;min-width:18px;height:18px;padding:0 5px;background:var(--green-600);color:white;font-size:9px;font-weight:700;border-radius:9px;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+
+@media(max-width:640px){.header{padding:12px 10px}.header h1{font-size:16px}.btn{padding:5px 9px;font-size:10px}.list-view{padding:16px 8px 40px}.org-children{padding-left:24px}.org-children::before{left:16px}.person-name{font-size:13px}.avatar{width:36px;height:36px}.hint{display:none!important}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark">DG</div>
+    <div><h1>Dream Greener</h1><div class="header-sub">Organizational Chart</div></div>
+  </div>
+  <div class="controls">
+    <div class="view-toggle">
+      <button class="view-btn active" onclick="setView('list')" id="listBtn">List</button>
+      <button class="view-btn" onclick="setView('tree')" id="treeBtn">Tree</button>
+    </div>
+    <button class="btn" id="expandBtn" onclick="expandAll()">Expand All</button>
+    <button class="btn" id="collapseBtn" onclick="collapseAll()">Collapse All</button>
+    <button class="btn" id="crewsBtn" onclick="collapseCrews()">Hide Crews</button>
+    <button class="btn" id="fitBtn" style="display:none" onclick="fitToScreen()">Fit to Screen</button>
+    <span class="hint" id="hintText">Click for details · Scroll to zoom · Drag to pan</span>
+  </div>
+</div>
+
+<div class="list-view active" id="listView"></div>
+<div class="tree-view" id="treeView">
+  <div class="tree-canvas" id="treeCanvas"></div>
+</div>
+<div class="zoom-controls" id="zoomControls">
+  <button class="zoom-btn" onclick="zoomIn()">+</button>
+  <div class="zoom-level" id="zoomLevel">100%</div>
+  <button class="zoom-btn" onclick="zoomOut()">−</button>
+  <button class="zoom-btn" onclick="fitToScreen()" style="font-size:13px" title="Fit to screen">⊞</button>
+</div>
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal-layout" onclick="event.stopPropagation()">
+    <div class="modal-card" id="modalCard">
+      <button class="modal-close" onclick="closeModal(event)">&times;</button>
+      <div id="modalContent"></div>
+    </div>
+    <div class="modal-reports-panel" id="modalReportsBelow"></div>
+  </div>
+</div>
+
+<script>
+const D={{DATA}};
+
+const DUTIES={{DUTIES}};
+const DN=['Mowing','Maintenance','Snow'],collapsed=new Set();
+const isD=n=>DN.includes(n.name);
+const isC=n=>!isD(n)&&(n.name.includes('Crew')||(n.name.includes('Snow')&&n.name.includes('-'))||n.name.includes('Specialist')||n.name.includes('Pest')||n.name.includes('Construction'));
+const isO=n=>n.name==='Open'||n.name.includes('- Open');
+const hI=n=>n.image&&n.image!=='NULL';
+const ini=name=>{if(DN.includes(name))return name[0];return name.split(/[\s-]+/).filter(w=>w!=='Open'&&w.length>1).slice(0,2).map(w=>w[0]).join('')||'?'};
+const cnt=n=>{let c=0;if(n.children){c+=n.children.length;n.children.forEach(x=>c+=cnt(x))}return c};
+const hCo=n=>n.email||n.mobile||n.phone;
+const av=n=>hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span class=\\'avatar-initials\\'>${ini(n.name)}</span>'">`:`<span class="avatar-initials">${ini(n.name)}</span>`;
+const parentMap={},flat={};
+function bp(ns,p){ns.forEach(n=>{if(p)parentMap[n.id]=p;if(n.children)bp(n.children,n)})}
+function bf(ns){ns.forEach(n=>{flat[n.id]=n;if(n.children)bf(n.children)})}
+bp(D,null);bf(D);
+
+/* ===== PAN & ZOOM ===== */
+let zoom=1,panX=0,panY=0,isDragging=false,dragStartX,dragStartY,dragPanX,dragPanY;
+const canvas=()=>document.getElementById('treeCanvas');
+const viewport=()=>document.getElementById('treeView');
+
+function applyTransform(){
+  const c=canvas();
+  if(c)c.style.transform=`translate(${panX}px,${panY}px) scale(${zoom})`;
+  document.getElementById('zoomLevel').textContent=Math.round(zoom*100)+'%';
+}
+
+function zoomIn(){zoom=Math.min(zoom*1.2,3);applyTransform()}
+function zoomOut(){zoom=Math.max(zoom/1.2,.2);applyTransform()}
+
+function fitToScreen(){
+  const c=canvas(),v=viewport();
+  if(!c||!v)return;
+  const cr=c.children[0];
+  if(!cr)return;
+  const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
+  const vw=v.clientWidth,vh=v.clientHeight;
+  zoom=Math.min(vw/cw,vh/ch,.9);
+  panX=(vw-cw*zoom)/2;
+  panY=20;
+  applyTransform();
+}
+
+// Mouse pan
+document.addEventListener('mousedown',e=>{
+  const v=viewport();
+  if(!v||!v.classList.contains('active'))return;
+  if(e.target.closest('.nc,.modal-overlay,.zoom-controls'))return;
+  isDragging=true;dragStartX=e.clientX;dragStartY=e.clientY;dragPanX=panX;dragPanY=panY;
+  e.preventDefault();
+});
+document.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  panX=dragPanX+(e.clientX-dragStartX);
+  panY=dragPanY+(e.clientY-dragStartY);
+  applyTransform();
+});
+document.addEventListener('mouseup',()=>{isDragging=false});
+
+// Scroll zoom
+document.addEventListener('wheel',e=>{
+  const v=viewport();
+  if(!v||!v.classList.contains('active'))return;
+  if(!v.contains(e.target))return;
+  e.preventDefault();
+  const rect=v.getBoundingClientRect();
+  const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+  const oldZoom=zoom;
+  const delta=e.deltaY>0?0.9:1.1;
+  zoom=Math.max(.2,Math.min(3,zoom*delta));
+  panX=mx-(mx-panX)*(zoom/oldZoom);
+  panY=my-(my-panY)*(zoom/oldZoom);
+  applyTransform();
+},{passive:false});
+
+// Touch pan/pinch
+let touches=[],lastTouchDist=0;
+document.addEventListener('touchstart',e=>{
+  const v=viewport();if(!v||!v.classList.contains('active')||!v.contains(e.target))return;
+  touches=Array.from(e.touches);
+  if(touches.length===1){isDragging=true;dragStartX=touches[0].clientX;dragStartY=touches[0].clientY;dragPanX=panX;dragPanY=panY}
+  if(touches.length===2){lastTouchDist=Math.hypot(touches[1].clientX-touches[0].clientX,touches[1].clientY-touches[0].clientY)}
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+  const v=viewport();if(!v||!v.classList.contains('active'))return;
+  const t=Array.from(e.touches);
+  if(t.length===1&&isDragging){panX=dragPanX+(t[0].clientX-dragStartX);panY=dragPanY+(t[0].clientY-dragStartY);applyTransform()}
+  if(t.length===2){const d=Math.hypot(t[1].clientX-t[0].clientX,t[1].clientY-t[0].clientY);if(lastTouchDist){const s=d/lastTouchDist;zoom=Math.max(.2,Math.min(2,zoom*s));applyTransform()}lastTouchDist=d}
+},{passive:true});
+document.addEventListener('touchend',()=>{isDragging=false;lastTouchDist=0});
+
+/* ===== LIST VIEW ===== */
+function rL(ns,lv){
+  let h='';ns.forEach(n=>{
+    const hk=n.children&&n.children.length>0,co=collapsed.has(n.id),dc=cnt(n);
+    let cl=['org-item',`level-${lv}`];
+    if(isD(n))cl.push('is-department');if(isC(n))cl.push('is-crew');if(isO(n))cl.push('is-open');
+    h+=`<li class="${cl.join(' ')}"><div class="org-item-inner" onclick="tgList('${n.id}')">`;
+    h+=`<div class="avatar">${av(n)}</div><div class="person-info"><div class="person-name">${n.name}</div>`;
+    if(n.title)h+=`<div class="person-title">${n.title}</div>`;
+    h+=`</div>`;if(hk&&co)h+=`<span class="child-badge">${dc}</span>`;
+    if(hk)h+=`<div class="toggle-icon">${co?'+':'−'}</div>`;
+    h+=`</div>`;if(hk){h+=`<ul class="org-children${co?' collapsed':''}">${rL(n.children,lv+1)}</ul>`}h+=`</li>`;
+  });return h;
+}
+
+/* ===== TREE VIEW ===== */
+function rT(ns,lv){
+  let h='';ns.forEach(n=>{
+    const hk=n.children&&n.children.length>0,st=hCo(n)||n.title;
+    let cl=[`t${lv}`];
+    if(isD(n))cl.push('td');if(isC(n))cl.push('tc');if(isO(n))cl.push('to');
+    if(hk)cl.push('has-kids');
+    h+=`<li><div class="${cl.join(' ')}" data-id="${n.id}">`;
+    h+=`<div class="nc"`;
+    if(st&&!isD(n))h+=` onclick="openModal(event,'${n.id}')"`;
+    h+=`>`;
+    if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span>${ini(n.name)}</span>'">`:`<span>${ini(n.name)}</span>`}</div>`;
+    h+=`<div class="tn">${n.name}</div>`;
+    if(n.title)h+=`<div class="tt">${n.title}</div>`;
+    h+=`</div></div>`;
+    if(hk)h+=`<ul>${rT(n.children,lv+1)}</ul>`;
+    h+=`</li>`;
+  });return h;
+}
+
+function openModal(e,id){
+  e.stopPropagation();
+  const n=flat[id];if(!n)return;
+  const par=parentMap[id];
+  const duties=DUTIES[id]||[];
+  let h='';
+  h+=`<div class="modal-photo">${hI(n)?`<img src="${n.image}" alt="${n.name}">`:`<span>${ini(n.name)}</span>`}</div>`;
+  h+=`<div class="modal-body">`;
+  h+=`<div class="modal-name">${n.name}</div>`;
+  if(n.title)h+=`<div class="modal-title">${n.title}</div>`;
+  if(par)h+=`<div class="modal-reports">Reports to <strong>${par.name}</strong></div>`;
+  if(n.email||n.mobile||n.phone){
+    h+=`<div class="modal-contact">`;
+    if(n.email)h+=`<a href="mailto:${n.email}">✉ ${n.email}</a>`;
+    if(n.mobile)h+=`<a href="tel:${n.mobile.replace(/[^\d+]/g,'')}">📱 ${n.mobile}</a>`;
+    if(n.phone)h+=`<a href="tel:${n.phone.replace(/[^\d+]/g,'')}">☎ ${n.phone}</a>`;
+    h+=`</div>`;
+  }
+  if(duties.length){
+    h+=`<div class="modal-duties"><div class="modal-duties-title">Responsibilities</div>`;
+    duties.forEach(d=>{h+=`<div class="modal-duty"><h4>${d.h}</h4><p>${d.d}</p></div>`});
+    h+=`</div>`;
+  }
+  h+=`</div>`;
+  document.getElementById('modalContent').innerHTML=h;
+  const kids=n.children||[];
+  const rc=c=>{const dc=cnt(c);return `<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div>${dc?`<div class="modal-report-badge">${dc}</div>`:''}<div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`};
+  document.getElementById('modalReportsBelow').innerHTML=kids.map(rc).join('');
+  document.getElementById('modalOverlay').classList.add('show');
+}
+function closeModal(e){e.stopPropagation();document.getElementById('modalOverlay').classList.remove('show')}
+
+function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
+function renderTree(){
+  document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
+}
+function render(){renderList();renderTree()}
+function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
+
+function expandAll(){collapsed.clear();renderList()}
+function collapseAll(){const a=n=>{n.forEach(x=>{if(x.children&&x.children.length){collapsed.add(x.id);a(x.children)}})};a(D);collapsed.delete(D[0].id);renderList()}
+function collapseCrews(){collapsed.clear();const f=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)f(x.children)})};f(D);renderList()}
+function setView(v){
+  document.getElementById('listView').classList.toggle('active',v==='list');
+  document.getElementById('treeView').classList.toggle('active',v==='tree');
+  document.getElementById('listBtn').classList.toggle('active',v==='list');
+  document.getElementById('treeBtn').classList.toggle('active',v==='tree');
+  document.getElementById('hintText').classList.toggle('show',v==='tree');
+  document.getElementById('zoomControls').classList.toggle('show',v==='tree');
+  document.getElementById('fitBtn').style.display=v==='tree'?'inline-block':'none';
+  document.getElementById('expandBtn').style.display=v==='tree'?'none':'inline-block';
+  document.getElementById('collapseBtn').style.display=v==='tree'?'none':'inline-block';
+  document.getElementById('crewsBtn').style.display=v==='tree'?'none':'inline-block';
+  if(v==='tree')setTimeout(fitToScreen,50);
+}
+
+collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();setView('tree');
+</script>
+</body>
+</html>

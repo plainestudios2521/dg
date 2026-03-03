@@ -13,8 +13,13 @@ rsync -avz --delete \
   --exclude '.claude' \
   --exclude 'node_modules' \
   --exclude 'scripts' \
+  --exclude 'data/org.json' \
+  --exclude 'data/uploads/' \
   -e "ssh" \
   "$PROJECT_ROOT/" "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}"
 
-# Fix ownership so Apache can serve files
+# Ensure data directories exist on server (first deploy)
+ssh "${REMOTE_USER}@${REMOTE_HOST}" "mkdir -p ${REMOTE_PATH}data/uploads"
+
+# Fix ownership so Apache can serve files and PHP can write
 ssh "${REMOTE_USER}@${REMOTE_HOST}" "chown -R plaine9:plaine9 ${REMOTE_PATH}"

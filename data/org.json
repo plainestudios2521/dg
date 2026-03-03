@@ -1,0 +1,982 @@
+{
+  "tree": [
+    {
+      "id": "14204",
+      "name": "Jon Stanton",
+      "title": "Founder & President",
+      "email": "jon.stanton@dreamgreener.com",
+      "mobile": "412-337-2207",
+      "phone": "",
+      "image": "https://dreamgreener.com/wp-content/uploads/2026/01/jon-2.jpg",
+      "children": [
+        {
+          "id": "14217",
+          "name": "Open",
+          "title": "Operations Manager",
+          "email": "",
+          "mobile": "",
+          "phone": "",
+          "image": null,
+          "children": [
+            {
+              "id": "14230",
+              "name": "Tyler Charlton",
+              "title": "Maintenance Manager",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [
+                {
+                  "id": "14295",
+                  "name": "Mowing",
+                  "title": "",
+                  "email": "",
+                  "mobile": "",
+                  "phone": "",
+                  "image": null,
+                  "children": [
+                    {
+                      "id": "14277",
+                      "name": "Mowing Crew 1 - Eduardo",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14280",
+                      "name": "Mowing Crew 2 - Cesar",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14281",
+                      "name": "Mowing Crew 3 - Open",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14282",
+                      "name": "Mowing Crew 4 - Open",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    }
+                  ],
+                  "duties": []
+                },
+                {
+                  "id": "14296",
+                  "name": "Maintenance",
+                  "title": "",
+                  "email": "",
+                  "mobile": "",
+                  "phone": "",
+                  "image": null,
+                  "children": [
+                    {
+                      "id": "14283",
+                      "name": "Maintenance Crew 1",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14284",
+                      "name": "Maintenance Crew 2",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14285",
+                      "name": "Maintenance Crew 3",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14286",
+                      "name": "Maintenance Crew 4",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14287",
+                      "name": "Maintenance Crew 5",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    }
+                  ],
+                  "duties": []
+                },
+                {
+                  "id": "14297",
+                  "name": "Snow",
+                  "title": "",
+                  "email": "",
+                  "mobile": "",
+                  "phone": "",
+                  "image": null,
+                  "children": [
+                    {
+                      "id": "14288",
+                      "name": "Commercial Snow 1 - Brayan",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14289",
+                      "name": "Commercial Snow 2 - Homer",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14290",
+                      "name": "Residential Snow 1 - Eduardo",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14291",
+                      "name": "Residential Snow 2 - Nestor",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    },
+                    {
+                      "id": "14292",
+                      "name": "Residential Snow 3 - Cesar",
+                      "title": "",
+                      "email": "",
+                      "mobile": "",
+                      "phone": "",
+                      "image": null,
+                      "children": [],
+                      "duties": []
+                    }
+                  ],
+                  "duties": []
+                }
+              ],
+              "duties": [
+                {
+                  "h": "Field Operations and Quality Control Oversight",
+                  "d": "Manage the daily execution and conduct regular inspections of maintenance and snow services to ensure contract adherence and high-quality work. Communicates with Production Coordinator on all maintenance related scheduling goals, weather adjustments, delays. Point of contact for all job specific questions from crew leaders."
+                },
+                {
+                  "h": "Team Leadership and Development",
+                  "d": "Train, lead, supervise, and develop landscape crews on-site, providing guidance and hands-on training to ensure efficient operations, quality service, and professional growth."
+                },
+                {
+                  "h": "Equipment & Driving Training",
+                  "d": "Provide training for crew members on truck and trailer driving, as well as the operation of equipment such as front loader, skid steer, dingo, mowers, blowers, trimmers, chainsaws, sod cutters, aerators, mulch blowers, plows, and salters."
+                },
+                {
+                  "h": "Safety Oversight and Compliance",
+                  "d": "Enforce safety regulations and industry standards on job sites through diligent preparation (e.g., use of caulk blocks and safety cones). Conduct branch, driving and jobsite safety audits and provide ongoing team training."
+                },
+                {
+                  "h": "Resource Coordination and Equipment Management",
+                  "d": "Optimize jobsite labor and equipment allocation for maximum productivity, while ensuring the proper use, operation, and maintenance of landscaping tools and machinery."
+                },
+                {
+                  "h": "Best Practices and Innovations",
+                  "d": "Promote sustainable landscaping methods by overseeing environmentally responsible practices and implementing the latest techniques to improve service quality and efficiency."
+                },
+                {
+                  "h": "Service Call Management",
+                  "d": "Collaborate with the Operations Manager to ensure timely responses and resolutions to service call requests."
+                },
+                {
+                  "h": "Customer Feedback and Improvement",
+                  "d": "Collect client feedback after service completion and implement improvements based on their input to maintain satisfaction and enhance service quality."
+                },
+                {
+                  "h": "Collaboration with Other Departments",
+                  "d": "Work closely with the operations team and other departments to align maintenance services with overall business objectives and client expectations."
+                }
+              ]
+            },
+            {
+              "id": "14235",
+              "name": "Ruth Barahona",
+              "title": "Production & Materials Coordinator",
+              "email": "ruth.barahona@dreamgreener.com",
+              "mobile": "412.370.5093",
+              "phone": "",
+              "image": "https://dreamgreener.com/wp-content/uploads/2024/12/Ruth-B.jpg",
+              "children": [],
+              "duties": [
+                {
+                  "h": "Production Meetings",
+                  "d": "Communicate with the Operations Manager to outline pre-production schedules and material needs for specific maintenance contracts and construction projects."
+                },
+                {
+                  "h": "Scheduling",
+                  "d": "Route and dispatch construction, maintenance and snow service tickets and work orders. Coordinate calls and texts to the construction and maintenance teams regarding start times, weather-related delays, and return-to-branch notifications."
+                },
+                {
+                  "h": "Purchase Receipts",
+                  "d": "Manage field production-related purchase receipts (P.O.’s) and assist the CFO with monthly close-out processes."
+                },
+                {
+                  "h": "Production Close-Out",
+                  "d": "Work with the Managers and CFO to close out Aspire monthly."
+                },
+                {
+                  "h": "Garage Monitors",
+                  "d": "Daily update of Dak Board to include fleet, equipment, and crew assignments."
+                },
+                {
+                  "h": "Construction Support",
+                  "d": "Assist the design and sales team with material ordering, shipping, and logistics."
+                },
+                {
+                  "h": "Trucks and Equipment",
+                  "d": "Assist with the assignment of trucks, equipment, and assets."
+                },
+                {
+                  "h": "Nursery and Bulk Materials",
+                  "d": "Oversee the management and care of nursery stock and bulk material bins, ensuring cleanliness, stock oversight, pruning, and irrigation. Additionally, responsible for ordering bulk products (such as mulch, soil, and river rock) and coordinating dumpster change-outs as needed."
+                },
+                {
+                  "h": "Crew GPS Tracking",
+                  "d": "Monitor trucks to ensure they maintain safe driving standards and are not making unnecessary stops."
+                },
+                {
+                  "h": "Employee Onboarding",
+                  "d": "Assist with the hiring process, including processing paperwork, providing onboarding packages (uniforms, key fobs, locker labels, timecards, manager and crew introductions)."
+                },
+                {
+                  "h": "Translation",
+                  "d": "Help facilitate communication between team members when needed."
+                },
+                {
+                  "h": "Truck Registration and Insurance",
+                  "d": "Ensure all trucks and trailers have updated registration and insurance cards."
+                },
+                {
+                  "h": "Drivers’ Licenses and DOT Card Oversight",
+                  "d": "Ensure all employees’ driver’s licenses and DOT cards are current and compliant."
+                }
+              ]
+            },
+            {
+              "id": "14293",
+              "name": "Construction 1 - Nestor",
+              "title": "",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [],
+              "duties": []
+            },
+            {
+              "id": "14294",
+              "name": "Construction Crew - Open",
+              "title": "",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [],
+              "duties": []
+            },
+            {
+              "id": "14232",
+              "name": "Homer Briggs",
+              "title": "Mechanic",
+              "email": "",
+              "mobile": "304.218.4182",
+              "phone": "412.835.1035",
+              "image": null,
+              "children": [],
+              "duties": [
+                {
+                  "h": "Fleet Inspections and Readiness",
+                  "d": "Perform pre-trip inspections and ensure all trucks, trailers, and equipment are in proper working condition, ready for operations, and compliant with safety standards."
+                },
+                {
+                  "h": "Preventative Maintenance",
+                  "d": "Collaborate with the Operations Manager to establish and adhere to a maintenance schedule for trucks and equipment."
+                },
+                {
+                  "h": "Equipment Repairs",
+                  "d": "Perform proactive and timely repairs on all trucks, trailers, and job-related equipment."
+                },
+                {
+                  "h": "Inspection Compliance",
+                  "d": "Ensure all vehicles and equipment meet safety and operational standards in accordance with local, state, and federal regulations, including DOT requirements."
+                },
+                {
+                  "h": "Emergency Repairs",
+                  "d": "Provide on-call support for emergency repairs, assisting teams on-site with troubleshooting and resolving equipment issues promptly."
+                },
+                {
+                  "h": "Equipment Training",
+                  "d": "Collaborate with the Operations team to train landscaping crews on proper equipment operation, care, and basic troubleshooting to prevent misuse and extend equipment lifespan."
+                },
+                {
+                  "h": "Vendor Coordination",
+                  "d": "Work with vendors to source parts, negotiate pricing, and ensure timely delivery of supplies to reduce repair delays."
+                },
+                {
+                  "h": "Cost Efficiency",
+                  "d": "Identify and implement cost-saving measures, such as repairing components instead of replacing them and recommending energy-efficient or low-maintenance equipment upgrades."
+                },
+                {
+                  "h": "Purchase Order System",
+                  "d": "Utilize the company’s purchase order system for all purchases and obtain sign-off from the Operations Manager before making any purchases."
+                },
+                {
+                  "h": "Maintenance Records",
+                  "d": "Keep accurate and up-to-date records of fleet maintenance and repairs for compliance and reporting purposes."
+                },
+                {
+                  "h": "Yard Operations and Waste Management",
+                  "d": "Assist with loading/unloading materials, manage green waste disposal, and transport hardscape spoils offsite as needed to support overall yard operations."
+                },
+                {
+                  "h": "Transportation Assistance",
+                  "d": "Support the transportation of assets, equipment, and materials to job sites when required."
+                }
+              ]
+            }
+          ],
+          "duties": [
+            {
+              "h": "Hiring (Recruitment)",
+              "d": "Responsible for hires related to maintenance and construction including field level managers."
+            },
+            {
+              "h": "Training, and SOP Development",
+              "d": "Plan and implement training programs. Develop safety plans, establish, and refine standard operating procedures (SOPs). Ensure team compliance with the company’s standards and practices."
+            },
+            {
+              "h": "Daily Operations and Staffing",
+              "d": "Set production goals based on budget and oversee daily operations (e.g., 15-minute morning dispatch, end-of-day loading, GPS monitoring). Manage staffing schedules and time-off requests to ensure smooth workflows."
+            },
+            {
+              "h": "Safety Oversight",
+              "d": "Manage safety sign-off sheets and verify field crew participation. Maintain safety records to ensure full compliance across the team."
+            },
+            {
+              "h": "Problem Resolution (Customer-Related)",
+              "d": "Troubleshoot any landscape, hardscape, planting, lawn installation, or damage caused during work and ensure resolution."
+            },
+            {
+              "h": "Performance Monitoring and Goal Setting",
+              "d": "Establish and oversee key performance indicators (KPIs) such as productivity rates, job costs, labor efficiency, and revenue per crew. Monitor performance to ensure adherence to sales, maintenance, and production goals."
+            },
+            {
+              "h": "Project Oversight",
+              "d": "Oversee the execution and profitability of construction and maintenance projects."
+            },
+            {
+              "h": "Fleet, Equipment, Parts Management",
+              "d": "Supervise mechanic activities related to the maintenance and care of trucks, trailers, and equipment, ensuring that all repairs and maintenance tasks are executed effectively and efficiently. Oversee an organized system for checking, tracking, and returning tools to minimize waste or loss. Evaluate and make decisions on quotes and purchase orders to ensure alignment with the annual budget, prioritizing cost-efficiency and resource allocation."
+            },
+            {
+              "h": "Shop, Grounds, and Fleet Cleanliness Oversight",
+              "d": "Oversee the cleanliness and organization of the shop, surrounding grounds, and fleet to meet safety, efficiency, and presentation standards."
+            },
+            {
+              "h": "Staff Problem Resolution",
+              "d": "Manage and oversee conflict resolution among team members."
+            }
+          ]
+        },
+        {
+          "id": "14215",
+          "name": "Luz Quintanar",
+          "title": "Vice President / Chief Financial Officer",
+          "email": "luz.quintanar@dreamgreener.com",
+          "mobile": "",
+          "phone": "",
+          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/Luz-2025.jpg",
+          "children": [
+            {
+              "id": "14216",
+              "name": "Paula Padron",
+              "title": "Office Support Specialist",
+              "email": "Paula.Padron@dreamgreener.com",
+              "mobile": "",
+              "phone": "412.835.1035",
+              "image": null,
+              "children": [],
+              "duties": [
+                {
+                  "h": "Client Payments",
+                  "d": "Process customer payments, manage accounts receivable (AR) collections, and update client payment information."
+                },
+                {
+                  "h": "Design Proposals",
+                  "d": "Monitor design proposals and coordinate associated payments."
+                },
+                {
+                  "h": "Payment Scheduling",
+                  "d": "Ensure that construction-related payments align with established payment schedules and confirm that client payment information is accurate before work is scheduled."
+                },
+                {
+                  "h": "Proposal Review",
+                  "d": "Review all “Won” proposals for accuracy and completeness."
+                },
+                {
+                  "h": "Renewable Services Verification",
+                  "d": "Confirm that renewable services are not tagged for commission."
+                },
+                {
+                  "h": "Client/Property Setup",
+                  "d": "Ensure new clients have properly set up accounts in the Aspire system."
+                },
+                {
+                  "h": "Spanish Translations",
+                  "d": "Verify that notes and tickets are accurately translated into Spanish."
+                },
+                {
+                  "h": "Production Support",
+                  "d": "Support the production team by reviewing job notes for accuracy prior to production meetings."
+                },
+                {
+                  "h": "Receipt Management",
+                  "d": "Scan, track, and report receipts to ensure accurate inventory and expense management."
+                },
+                {
+                  "h": "Office Supplies Management",
+                  "d": "Track, manage, and maintain office supplies, including mechanic and operational supplies, while ensuring general office cleanliness."
+                },
+                {
+                  "h": "Facility Inventory Management",
+                  "d": "Conduct weekly inventory checks of parts and supplies required for repair and maintenance."
+                },
+                {
+                  "h": "Uniform Management",
+                  "d": "Assist the Production Coordinator with onboarding readiness for new hires."
+                }
+              ]
+            }
+          ],
+          "duties": [
+            {
+              "h": "Budget Management and Oversight",
+              "d": "Handle and oversee budget planning, implementation, and tracking."
+            },
+            {
+              "h": "Accounts Payable and Receivable",
+              "d": "Manage weekly payment processing and ensure timely collection of receivables."
+            },
+            {
+              "h": "Payroll & Taxes",
+              "d": "Weekly payroll processing and compliance with payroll tax regulations."
+            },
+            {
+              "h": "Property Taxes",
+              "d": "Manage and ensure compliance with property tax requirements."
+            },
+            {
+              "h": "H2B Filing and Coordination",
+              "d": "File, process and coordinate H2B applications."
+            },
+            {
+              "h": "Bad Debt & Collections Management",
+              "d": "Oversee collection activities and minimize bad debt."
+            },
+            {
+              "h": "Report Preparation and Analysis",
+              "d": "Prepare, analyze, and review financial reports."
+            },
+            {
+              "h": "KPI",
+              "d": "Set up of financial related KPI's in Aspire."
+            },
+            {
+              "h": "Strategic Planning",
+              "d": "Help to develop long-term financial strategies to support business goals."
+            },
+            {
+              "h": "Financial Forecasting",
+              "d": "Using existing and historical Aspire data, perform forecasting, and assist with planning."
+            },
+            {
+              "h": "Risk Management",
+              "d": "Help to identify and mitigate financial risks while managing insurance requirements."
+            },
+            {
+              "h": "Employee Benefits Management",
+              "d": "Administer employee benefit plans like health and retirement."
+            },
+            {
+              "h": "HR",
+              "d": "Oversee admin functions including onboarding oversight, updated staff files, insurance and benefits."
+            },
+            {
+              "h": "Insurance",
+              "d": "Oversee company insurance plans and policies for investments, fleet, workers comp, property, benefits, audits, unemployment."
+            }
+          ]
+        },
+        {
+          "id": "14205",
+          "name": "Brian Baur",
+          "title": "Vice President of Sales & Customer Care",
+          "email": "brian.baur@dreamgreener.com",
+          "mobile": "412.999.6462",
+          "phone": "412.835.1035",
+          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/P1190886-Edit.jpg",
+          "children": [
+            {
+              "id": "14233",
+              "name": "Erik McDowell",
+              "title": "Maintenance Account Manager",
+              "email": "erik.mcdowell@dreamgreener.com",
+              "mobile": "412.403.8360",
+              "phone": "412.835.1035",
+              "image": "https://dreamgreener.com/wp-content/uploads/2025/02/erik.webp",
+              "children": [],
+              "duties": [
+                {
+                  "h": "Sales Goals",
+                  "d": "Achieve a sales goal of $1.6 million for 2026. For inquiries related to enhancement and construction jobs exceeding $10,000, these will be reassigned to the landscape design team. All maintenance inquiries will be the responsibility of the maintenance account managers, and any enhancement job beyond their scope will be assigned to the designers."
+                },
+                {
+                  "h": "New Business and Legacy Client Management",
+                  "d": "Identify, cultivate, and pursue new business opportunities while maintaining and developing relationships with existing clients."
+                },
+                {
+                  "h": "Proposal Creation",
+                  "d": "Create and present lawn and landscape maintenance proposals upon request, ensuring completion within 48 hours or less of client inquiry."
+                },
+                {
+                  "h": "Client Concerns",
+                  "d": "Address and respond promptly to client concerns, proactively escalating and coordinating with operations for resolution as needed."
+                },
+                {
+                  "h": "Communication Excellence",
+                  "d": "Exhibit strong follow-through and impressive communication skills, both verbal and written, ensuring client satisfaction and operational clarity."
+                },
+                {
+                  "h": "Monitor Installations and Services",
+                  "d": "Oversee enhancement installations and maintenance services provided by the team to ensure quality and adherence to client expectations."
+                },
+                {
+                  "h": "Measurements and Renewals",
+                  "d": "Measure properties and aid with customer maintenance contract renewals to sustain a long-term client base."
+                },
+                {
+                  "h": "Crew Coordination",
+                  "d": "Work closely with the management team to confirm that all tasks are completed accurately and meet prescribed quality standards."
+                },
+                {
+                  "h": "Professional Representation",
+                  "d": "Act as a professional representative of the company, exhibiting courtesy and reinforcing the company’s reputation in all client and community interactions."
+                }
+              ]
+            },
+            {
+              "id": "14234",
+              "name": "Gary Wesolowksi",
+              "title": "Customer Care Representative",
+              "email": "gary.wesolowski@dreamgreener.com",
+              "mobile": "",
+              "phone": "412.835.1035",
+              "image": "https://dreamgreener.com/wp-content/uploads/2025/02/Gary.webp",
+              "children": [],
+              "duties": [
+                {
+                  "h": "Customer Communication",
+                  "d": "Assist in answering and returning calls during busy periods, responding to inquiries within 1 hour during business hours and within 24 hours after business hours, ensuring exceptional customer service and satisfaction."
+                },
+                {
+                  "h": "Customer Onboarding",
+                  "d": "Oversee the onboarding process for new clients, ensuring a comprehensive understanding of services, schedules, and communication protocols."
+                },
+                {
+                  "h": "Billing Inquiries",
+                  "d": "Investigate and respond to billing-related questions."
+                },
+                {
+                  "h": "Lead Tracking",
+                  "d": "Maintain and manage updated records of leads, inquiries, complaints, reviews, and referral sources to support overall customer relationship management."
+                },
+                {
+                  "h": "Client Tag Management",
+                  "d": "Ensure that Aspire tags for clients are accurate and up to date, providing oversight for effective tracking and service provision."
+                },
+                {
+                  "h": "Aspire Task Management",
+                  "d": "Monitor and manage the progress of client-centered tasks within the Aspire system, ensuring that all tasks are aligned with client needs and company objectives."
+                },
+                {
+                  "h": "Complaint Resolution",
+                  "d": "Investigate customer issues, collaborating with operations and account managers to resolve them, and following up with clients to ensure their satisfaction and closure of issues."
+                },
+                {
+                  "h": "Client Follow-Up & Reviews",
+                  "d": "Send review links and encourage clients to document their positive experiences as 5-star reviews on Google and social media, contributing to brand reputation and visibility."
+                },
+                {
+                  "h": "Cancellation Management",
+                  "d": "Work closely with the sales team to develop strategies to retain clients considering cancellation; assist in processing cancellations and managing related communications if retention is unsuccessful."
+                },
+                {
+                  "h": "Active/Inactive Properties Management",
+                  "d": "Oversee the deactivation of properties following confirmed cancellations, ensuring no work is scheduled, and final payments are processed efficiently."
+                },
+                {
+                  "h": "Customer Retention Initiatives",
+                  "d": "Collaborate with management to develop strategies aimed at improving customer retention and increasing satisfaction, documenting customer feedback and concerns to enhance communication processes."
+                },
+                {
+                  "h": "Mentorship",
+                  "d": "Mentor Customer Care Assistants, providing guidance on handling complex customer interactions and ensuring consistent messaging."
+                }
+              ]
+            },
+            {
+              "id": "14236",
+              "name": "Vic Hribar",
+              "title": "Landscape Designer",
+              "email": "Vic.hribar@dreamgreener.com",
+              "mobile": "412.491.5322",
+              "phone": "",
+              "image": "https://dreamgreener.com/wp-content/uploads/2026/01/Vic.jpg",
+              "children": [],
+              "duties": [
+                {
+                  "h": "Sales Goal",
+                  "d": "Achieve a sales goal of $1.2 million for 2026."
+                },
+                {
+                  "h": "Project Design and Sales",
+                  "d": "Design and sell residential or commercial landscape projects, including outdoor living areas, softscapes, hardscapes, ponds, and lighting systems, to builders, developers, homeowners, and small business owners."
+                },
+                {
+                  "h": "Customer Consultations and Site Assessments",
+                  "d": "Conduct onsite consultations and site inspections to gather requirements and assess soil type, slope, drainage, exposure, and the impact of existing structures or utilities on project development."
+                },
+                {
+                  "h": "Proposal Preparation and Tracking",
+                  "d": "Prepare and present professional proposals that align with company margins, and maintain all proposals in progress while following up to maximize sales opportunities."
+                },
+                {
+                  "h": "Margin and Cost Control",
+                  "d": "Ensure work is sold within approved margin guidelines to achieve targeted job costs and desired profit margins."
+                },
+                {
+                  "h": "Inquiry Responses",
+                  "d": "Respond promptly to all inquiries and bid requests."
+                },
+                {
+                  "h": "Project Management and Client Collaboration",
+                  "d": "Manage projects to meet desired outcomes, ensure client satisfaction, and collaborate with clients and teams for successful project completion."
+                },
+                {
+                  "h": "Crew Oversight and Supervision",
+                  "d": "Supervise job site crews to ensure proper execution from start to finish."
+                },
+                {
+                  "h": "Material Coordination and Budget Tracking",
+                  "d": "Order and schedule materials for delivery, track their usage, and monitor labor and costs to keep projects within budget."
+                },
+                {
+                  "h": "Leadership and Team Collaboration",
+                  "d": "Provide leadership and coordinate with on-site staff, subcontractors, and office teams to maintain quality and customer satisfaction."
+                },
+                {
+                  "h": "Progress Monitoring and Deadline Management",
+                  "d": "Review project progress regularly to ensure deadlines are consistently met."
+                },
+                {
+                  "h": "Complaint Resolution",
+                  "d": "Investigate and resolve customer complaints promptly."
+                },
+                {
+                  "h": "Meetings",
+                  "d": "Attend weekly management meetings to review project progress and schedules."
+                },
+                {
+                  "h": "Asset Reporting and SOP Compliance",
+                  "d": "Report any damage to company assets promptly and ensure compliance with standard operating procedures (SOPs)."
+                },
+                {
+                  "h": "Maintenance and Enhancement Job Management",
+                  "d": "Assign maintenance inquiries to maintenance account managers and manage enhancement jobs that exceed their scope."
+                }
+              ]
+            },
+            {
+              "id": "14244",
+              "name": "Open",
+              "title": "Customer Care Assistant",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [],
+              "duties": []
+            }
+          ],
+          "duties": [
+            {
+              "h": "Sales Strategy Development",
+              "d": "Develop and execute the overarching sales strategy to achieve targets across all divisions, including maintenance, treatments, and landscape construction services."
+            },
+            {
+              "h": "Sales Goal Oversight and Forecasting",
+              "d": "Oversee a structured sales team with individual sales goals. Monitor and report daily, weekly, and monthly sales performance to ensure alignment with sales targets and company objectives. Review sales pipelines regularly to track proposal opportunities, address missed deals, and proactively manage proposal flow to achieve targets."
+            },
+            {
+              "h": "Customer Care Leadership",
+              "d": "Lead and manage the customer care department to ensure seamless client onboarding, effective communication, and outstanding service delivery. Focus on building long-term customer satisfaction and improving retention through proactive leadership."
+            },
+            {
+              "h": "Collaboration with Operations",
+              "d": "Foster a strong partnership between sales and operations to ensure cohesive service delivery. Resolve client concerns by working directly with operations to implement best practices and refine processes for greater efficiency."
+            },
+            {
+              "h": "Training, Development, and Improvement Systems",
+              "d": "Plan and implement comprehensive training programs for both sales and client care teams, from onboarding to advanced skills development. Collect feedback from staff and clients to identify areas for improvement and continuously enhance training and processes. Conduct regular performance audits to ensure accountability, profitability, and skill elevation across the team."
+            },
+            {
+              "h": "Performance Metrics Management",
+              "d": "Define and monitor key performance indicators (KPIs) to track sales, crew efficiency, client satisfaction and service quality. Use data-driven insights to set team benchmarks and identify opportunities for improvement."
+            },
+            {
+              "h": "Client Relationship Management",
+              "d": "Build and maintain strong relationships with key clients to enhance long-term retention. Proactively resolve client concerns and identify upselling and cross-selling opportunities to provide additional value and grow revenue."
+            },
+            {
+              "h": "Marketing and Sales Collaboration",
+              "d": "Collaborate with the marketing team to align sales strategies with marketing campaigns and materials, creating cohesive customer messaging and maximizing reach. Understand campaign effectiveness, and monitor ROI, sharing updates with team. Plan and execute theme-based campaigns, preparing teams to participate in strategic marketing efforts. Use marketing strategies as a growth engine by fostering collaboration between the sales and marketing teams to achieve measurable outcomes."
+            },
+            {
+              "h": "Accountability and Conflict Resolution Framework",
+              "d": "Create and maintain accountability structures to track progress toward sales and customer care goals and ensure timely and effective team performance. Manage and resolve escalated client-related issues promptly to maintain customer relationships."
+            },
+            {
+              "h": "Capacity Planning and Client Communication",
+              "d": "Collaborate with scheduling and operations teams to accurately plan workforce capacity."
+            },
+            {
+              "h": "Job Costing Ownership",
+              "d": "Streamline the job costing process into a single ownership framework, centralizing efforts currently divided among various team members. Track key metrics—including Cost of Goods Sold (COGS), labor efficiency, and budget vs. actual audits—to enhance financial performance and operations. Promote pre- and post-job analytics to document successes, assess challenges, and improve future job estimates. Transition estimating practices toward a preventative strategy to anticipate and address profitability issues before they arise."
+            }
+          ]
+        },
+        {
+          "id": "14229",
+          "name": "Sherry Presutti",
+          "title": "Lawn & Plant Health Manager",
+          "email": "sherry.presutti@dreamgreener.com",
+          "mobile": "",
+          "phone": "",
+          "image": "https://dreamgreener.com/wp-content/uploads/2026/01/P1190787-Edit.jpg",
+          "children": [
+            {
+              "id": "14298",
+              "name": "Lawn Specialist 1 - Ed",
+              "title": "",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": "https://dreamgreener.com/wp-content/uploads/2024/08/Ed.jpg",
+              "children": [],
+              "duties": []
+            },
+            {
+              "id": "14299",
+              "name": "Lawn Specialist 2 - Open",
+              "title": "",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [],
+              "duties": []
+            },
+            {
+              "id": "14300",
+              "name": "Plant & Pest 1 - Jake",
+              "title": "",
+              "email": "",
+              "mobile": "",
+              "phone": "",
+              "image": null,
+              "children": [],
+              "duties": []
+            }
+          ],
+          "duties": [
+            {
+              "h": "Division Leadership",
+              "d": "Oversee daily operations of the lawn, pest, and plant health division, ensuring alignment with company goals and standards."
+            },
+            {
+              "h": "Customer Relations and Education",
+              "d": "Collaborate with the customer care team to handle inquiries and resolve complaints. Conduct site visits and provide guidance on best practices for lawn care, pest management, and plant health."
+            },
+            {
+              "h": "Hiring and Supervision",
+              "d": "Assist with hiring, onboarding, training, scheduling, and performance evaluations to build a skilled and efficient team."
+            },
+            {
+              "h": "Regulatory Compliance",
+              "d": "Ensure adherence to local, state, and federal regulations, including pesticide application laws, OSHA standards, and environmental guidelines."
+            },
+            {
+              "h": "Safety Oversight",
+              "d": "Enforce safety protocols, conduct routine inspections, and ensure the proper use of personal protective equipment (PPE)."
+            },
+            {
+              "h": "Field Training",
+              "d": "Provide hands-on training to staff on proper application techniques, equipment usage, and safety practices to maintain high service quality."
+            },
+            {
+              "h": "Scheduling",
+              "d": "Schedule treatment assignments for specialists to ensure efficient and timely service delivery."
+            },
+            {
+              "h": "Quality Assurance",
+              "d": "Conduct audits of work to uphold service quality standards, offering feedback to specialists and corrective actions as needed."
+            },
+            {
+              "h": "Performance Monitoring and Goal Setting",
+              "d": "Oversee key performance indicators (KPIs) such as productivity rates, job costs, labor efficiency, and revenue per crew, monitoring performance to meet sales and production goals."
+            },
+            {
+              "h": "Budget Management",
+              "d": "Collaborate with leadership to develop and manage the division’s budget and cost control."
+            },
+            {
+              "h": "Sales Growth",
+              "d": "Collaborate with President and VP of Sales to identify and leverage new market opportunities."
+            },
+            {
+              "h": "Inventory Management",
+              "d": "Weekly documentation of inventory of supplies, including fertilizers, pesticides, and herbicides, ensuring proper storage and weekly updates."
+            }
+          ]
+        }
+      ],
+      "duties": [
+        {
+          "h": "Vision and Mission Alignment",
+          "d": "Ensure that all team initiatives and projects support the company's vision and mission."
+        },
+        {
+          "h": "Strategic Delegation",
+          "d": "Delegate day-to-day operational decisions and responsibilities to department heads while maintaining oversight and accountability to empower team leadership."
+        },
+        {
+          "h": "Financial Forecasting",
+          "d": "Collaborate with our CFO to develop financial forecasts that support strategic planning and informed decision-making."
+        },
+        {
+          "h": "Marketing Budget & Oversight",
+          "d": "Set objectives and provide direction for the marketing team, guiding plans for web, social, and advertising strategies."
+        },
+        {
+          "h": "Budget Review Meetings",
+          "d": "Schedule and attend regular budget review meetings to assess performance, make necessary adjustments, and ensure fiscal responsibility."
+        },
+        {
+          "h": "Performance Metrics",
+          "d": "Define and review key performance indicators (KPIs) for operations, sales, production, and marketing to measure and ensure success."
+        },
+        {
+          "h": "Operational Efficiency Review",
+          "d": "Assess sales and operational processes to identify inefficiencies, implement best practices, and streamline workflows."
+        },
+        {
+          "h": "Team Collaboration",
+          "d": "Foster collaboration between departments (sales, operations, and customer care) by establishing clear communication channels and aligning shared goals."
+        },
+        {
+          "h": "Training and Development",
+          "d": "Ensure training programs across sales, production, and customer care teams are aligned with company goals. Support leadership in implementing these programs."
+        },
+        {
+          "h": "Feedback Mechanisms",
+          "d": "Develop systems and processes to gather feedback from team members, clients, and stakeholders to identify areas for improvement and enhance decision-making."
+        },
+        {
+          "h": "Market Research",
+          "d": "Oversee market research efforts to stay informed of trends, customer preferences, and competitive positioning to guide strategy discussions with senior leadership."
+        },
+        {
+          "h": "Accountability Systems",
+          "d": "Establish clear accountability frameworks for the leadership team to ensure projects and goals are completed on time and within budget."
+        },
+        {
+          "h": "Leadership Development",
+          "d": "Invest in leadership training and mentorship opportunities for department heads to prepare them for greater autonomy and responsibility."
+        },
+        {
+          "h": "Strategic Innovation",
+          "d": "Stay informed about industry changes and opportunities for innovation. Support teams in proposing and evaluating initiatives for growth and expansion."
+        }
+      ]
+    }
+  ]
+}
