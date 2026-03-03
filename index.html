@@ -355,7 +355,7 @@ function openModal(e,id){
   }
   h+=`</div>`;
   document.getElementById('modalContent').innerHTML=h;
-  const kids=(n.children||[]).filter(c=>!isD(c));
+  const kids=n.children||[];
   const rc=c=>`<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div><div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`;
   document.getElementById('modalReportsBelow').innerHTML=kids.map(rc).join('');
   document.getElementById('modalOverlay').classList.add('show');
