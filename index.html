@@ -175,7 +175,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
     <button class="btn" onclick="collapseAll()">Collapse All</button>
     <button class="btn" onclick="collapseCrews()">Hide Crews</button>
     <button class="btn" id="fitBtn" style="display:none" onclick="fitToScreen()">Fit to Screen</button>
-    <span class="hint" id="hintText">Click to expand · Scroll to zoom · Drag to pan</span>
+    <span class="hint" id="hintText">Hover to peek · Click to pin · Scroll to zoom · Drag to pan</span>
   </div>
 </div>
 
@@ -315,7 +315,9 @@ function rT(ns,lv){
     let cl=[`t${lv}`];
     if(isD(n))cl.push('td');if(isC(n))cl.push('tc');if(isO(n))cl.push('to');
     if(hk)cl.push('has-kids');if(hk&&!ip)cl.push('is-collapsed');if(ip)cl.push('pinned');
-    h+=`<li><div class="${cl.join(' ')}" data-id="${n.id}"`;
+    h+=`<li`;
+    if(hk)h+=` onmouseenter="hvIn('${n.id}')" onmouseleave="hvOut('${n.id}')"`;
+    h+=`><div class="${cl.join(' ')}" data-id="${n.id}"`;
     if(hk)h+=` onclick="pin('${n.id}')"`;
     if(!hk&&st&&!isD(n))h+=` onmouseenter="sTip('${n.id}')" onmouseleave="hTip('${n.id}')"`;
     h+=`><div class="nc"`;
@@ -332,16 +334,20 @@ function rT(ns,lv){
   });return h;
 }
 
+let hvT={},aH=new Set();
+function hvIn(id){if(pinned.has(id))return;hTip(id);clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e){e.classList.remove('hidden');e.classList.add('visible');aH.add(id)}},150)}
+function hvOut(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('visible');e.classList.add('hidden');aH.delete(id)}},500)}
 function pin(id){
   if(pinned.has(id)){pinned.delete(id);const up=n=>{n.forEach(c=>{pinned.delete(c.id);if(c.children)up(c.children)})};up(flat[id].children||[])}
   else pinned.add(id);renderTree();
 }
-function sTip(id){if(pinned.has(id))return;const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
+function sTip(id){if(aH.has(id)||pinned.has(id))return;const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
 function hTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.remove('show')}
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
 function renderTree(){
   document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
+  aH.forEach(id=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('hidden');e.classList.add('visible')}});
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
@@ -352,7 +358,7 @@ function expandAll(){
   }else{collapsed.clear();renderList()}
 }
 function collapseAll(){
-  if(document.getElementById('treeView').classList.contains('active')){pinned.clear();pinned.add('14204');renderTree();setTimeout(fitToScreen,100)}
+  if(document.getElementById('treeView').classList.contains('active')){pinned.clear();aH.clear();pinned.add('14204');renderTree();setTimeout(fitToScreen,100)}
   else{const a=n=>{n.forEach(x=>{if(x.children&&x.children.length){collapsed.add(x.id);a(x.children)}})};a(D);collapsed.delete(D[0].id);renderList()}
 }
 function collapseCrews(){
