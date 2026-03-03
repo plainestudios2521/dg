@@ -492,7 +492,10 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <?php else: ?>
 <!-- ─── Admin Interface ─── -->
 <div class="topbar">
-  <h1>DG Org Chart Admin</h1>
+  <div style="display:flex;align-items:center;gap:12px">
+    <img src="../dg-leaf.svg" alt="DG" style="width:36px;height:36px;border-radius:50%">
+    <h1>DG Org Chart Admin</h1>
+  </div>
   <div class="topbar-actions">
     <a href="?logout" class="btn">Logout</a>
   </div>

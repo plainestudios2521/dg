@@ -21,7 +21,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 
 .header{background:linear-gradient(135deg,var(--green-900),var(--green-800),var(--green-700));padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:100;box-shadow:0 4px 24px var(--shadow-lg);flex-wrap:wrap;gap:8px}
 .header-left{display:flex;align-items:center;gap:14px}
-.logo-mark{width:38px;height:38px;background:var(--green-500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:20px;color:white;box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0}
+.logo-mark{width:38px;height:38px;border-radius:50%;flex-shrink:0;overflow:hidden}
+.logo-mark img{width:100%;height:100%;object-fit:cover}
 .header h1{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:white}
 .header-sub{font-size:12px;color:var(--green-300);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
 .controls{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
@@ -167,7 +168,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 <body>
 <div class="header">
   <div class="header-left">
-    <div class="logo-mark">DG</div>
+    <div class="logo-mark"><img src="dg-leaf.svg" alt="DG"></div>
     <div><h1>Dream Greener</h1><div class="header-sub">Organizational Chart</div></div>
   </div>
   <div class="controls">
