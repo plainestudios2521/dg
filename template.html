@@ -13,7 +13,6 @@
   --green-50:#f4faf4;--cream:#fdfcf9;
   --shadow:rgba(26,58,26,.1);--shadow-lg:rgba(26,58,26,.18);
   --text:#2a2a2a;--text-sec:#6a6a6a;--line:#c5dcc5;
-  --open-color:#b8860b;--open-bg:#fffaf0;--open-border:#e8c888;
   --dept-bg:#eef6ee;--dept-border:#7dc87d;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -163,7 +162,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 </style>
 </head>
 <body>
-<div class="header">
+<header class="header">
   <div class="header-left">
     <div class="logo-mark"><img src="dg-leaf.svg" alt="DG"></div>
     <div><h1>Dream Greener</h1><div class="header-sub">Organizational Chart</div></div>
@@ -179,8 +178,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
     <button class="btn" id="fitBtn" style="display:none" onclick="fitToScreen()">Fit to Screen</button>
     <span class="hint" id="hintText">Click for details · Scroll to zoom · Drag to pan</span>
   </div>
-</div>
+</header>
 
+<main>
 <div class="list-view active" id="listView"></div>
 <div class="tree-view" id="treeView">
   <div class="tree-canvas" id="treeCanvas"></div>
@@ -191,10 +191,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
   <button class="zoom-btn" onclick="zoomOut()">−</button>
   <button class="zoom-btn" onclick="fitToScreen()" style="font-size:13px" title="Fit to screen">⊞</button>
 </div>
-<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+</main>
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" onclick="closeModal(event)">
   <div class="modal-layout" onclick="event.stopPropagation()">
     <div class="modal-card" id="modalCard">
-      <button class="modal-close" onclick="closeModal(event)">&times;</button>
+      <button class="modal-close" aria-label="Close" onclick="closeModal(event)">&times;</button>
       <div id="modalContent"></div>
     </div>
     <div class="modal-reports-panel" id="modalReportsBelow"></div>
@@ -206,15 +207,15 @@ const D={{DATA}};
 
 const DUTIES={{DUTIES}};
 const DN=['Mowing','Maintenance','Snow'],collapsed=new Set();
+const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
 const isD=n=>DN.includes(n.name);
 const isC=n=>!isD(n)&&(n.name.includes('Crew')||(n.name.includes('Snow')&&n.name.includes('-'))||n.name.includes('Specialist')||n.name.includes('Pest')||n.name.includes('Construction'));
-const isO=n=>n.name==='Open'||n.name.includes('- Open');
 const hI=n=>n.image&&n.image!=='NULL';
 const ini=name=>{if(DN.includes(name))return name[0];return name.split(/[\s-]+/).filter(w=>w!=='Open'&&w.length>1).slice(0,2).map(w=>w[0]).join('')||'?'};
 const cnt=n=>{let c=0;if(n.children){c+=n.children.length;n.children.forEach(x=>c+=cnt(x))}return c};
 const hCo=n=>n.email||n.mobile||n.phone;
 const fmtPhone=s=>{if(!s)return s;const d=s.replace(/\D/g,'');if(d.length===10)return`(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;if(d.length===11&&d[0]==='1')return`(${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;return s};
-const av=n=>hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span class=\\'avatar-initials\\'>${ini(n.name)}</span>'">`:`<span class="avatar-initials">${ini(n.name)}</span>`;
+const av=n=>hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}" onerror="this.parentElement.innerHTML='<span class=\\'avatar-initials\\'>${esc(ini(n.name))}</span>'">`:`<span class="avatar-initials">${esc(ini(n.name))}</span>`;
 const parentMap={},flat={};
 function bp(ns,p){ns.forEach(n=>{if(p)parentMap[n.id]=p;if(n.children)bp(n.children,n)})}
 function bf(ns){ns.forEach(n=>{flat[n.id]=n;if(n.children)bf(n.children)})}
@@ -280,12 +281,12 @@ document.addEventListener('wheel',e=>{
 },{passive:false});
 
 // Touch pan/pinch
-let touches=[],lastTouchDist=0;
+let lastTouchDist=0;
 document.addEventListener('touchstart',e=>{
   const v=viewport();if(!v||!v.classList.contains('active')||!v.contains(e.target))return;
-  touches=Array.from(e.touches);
-  if(touches.length===1){isDragging=true;dragStartX=touches[0].clientX;dragStartY=touches[0].clientY;dragPanX=panX;dragPanY=panY}
-  if(touches.length===2){lastTouchDist=Math.hypot(touches[1].clientX-touches[0].clientX,touches[1].clientY-touches[0].clientY)}
+  const t=Array.from(e.touches);
+  if(t.length===1){isDragging=true;dragStartX=t[0].clientX;dragStartY=t[0].clientY;dragPanX=panX;dragPanY=panY}
+  if(t.length===2){lastTouchDist=Math.hypot(t[1].clientX-t[0].clientX,t[1].clientY-t[0].clientY)}
 },{passive:true});
 document.addEventListener('touchmove',e=>{
   const v=viewport();if(!v||!v.classList.contains('active'))return;
@@ -300,13 +301,14 @@ function rL(ns,lv){
   let h='';ns.forEach(n=>{
     const hk=n.children&&n.children.length>0,co=collapsed.has(n.id),dc=cnt(n);
     const canOpen=!isD(n)&&(hCo(n)||n.title);
+    const eid=esc(n.id);
     let cl=['org-item',`level-${lv}`];
-    if(isD(n))cl.push('is-department');if(isC(n))cl.push('is-crew');if(isO(n))cl.push('is-open');
-    h+=`<li class="${cl.join(' ')}"><div class="org-item-inner"${canOpen?` onclick="openModal(event,'${n.id}')"`:hk?` onclick="tgList('${n.id}')"`:''}>`;
-    h+=`<div class="avatar">${av(n)}</div><div class="person-info"><div class="person-name">${n.name}</div>`;
-    if(n.title)h+=`<div class="person-title">${n.title}</div>`;
+    if(isD(n))cl.push('is-department');if(isC(n))cl.push('is-crew');
+    h+=`<li class="${cl.join(' ')}"><div class="org-item-inner"${canOpen?` onclick="openModal(event,'${eid}')"`:hk?` onclick="tgList('${eid}')"`:''}>`;
+    h+=`<div class="avatar">${av(n)}</div><div class="person-info"><div class="person-name">${esc(n.name)}</div>`;
+    if(n.title)h+=`<div class="person-title">${esc(n.title)}</div>`;
     h+=`</div>`;if(hk&&co)h+=`<span class="child-badge">${dc}</span>`;
-    if(hk)h+=`<div class="toggle-icon" onclick="event.stopPropagation();tgList('${n.id}')">${co?'+':'−'}</div>`;
+    if(hk)h+=`<div class="toggle-icon" onclick="event.stopPropagation();tgList('${eid}')">${co?'+':'−'}</div>`;
     h+=`</div>`;if(hk){h+=`<ul class="org-children${co?' collapsed':''}">${rL(n.children,lv+1)}</ul>`}h+=`</li>`;
   });return h;
 }
@@ -315,16 +317,16 @@ function rL(ns,lv){
 function rT(ns,lv){
   let h='';ns.forEach(n=>{
     const hk=n.children&&n.children.length>0,st=hCo(n)||n.title;
+    const eid=esc(n.id);
     let cl=[`t${lv}`];
-    if(isD(n))cl.push('td');if(isC(n))cl.push('tc');if(isO(n))cl.push('to');
-    if(hk)cl.push('has-kids');
-    h+=`<li><div class="${cl.join(' ')}" data-id="${n.id}">`;
+    if(isD(n))cl.push('td');if(isC(n))cl.push('tc');
+    h+=`<li><div class="${cl.join(' ')}" data-id="${eid}">`;
     h+=`<div class="nc"`;
-    if(st&&!isD(n))h+=` onclick="openModal(event,'${n.id}')"`;
+    if(st&&!isD(n))h+=` onclick="openModal(event,'${eid}')"`;
     h+=`>`;
-    if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span>${ini(n.name)}</span>'">`:`<span>${ini(n.name)}</span>`}</div>`;
-    h+=`<div class="tn">${n.name}</div>`;
-    if(n.title)h+=`<div class="tt">${n.title}</div>`;
+    if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}" onerror="this.parentElement.innerHTML='<span>${esc(ini(n.name))}</span>'">`:`<span>${esc(ini(n.name))}</span>`}</div>`;
+    h+=`<div class="tn">${esc(n.name)}</div>`;
+    if(n.title)h+=`<div class="tt">${esc(n.title)}</div>`;
     h+=`</div></div>`;
     if(hk)h+=`<ul>${rT(n.children,lv+1)}</ul>`;
     h+=`</li>`;
@@ -337,31 +339,32 @@ function openModal(e,id){
   const par=parentMap[id];
   const duties=DUTIES[id]||[];
   let h='';
-  h+=`<div class="modal-photo">${hI(n)?`<img src="${n.image}" alt="${n.name}">`:`<span>${ini(n.name)}</span>`}</div>`;
+  h+=`<div class="modal-photo">${hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}">`:`<span>${esc(ini(n.name))}</span>`}</div>`;
   h+=`<div class="modal-body">`;
-  h+=`<div class="modal-name">${n.name}</div>`;
-  if(n.title)h+=`<div class="modal-title">${n.title}</div>`;
-  if(par)h+=`<div class="modal-reports">Reports to <strong>${par.name}</strong></div>`;
+  h+=`<div class="modal-name">${esc(n.name)}</div>`;
+  if(n.title)h+=`<div class="modal-title">${esc(n.title)}</div>`;
+  if(par)h+=`<div class="modal-reports">Reports to <strong>${esc(par.name)}</strong></div>`;
   if(n.email||n.mobile||n.phone){
     h+=`<div class="modal-contact">`;
-    if(n.email)h+=`<a href="mailto:${n.email}">✉ ${n.email}</a>`;
-    if(n.mobile)h+=`<a href="tel:${n.mobile.replace(/[^\d+]/g,'')}">📱 ${fmtPhone(n.mobile)}</a>`;
-    if(n.phone)h+=`<a href="tel:${n.phone.replace(/[^\d+]/g,'')}">☎ ${fmtPhone(n.phone)}</a>`;
+    if(n.email)h+=`<a href="mailto:${esc(n.email)}">✉ ${esc(n.email)}</a>`;
+    if(n.mobile)h+=`<a href="tel:${n.mobile.replace(/[^\d+]/g,'')}">📱 ${esc(fmtPhone(n.mobile))}</a>`;
+    if(n.phone)h+=`<a href="tel:${n.phone.replace(/[^\d+]/g,'')}">☎ ${esc(fmtPhone(n.phone))}</a>`;
     h+=`</div>`;
   }
   if(duties.length){
     h+=`<div class="modal-duties"><div class="modal-duties-title">Responsibilities</div>`;
-    duties.forEach(d=>{h+=`<div class="modal-duty"><h4>${d.h}</h4><p>${d.d}</p></div>`});
+    duties.forEach(d=>{h+=`<div class="modal-duty"><h4>${esc(d.h)}</h4><p>${esc(d.d)}</p></div>`});
     h+=`</div>`;
   }
   h+=`</div>`;
   document.getElementById('modalContent').innerHTML=h;
   const kids=n.children||[];
-  const rc=c=>{const dc=cnt(c);return `<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div>${dc?`<div class="modal-report-badge">${dc}</div>`:''}<div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`};
+  const rc=c=>{const dc=cnt(c);return `<div class="modal-report-card" onclick="openModal(event,'${esc(c.id)}')"><div class="modal-report-photo">${hI(c)?`<img src="${esc(c.image)}" alt="${esc(c.name)}">`:`<span>${esc(ini(c.name))}</span>`}</div>${dc?`<div class="modal-report-badge">${dc}</div>`:''}<div class="modal-report-name">${esc(c.name)}</div>${c.title?`<div class="modal-report-title">${esc(c.title)}</div>`:''}</div>`};
   document.getElementById('modalReportsBelow').innerHTML=kids.map(rc).join('');
   document.getElementById('modalOverlay').classList.add('show');
 }
-function closeModal(e){e.stopPropagation();document.getElementById('modalOverlay').classList.remove('show')}
+function closeModal(e){if(e)e.stopPropagation();document.getElementById('modalOverlay').classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
 function renderTree(){

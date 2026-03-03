@@ -12,14 +12,34 @@ define('UPLOAD_DIR',   __DIR__ . '/../data/uploads/');
 define('MAX_UPLOAD',   5 * 1024 * 1024); // 5 MB
 define('SESSION_TIMEOUT', 3600); // 1 hour
 
-// Admin password — set your plaintext password here; it's hashed at runtime via password_verify()
-// On the server, PHP handles the bcrypt comparison securely.
+// Admin password — change this value, then run on server to get hash:
+//   php -r "echo password_hash('yourpass', PASSWORD_DEFAULT);"
+// Then replace ADMIN_PASSWORD with: define('ADMIN_HASH', '$2y$10$...');
 define('ADMIN_PASSWORD', 'chris');
 
-// To use a pre-hashed password instead, comment out ADMIN_PASSWORD above and uncomment:
-// define('ADMIN_HASH', '$2y$10$...');  // generated with: php -r "echo password_hash('your_pass', PASSWORD_DEFAULT);"
-
+// Session hardening
+ini_set('session.cookie_httponly', '1');
+ini_set('session.cookie_samesite', 'Strict');
+ini_set('session.use_strict_mode', '1');
 session_start();
+
+// ─── Security headers ───────────────────────────────────────────────────────
+header('X-Content-Type-Options: nosniff');
+header('X-Frame-Options: DENY');
+header('Referrer-Policy: same-origin');
+
+// ─── CSRF helpers ───────────────────────────────────────────────────────────
+function csrfToken(): string {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+function verifyCsrf(): bool {
+    $token = $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
+    return !empty($token) && hash_equals($_SESSION['csrf_token'] ?? '', $token);
+}
 
 // ─── Auth helpers ────────────────────────────────────────────────────────────
 function isLoggedIn(): bool {
@@ -38,6 +58,13 @@ if (isset($_GET['api'])) {
     if (!isLoggedIn()) { http_response_code(401); echo json_encode(['error'=>'Not authenticated']); exit; }
 
     $action = $_GET['api'];
+
+    // CSRF check on all state-changing endpoints
+    if ($action !== 'load' && !verifyCsrf()) {
+        http_response_code(403);
+        echo json_encode(['error'=>'Invalid CSRF token']);
+        exit;
+    }
 
     // ── Load data ──
     if ($action === 'load') {
@@ -186,7 +213,7 @@ if (isset($_GET['api'])) {
     }
 
     // ── Publish ──
-    if ($action === 'publish') {
+    if ($action === 'publish' && $_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = publish();
         if ($result === true) {
             echo json_encode(['ok'=>true]);
@@ -211,13 +238,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password'])) {
         $valid = ($_POST['password'] === ADMIN_PASSWORD);
     }
     if ($valid) {
+        session_regenerate_id(true);
         $_SESSION['admin_logged_in'] = true;
         $_SESSION['admin_last_activity'] = time();
     } else {
         $loginError = 'Invalid password.';
     }
 }
-if (isset($_GET['logout'])) {
+if (isset($_GET['logout']) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+    $_SESSION = [];
+    if (ini_get('session.use_cookies')) {
+        $p = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 3600, $p['path'], $p['domain'], $p['secure'], $p['httponly']);
+    }
     session_destroy();
     header('Location: ./');
     exit;
@@ -231,18 +264,7 @@ function loadData(): array {
 }
 
 function saveData(array $data): void {
-    file_put_contents(DATA_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-}
-
-function findNode(array $nodes, string $id): ?array {
-    foreach ($nodes as $n) {
-        if ($n['id'] === $id) return $n;
-        if (!empty($n['children'])) {
-            $found = findNode($n['children'], $id);
-            if ($found !== null) return $found;
-        }
-    }
-    return null;
+    file_put_contents(DATA_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
 }
 
 function updateNode(array &$nodes, string $id, array $input): bool {
@@ -343,7 +365,7 @@ function publish() {
     $html = str_replace('{{DATA}}', $dJson, $template);
     $html = str_replace('{{DUTIES}}', $dutiesJson, $html);
 
-    $written = file_put_contents(OUTPUT_FILE, $html);
+    $written = file_put_contents(OUTPUT_FILE, $html, LOCK_EX);
     return $written !== false ? true : 'Failed to write index.html';
 }
 
@@ -517,6 +539,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 <div class="toast" id="toast"></div>
 
 <script>
+const CSRF = '<?= csrfToken() ?>';
 let orgData = null;
 let selectedId = null;
 let flatMap = {};
@@ -596,12 +619,12 @@ function initDragDrop() {
 
       const res = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
         body: JSON.stringify(body)
       });
       const data = await res.json();
       if (!data.ok) { toast(data.error || 'Move failed', 'error'); return; }
-      await fetch('?api=publish');
+      await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
       toast(zone === 'middle' ? 'Moved under & published' : 'Reordered & published', 'success');
       await reload();
     });
@@ -697,8 +720,8 @@ function renderEditForm() {
     : '<span>' + escHtml(initials) + '</span>';
 
   let dutiesHtml = '';
-  (n.duties || []).forEach((d, i) => {
-    dutiesHtml += dutyItemHtml(i, d.h, d.d);
+  (n.duties || []).forEach(d => {
+    dutiesHtml += dutyItemHtml(d.h, d.d);
   });
 
   panel.innerHTML = `
@@ -717,29 +740,29 @@ function renderEditForm() {
     </div>
 
     <div class="form-group">
-      <label>Name</label>
+      <label for="fName">Name</label>
       <input type="text" id="fName" value="${escHtml(n.name)}">
     </div>
     <div class="form-group">
-      <label>Title</label>
+      <label for="fTitle">Title</label>
       <input type="text" id="fTitle" value="${escHtml(n.title || '')}">
     </div>
     <div class="form-group">
-      <label>Email</label>
+      <label for="fEmail">Email</label>
       <input type="email" id="fEmail" value="${escHtml(n.email || '')}">
     </div>
     <div style="display:flex;gap:12px">
       <div class="form-group" style="flex:1">
-        <label>Mobile</label>
+        <label for="fMobile">Mobile</label>
         <input type="text" id="fMobile" value="${escHtml(n.mobile || '')}" oninput="fmtPhoneInput(this)">
       </div>
       <div class="form-group" style="flex:1">
-        <label>Office Phone</label>
+        <label for="fPhone">Office Phone</label>
         <input type="text" id="fPhone" value="${escHtml(n.phone || '')}" oninput="fmtPhoneInput(this)">
       </div>
     </div>
     <div class="form-group">
-      <label>Reports To</label>
+      <label for="fParent">Reports To</label>
       <select id="fParent">${parentOpts}</select>
     </div>
 
@@ -759,8 +782,8 @@ function renderEditForm() {
   fmtPhoneInput(document.getElementById('fPhone'));
 }
 
-function dutyItemHtml(index, heading, desc) {
-  return `<div class="duty-item" data-index="${index}">
+function dutyItemHtml(heading, desc) {
+  return `<div class="duty-item">
     <div class="duty-controls">
       <button class="duty-btn" onclick="moveDuty(this,-1)" title="Move up">&#9650;</button>
       <button class="duty-btn" onclick="moveDuty(this,1)" title="Move down">&#9660;</button>
@@ -773,8 +796,7 @@ function dutyItemHtml(index, heading, desc) {
 
 function addDuty() {
   const list = document.getElementById('dutiesList');
-  const idx = list.children.length;
-  list.insertAdjacentHTML('beforeend', dutyItemHtml(idx, '', ''));
+  list.insertAdjacentHTML('beforeend', dutyItemHtml('', ''));
 }
 
 function removeDuty(btn) {
@@ -808,11 +830,11 @@ async function uploadPhoto(file) {
   if (!file) return;
   const fd = new FormData();
   fd.append('photo', file);
-  const res = await fetch('?api=upload', { method: 'POST', body: fd });
+  const res = await fetch('?api=upload', { method: 'POST', headers: { 'X-CSRF-Token': CSRF }, body: fd });
   const data = await res.json();
   if (data.ok) {
     document.getElementById('photoUrl').value = data.url;
-    document.getElementById('photoPreview').innerHTML = '<img src="../' + data.url + '" alt="Photo">';
+    document.getElementById('photoPreview').innerHTML = '<img src="../' + escHtml(data.url) + '" alt="Photo">';
     toast('Photo uploaded', 'success');
   } else {
     toast(data.error || 'Upload failed', 'error');
@@ -844,7 +866,7 @@ async function savePerson() {
   // Save person data
   const res = await fetch('?api=save', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
     body: JSON.stringify(payload)
   });
   const data = await res.json();
@@ -854,7 +876,7 @@ async function savePerson() {
   if (newParentId !== currentParentId) {
     const mRes = await fetch('?api=move', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
       body: JSON.stringify({ id: selectedId, newParentId: newParentId })
     });
     const mData = await mRes.json();
@@ -862,7 +884,7 @@ async function savePerson() {
   }
 
   // Auto-publish
-  const pRes = await fetch('?api=publish');
+  const pRes = await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
   const pData = await pRes.json();
   if (!pData.ok) { toast('Saved but publish failed: ' + (pData.error || ''), 'error'); await reload(); return; }
 
@@ -881,13 +903,13 @@ async function deletePerson() {
 
   const res = await fetch('?api=delete', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
     body: JSON.stringify({ id: selectedId })
   });
   const data = await res.json();
   if (data.ok) {
     selectedId = null;
-    await fetch('?api=publish');
+    await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
     toast('Deleted & published', 'success');
     await reload();
     document.getElementById('mainPanel').innerHTML = '<span>Select a person from the sidebar to edit</span>';
@@ -906,12 +928,12 @@ async function addPerson() {
 
   const res = await fetch('?api=add', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
     body: JSON.stringify({ parentId, name, title: title || '' })
   });
   const data = await res.json();
   if (data.ok) {
-    await fetch('?api=publish');
+    await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
     toast('Person added & published', 'success');
     await reload();
     selectPerson(data.id);
@@ -920,7 +942,6 @@ async function addPerson() {
   }
 }
 
-// ── Publish ──
 // ── Helpers ──
 async function reload() {
   const res = await fetch('?api=load');
