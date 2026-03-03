@@ -374,6 +374,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 .tree-list>ul{padding-left:8px}
 .tree-node{padding:5px 10px;margin:1px 4px;border-radius:6px;cursor:pointer;font-size:13px;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tree-node:hover{background:var(--green-50)}
+.tree-node.drag-over{outline:2px dashed var(--green-500);background:var(--green-50)}
 .tree-node.active{background:var(--green-100);font-weight:600;color:var(--green-800)}
 .tree-node .node-icon{width:20px;height:20px;border-radius:50%;background:var(--green-100);display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--green-700);flex-shrink:0}
 .tree-node .node-name{overflow:hidden;text-overflow:ellipsis}
@@ -506,6 +507,41 @@ function buildFlatMap() {
 function renderTree() {
   const el = document.getElementById('treeList');
   el.innerHTML = '<ul>' + renderNodes(orgData.tree) + '</ul>';
+  initDragDrop();
+}
+
+function initDragDrop() {
+  document.querySelectorAll('.tree-node[draggable]').forEach(node => {
+    node.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', node.dataset.id);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+    node.addEventListener('dragover', e => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      node.classList.add('drag-over');
+    });
+    node.addEventListener('dragleave', () => {
+      node.classList.remove('drag-over');
+    });
+    node.addEventListener('drop', async e => {
+      e.preventDefault();
+      node.classList.remove('drag-over');
+      const draggedId = e.dataTransfer.getData('text/plain');
+      const targetId = node.dataset.id;
+      if (draggedId === targetId) return;
+      const res = await fetch('?api=move', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: draggedId, newParentId: targetId })
+      });
+      const data = await res.json();
+      if (!data.ok) { toast(data.error || 'Move failed', 'error'); return; }
+      await fetch('?api=publish');
+      toast('Moved & published', 'success');
+      await reload();
+    });
+  });
 }
 
 function renderNodes(nodes) {
@@ -515,7 +551,7 @@ function renderNodes(nodes) {
     const active = n.id === selectedId ? ' active' : '';
     const initials = getInitials(n.name);
     h += '<li>';
-    h += '<div class="tree-node' + active + '" onclick="selectPerson(\'' + n.id + '\')" title="' + escHtml(n.name) + '">';
+    h += '<div class="tree-node' + active + '" draggable="true" data-id="' + n.id + '" onclick="selectPerson(\'' + n.id + '\')" title="' + escHtml(n.name) + '">';
     if (hasKids) {
       h += '<span class="tree-toggle" onclick="event.stopPropagation();toggleBranch(this)">&#9660;</span>';
     } else {
@@ -621,7 +657,7 @@ function renderEditForm() {
         <input type="text" id="fMobile" value="${escHtml(n.mobile || '')}">
       </div>
       <div class="form-group" style="flex:1">
-        <label>Phone</label>
+        <label>Office Phone</label>
         <input type="text" id="fPhone" value="${escHtml(n.phone || '')}">
       </div>
     </div>
