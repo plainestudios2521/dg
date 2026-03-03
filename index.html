@@ -87,7 +87,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree-canvas{transform-origin:0 0;transition:transform .1s ease-out;position:absolute;padding:60px 80px}
 
 .tree{display:flex;flex-direction:column;align-items:center}
-.tree ul{display:flex;justify-content:center;list-style:none;padding-top:28px;position:relative;gap:6px}
+.tree ul{display:flex;justify-content:center;list-style:none;padding-top:28px;position:relative;gap:3px}
 .tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:28px;z-index:1}
 .tree li:hover{z-index:10}
 .tree li::before,.tree li::after{content:'';position:absolute;top:0;width:50%;height:28px;border-top:2px solid var(--line)}
@@ -103,16 +103,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree li:only-child>ul::before{height:56px}
 .tree li:only-child>ul{padding-top:56px}
 
-.tree .nc{background:white;border:1.5px solid var(--green-200);border-radius:14px;padding:12px 14px;min-width:130px;max-width:160px;text-align:center;box-shadow:0 2px 10px var(--shadow);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative}
+.tree .nc{background:white;border:1.5px solid var(--green-200);border-radius:14px;padding:12px 14px;min-width:110px;max-width:160px;text-align:center;box-shadow:0 2px 10px var(--shadow);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative}
 .tree .nc:hover{box-shadow:0 8px 28px var(--shadow-lg);border-color:var(--green-400);transform:translateY(-3px)}
-.tree .t0 .nc{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-color:var(--green-700);min-width:170px;max-width:200px;padding:16px 18px}
+.tree .t0 .nc{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-color:var(--green-700);min-width:150px;max-width:200px;padding:16px 18px}
 .tree .t0 .tn{color:white;font-size:15px}
 .tree .t0 .tt{color:var(--green-300)}
-.tree .t1 .nc{background:linear-gradient(135deg,var(--green-50),white);border-color:var(--green-400);min-width:145px}
-.tree .td .nc{background:var(--dept-bg);border:2px dashed var(--dept-border);min-width:100px;padding:8px 10px}
+.tree .t1 .nc{background:linear-gradient(135deg,var(--green-50),white);border-color:var(--green-400);min-width:120px}
+.tree .td .nc{background:var(--dept-bg);border:2px dashed var(--dept-border);min-width:80px;padding:8px 10px}
 .tree .td .tn{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--green-700)}
 .tree .to .nc{background:var(--open-bg);border-color:var(--open-border);border-style:dashed}
-.tree .tc .nc{min-width:105px;max-width:135px;padding:9px 10px}
+.tree .tc .nc{min-width:85px;max-width:135px;padding:9px 10px}
 .tree .tc .tn{font-size:11px}
 .tree .ta{width:42px;height:42px;border-radius:50%;margin:0 auto 7px;overflow:hidden;border:2.5px solid var(--green-300);background:var(--green-100);display:flex;align-items:center;justify-content:center;transition:all .3s}
 .tree .t0 .ta{width:52px;height:52px;border-color:var(--green-500)}
@@ -134,8 +134,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree .has-kids.is-collapsed>.nc:hover{animation:none}
 
 .tree .child-wrap{overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1)}
-.tree .child-wrap.hidden{max-height:0;opacity:0;pointer-events:none}
-.tree .child-wrap.visible{max-height:2000px;opacity:1;pointer-events:auto}
+.tree .child-wrap.hidden{max-height:0;max-width:0;opacity:0;pointer-events:none}
+.tree .child-wrap.visible{max-height:2000px;max-width:2000px;opacity:1;pointer-events:auto}
 .tree .child-wrap.visible>li{animation:childIn .35s cubic-bezier(.4,0,.2,1) both}
 @keyframes childIn{from{opacity:0;transform:translateY(-14px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 .tree .child-wrap.visible>li:nth-child(1){animation-delay:.04s}
@@ -376,7 +376,7 @@ function setView(v){
   if(v==='tree')setTimeout(fitToScreen,50);
 }
 
-collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();setView('tree');
+collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);pinned.add('14204');render();setView('tree');
 setTimeout(()=>{zoom=1.1;const c=canvas(),v=viewport(),cr=c&&c.children[0];if(cr){const cw=cr.scrollWidth+160;panX=(v.clientWidth-cw*zoom)/2;panY=20}applyTransform()},100);
 </script>
 </body>
