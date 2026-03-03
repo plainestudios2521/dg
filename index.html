@@ -149,10 +149,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .modal-duty:last-child{margin-bottom:0}
 .modal-duty h4{font-weight:600;font-size:14px;color:var(--text);margin-bottom:3px}
 .modal-duty p{font-size:13px;color:var(--text-sec);line-height:1.5}
-.modal-layout{display:flex;align-items:flex-start;gap:16px;max-height:85vh}
-.modal-reports-panel{display:flex;flex-direction:column;gap:10px;max-height:85vh;overflow-y:auto;padding:4px;animation:modalIn .3s ease-out}
+.modal-layout{display:flex;flex-direction:column;align-items:center;gap:14px;max-height:90vh;overflow-y:auto}
+.modal-reports-panel{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;padding:4px;animation:modalIn .3s ease-out}
 .modal-reports-panel:empty{display:none}
-.modal-report-card{background:white;border-radius:12px;padding:0;width:150px;min-width:150px;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;transition:all .25s;overflow:hidden;text-align:center;border:1.5px solid var(--green-200);flex-shrink:0}
+.modal-report-card{background:white;border-radius:12px;padding:0;width:130px;min-width:130px;box-shadow:0 4px 20px rgba(0,0,0,.2);cursor:pointer;transition:all .25s;overflow:hidden;text-align:center;border:1.5px solid var(--green-200);flex-shrink:0}
 .modal-report-card:hover{transform:scale(1.05);box-shadow:0 8px 28px rgba(0,0,0,.25);border-color:var(--green-400)}
 .modal-report-photo{width:100%;height:70px;background:var(--green-100);overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--green-200)}
 .modal-report-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
@@ -194,12 +194,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 </div>
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal-layout" onclick="event.stopPropagation()">
-    <div class="modal-reports-panel" id="modalReportsLeft"></div>
     <div class="modal-card" id="modalCard">
       <button class="modal-close" onclick="closeModal(event)">&times;</button>
       <div id="modalContent"></div>
     </div>
-    <div class="modal-reports-panel" id="modalReportsRight"></div>
+    <div class="modal-reports-panel" id="modalReportsBelow"></div>
   </div>
 </div>
 
@@ -357,11 +356,8 @@ function openModal(e,id){
   h+=`</div>`;
   document.getElementById('modalContent').innerHTML=h;
   const kids=(n.children||[]).filter(c=>!isD(c));
-  const half=Math.ceil(kids.length/2);
-  const left=kids.slice(0,half),right=kids.slice(half);
   const rc=c=>`<div class="modal-report-card" onclick="openModal(event,'${c.id}')"><div class="modal-report-photo">${hI(c)?`<img src="${c.image}" alt="${c.name}">`:`<span>${ini(c.name)}</span>`}</div><div class="modal-report-name">${c.name}</div>${c.title?`<div class="modal-report-title">${c.title}</div>`:''}</div>`;
-  document.getElementById('modalReportsLeft').innerHTML=left.map(rc).join('');
-  document.getElementById('modalReportsRight').innerHTML=right.map(rc).join('');
+  document.getElementById('modalReportsBelow').innerHTML=kids.map(rc).join('');
   document.getElementById('modalOverlay').classList.add('show');
 }
 function closeModal(e){e.stopPropagation();document.getElementById('modalOverlay').classList.remove('show')}
