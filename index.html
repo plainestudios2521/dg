@@ -88,7 +88,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 
 .tree{display:flex;flex-direction:column;align-items:center}
 .tree ul{display:flex;justify-content:center;list-style:none;padding-top:28px;position:relative;gap:6px}
-.tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:28px}
+.tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:28px;z-index:1}
+.tree li:hover{z-index:10}
 .tree li::before,.tree li::after{content:'';position:absolute;top:0;width:50%;height:28px;border-top:2px solid var(--line)}
 .tree li::before{right:50%;border-right:2px solid var(--line)}
 .tree li::after{left:50%;border-left:2px solid var(--line)}
@@ -227,7 +228,7 @@ function fitToScreen(){
   if(!cr)return;
   const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
   const vw=v.clientWidth,vh=v.clientHeight;
-  zoom=Math.min(vw/cw,vh/ch,.9);
+  zoom=Math.min(vw/cw,vh/ch,1.1);
   panX=(vw-cw*zoom)/2;
   panY=20;
   applyTransform();
@@ -332,13 +333,13 @@ function rT(ns,lv){
 }
 
 let hvT={},aH=new Set();
-function hvIn(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e){e.classList.remove('hidden');e.classList.add('visible');aH.add(id)}},150)}
+function hvIn(id){if(pinned.has(id))return;hTip(id);clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e){e.classList.remove('hidden');e.classList.add('visible');aH.add(id)}},150)}
 function hvOut(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('visible');e.classList.add('hidden');aH.delete(id)}},350)}
 function pin(id){
   if(pinned.has(id)){pinned.delete(id);const up=n=>{n.forEach(c=>{pinned.delete(c.id);if(c.children)up(c.children)})};up(flat[id].children||[])}
   else pinned.add(id);renderTree();
 }
-function sTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
+function sTip(id){if(aH.has(id)||pinned.has(id))return;const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
 function hTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.remove('show')}
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
@@ -375,7 +376,7 @@ function setView(v){
   if(v==='tree')setTimeout(fitToScreen,50);
 }
 
-collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();
+collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();setView('tree');
 </script>
 </body>
 </html>
