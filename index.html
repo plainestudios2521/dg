@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream Greener — Organizational Chart</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-900:#1a3a1a;--green-800:#2d5a2d;--green-700:#3a7a3a;
+  --green-600:#4a9a4a;--green-500:#5cb85c;--green-400:#7dc87d;
+  --green-300:#a3d9a3;--green-200:#c8e8c8;--green-100:#e8f5e8;
+  --green-50:#f4faf4;--cream:#fdfcf9;
+  --shadow:rgba(26,58,26,.1);--shadow-lg:rgba(26,58,26,.18);
+  --text:#2a2a2a;--text-sec:#6a6a6a;--line:#c5dcc5;
+  --open-color:#b8860b;--open-bg:#fffaf0;--open-border:#e8c888;
+  --dept-bg:#eef6ee;--dept-border:#7dc87d;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);height:100vh;overflow:hidden}
+
+.header{background:linear-gradient(135deg,var(--green-900),var(--green-800),var(--green-700));padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:100;box-shadow:0 4px 24px var(--shadow-lg);flex-wrap:wrap;gap:8px}
+.header-left{display:flex;align-items:center;gap:14px}
+.logo-mark{width:38px;height:38px;background:var(--green-500);border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:white;box-shadow:0 2px 8px rgba(0,0,0,.2);flex-shrink:0}
+.header h1{font-family:'Playfair Display',serif;font-size:19px;font-weight:700;color:white}
+.header-sub{font-size:10px;color:var(--green-300);font-weight:500;letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.controls{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:white;padding:6px 13px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.25)}
+.view-toggle{display:flex;gap:2px;background:rgba(0,0,0,.2);border-radius:8px;padding:2px;margin-right:4px}
+.view-btn{background:none;border:none;color:rgba(255,255,255,.5);padding:5px 11px;border-radius:6px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s}
+.view-btn.active{background:rgba(255,255,255,.2);color:white}
+.hint{font-size:10px;color:rgba(255,255,255,.4);padding:0 6px;display:none}
+.hint.show{display:block}
+
+/* Zoom controls */
+.zoom-controls{position:fixed;bottom:20px;right:20px;display:none;flex-direction:column;gap:4px;z-index:90}
+.zoom-controls.show{display:flex}
+.zoom-btn{width:40px;height:40px;border-radius:10px;background:white;border:1.5px solid var(--green-200);box-shadow:0 2px 12px var(--shadow);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:var(--green-700);cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif}
+.zoom-btn:hover{background:var(--green-50);border-color:var(--green-400);transform:scale(1.05)}
+.zoom-level{text-align:center;font-size:10px;color:var(--text-sec);font-weight:600;padding:2px 0}
+
+/* LIST VIEW */
+.list-view{max-width:900px;margin:0 auto;padding:24px 16px 60px;display:none;overflow-y:auto;height:calc(100vh - 64px)}
+.list-view.active{display:block}
+.org-list{list-style:none}
+.org-item-inner{display:flex;align-items:center;gap:12px;padding:10px 14px;margin:3px 0;border-radius:12px;cursor:pointer;transition:all .15s;position:relative}
+.org-item-inner:hover{background:var(--green-50)}
+.org-item-inner::before{content:'';position:absolute;left:-12px;top:50%;width:12px;height:2px;background:var(--line)}
+.org-children{list-style:none;padding-left:36px;position:relative;overflow:hidden;max-height:5000px;transition:max-height .35s ease,opacity .25s ease;opacity:1}
+.org-children::before{content:'';position:absolute;left:24px;top:0;bottom:12px;width:2px;background:var(--line)}
+.org-children.collapsed{max-height:0!important;opacity:0;padding:0}
+.avatar{width:42px;height:42px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2.5px solid var(--green-200);background:var(--green-100);display:flex;align-items:center;justify-content:center}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar-initials{font-size:14px;font-weight:700;color:var(--green-600)}
+.person-info{flex:1;min-width:0}
+.person-name{font-weight:600;font-size:14px;color:var(--text);line-height:1.3}
+.person-title{font-size:12px;color:var(--text-sec);font-weight:500;line-height:1.3}
+.toggle-icon{flex-shrink:0;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--green-100);color:var(--green-700);font-size:14px;font-weight:700;transition:all .2s}
+.org-item-inner:hover .toggle-icon{background:var(--green-500);color:white;transform:scale(1.1)}
+.child-badge{font-size:10px;font-weight:700;color:white;background:var(--green-600);padding:1px 7px;border-radius:10px;margin-left:4px;flex-shrink:0}
+.level-0>.org-item-inner{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-radius:14px;padding:16px 20px;margin-bottom:8px}
+.level-0>.org-item-inner .avatar{width:52px;height:52px;border-color:var(--green-500)}
+.level-0>.org-item-inner .person-name{color:white;font-size:16px}
+.level-0>.org-item-inner .person-title{color:var(--green-300)}
+.level-0>.org-item-inner .toggle-icon{background:rgba(255,255,255,.15);color:var(--green-400)}
+.level-0>.org-item-inner::before{display:none}
+.level-1>.org-item-inner{background:white;border:1.5px solid var(--green-200);box-shadow:0 2px 8px var(--shadow);border-radius:12px;padding:12px 16px;margin-bottom:4px}
+.level-1>.org-item-inner .avatar{width:46px;height:46px;border-color:var(--green-400)}
+.level-1>.org-item-inner::before{display:none}
+.is-department>.org-item-inner{background:var(--dept-bg);border:2px dashed var(--dept-border);border-radius:10px;padding:8px 14px}
+.is-department .person-name{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--green-700)}
+.is-department .avatar{width:32px;height:32px;border-color:var(--dept-border);border-style:dashed}
+.is-department .avatar-initials{font-size:11px;color:var(--green-700)}
+.is-open>.org-item-inner{border:1.5px dashed var(--open-border);background:var(--open-bg)}
+.is-open .person-title{color:var(--open-color)}
+.is-crew>.org-item-inner{padding:6px 12px}
+.is-crew .avatar{width:32px;height:32px}
+.is-crew .person-name{font-size:12px}
+.is-crew .avatar-initials{font-size:10px}
+
+/* TREE VIEW — pannable viewport */
+.tree-view{display:none;width:100%;height:calc(100vh - 64px);overflow:hidden;position:relative;cursor:grab;background:var(--cream);background-image:radial-gradient(circle,var(--green-200) .5px,transparent .5px);background-size:24px 24px}
+.tree-view:active{cursor:grabbing}
+.tree-view.active{display:block}
+
+.tree-canvas{transform-origin:0 0;transition:transform .1s ease-out;position:absolute;padding:60px 80px}
+
+.tree{display:flex;flex-direction:column;align-items:center}
+.tree ul{display:flex;justify-content:center;list-style:none;padding-top:28px;position:relative;gap:6px}
+.tree li{display:flex;flex-direction:column;align-items:center;position:relative;padding-top:28px}
+.tree li::before,.tree li::after{content:'';position:absolute;top:0;width:50%;height:28px;border-top:2px solid var(--line)}
+.tree li::before{right:50%;border-right:2px solid var(--line)}
+.tree li::after{left:50%;border-left:2px solid var(--line)}
+.tree li:first-child::before,.tree li:last-child::after{border:0 none}
+.tree li:only-child::before,.tree li:only-child::after{border:0 none}
+.tree li:only-child{padding-top:0}
+.tree>ul>li{padding-top:0}
+.tree>ul>li::before,.tree>ul>li::after{border:0 none}
+.tree ul::before{content:'';position:absolute;top:0;left:50%;width:2px;height:28px;background:var(--line)}
+.tree>ul::before{display:none}
+.tree li:only-child>ul::before{height:56px}
+.tree li:only-child>ul{padding-top:56px}
+
+.tree .nc{background:white;border:1.5px solid var(--green-200);border-radius:14px;padding:12px 14px;min-width:130px;max-width:160px;text-align:center;box-shadow:0 2px 10px var(--shadow);cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);position:relative}
+.tree .nc:hover{box-shadow:0 8px 28px var(--shadow-lg);border-color:var(--green-400);transform:translateY(-3px)}
+.tree .t0 .nc{background:linear-gradient(135deg,var(--green-900),var(--green-800));border-color:var(--green-700);min-width:170px;max-width:200px;padding:16px 18px}
+.tree .t0 .tn{color:white;font-size:15px}
+.tree .t0 .tt{color:var(--green-300)}
+.tree .t1 .nc{background:linear-gradient(135deg,var(--green-50),white);border-color:var(--green-400);min-width:145px}
+.tree .td .nc{background:var(--dept-bg);border:2px dashed var(--dept-border);min-width:100px;padding:8px 10px}
+.tree .td .tn{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--green-700)}
+.tree .to .nc{background:var(--open-bg);border-color:var(--open-border);border-style:dashed}
+.tree .tc .nc{min-width:105px;max-width:135px;padding:9px 10px}
+.tree .tc .tn{font-size:11px}
+.tree .ta{width:42px;height:42px;border-radius:50%;margin:0 auto 7px;overflow:hidden;border:2.5px solid var(--green-300);background:var(--green-100);display:flex;align-items:center;justify-content:center;transition:all .3s}
+.tree .t0 .ta{width:52px;height:52px;border-color:var(--green-500)}
+.tree .nc:hover .ta{border-color:var(--green-500);transform:scale(1.05)}
+.tree .tc .ta{width:32px;height:32px}
+.tree .ta img{width:100%;height:100%;object-fit:cover}
+.tree .ta span{font-size:14px;font-weight:700;color:var(--green-600)}
+.tree .tc .ta span{font-size:10px}
+.tree .tn{font-weight:600;font-size:12.5px;color:var(--text);line-height:1.3;margin-bottom:2px}
+.tree .tt{font-size:10.5px;color:var(--text-sec);font-weight:500}
+
+.tree .tg{position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);height:22px;padding:0 8px;min-width:22px;background:var(--green-600);border:2.5px solid white;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:3px;font-size:10px;color:white;font-weight:700;box-shadow:0 2px 8px var(--shadow);z-index:5;transition:all .25s}
+.tree .nc:hover .tg{background:var(--green-800);transform:translateX(-50%) scale(1.08)}
+.tree .pinned .nc{border-color:var(--green-500);box-shadow:0 4px 16px rgba(92,184,92,.25)}
+.tree .pinned>.nc .tg{background:var(--green-800)}
+
+@keyframes pulseRing{0%{box-shadow:0 2px 10px var(--shadow),0 0 0 0 rgba(92,184,92,.3)}70%{box-shadow:0 2px 10px var(--shadow),0 0 0 10px rgba(92,184,92,0)}100%{box-shadow:0 2px 10px var(--shadow),0 0 0 0 rgba(92,184,92,0)}}
+.tree .has-kids.is-collapsed>.nc{animation:pulseRing 2.5s ease-out infinite}
+.tree .has-kids.is-collapsed>.nc:hover{animation:none}
+
+.tree .child-wrap{overflow:hidden;transition:all .4s cubic-bezier(.4,0,.2,1)}
+.tree .child-wrap.hidden{max-height:0;opacity:0;pointer-events:none}
+.tree .child-wrap.visible{max-height:2000px;opacity:1;pointer-events:auto}
+.tree .child-wrap.visible>li{animation:childIn .35s cubic-bezier(.4,0,.2,1) both}
+@keyframes childIn{from{opacity:0;transform:translateY(-14px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+.tree .child-wrap.visible>li:nth-child(1){animation-delay:.04s}
+.tree .child-wrap.visible>li:nth-child(2){animation-delay:.08s}
+.tree .child-wrap.visible>li:nth-child(3){animation-delay:.12s}
+.tree .child-wrap.visible>li:nth-child(4){animation-delay:.16s}
+.tree .child-wrap.visible>li:nth-child(5){animation-delay:.2s}
+
+.contact-tip{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(6px);margin-top:16px;z-index:50;background:white;border:1px solid var(--green-200);border-radius:12px;padding:14px 18px;min-width:230px;box-shadow:0 12px 36px rgba(0,0,0,.14);opacity:0;pointer-events:none;transition:all .25s cubic-bezier(.4,0,.2,1);text-align:left}
+.contact-tip.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.contact-tip::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:white;border-left:1px solid var(--green-200);border-top:1px solid var(--green-200)}
+.ct-name{font-weight:700;font-size:14px;color:var(--text);margin-bottom:2px}
+.ct-title{font-size:11.5px;color:var(--text-sec);margin-bottom:10px;font-weight:500}
+.ct-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text);margin-bottom:6px}
+.ct-row:last-child{margin-bottom:0}
+.ct-icon{width:24px;height:24px;border-radius:6px;background:var(--green-50);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.ct-row a{color:var(--green-800);text-decoration:none;font-weight:500}
+.ct-row a:hover{text-decoration:underline;color:var(--green-600)}
+.ct-reports{margin-top:8px;padding-top:8px;border-top:1px solid var(--green-100);font-size:11px;color:var(--text-sec)}
+.ct-reports strong{color:var(--text);font-weight:600}
+
+@media(max-width:640px){.header{padding:12px 10px}.header h1{font-size:16px}.btn{padding:5px 9px;font-size:10px}.list-view{padding:16px 8px 40px}.org-children{padding-left:24px}.org-children::before{left:16px}.person-name{font-size:13px}.avatar{width:36px;height:36px}.hint{display:none!important}}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-left">
+    <div class="logo-mark">DG</div>
+    <div><h1>Dream Greener</h1><div class="header-sub">Organizational Chart</div></div>
+  </div>
+  <div class="controls">
+    <div class="view-toggle">
+      <button class="view-btn active" onclick="setView('list')" id="listBtn">List</button>
+      <button class="view-btn" onclick="setView('tree')" id="treeBtn">Tree</button>
+    </div>
+    <button class="btn" onclick="expandAll()">Expand All</button>
+    <button class="btn" onclick="collapseAll()">Collapse All</button>
+    <button class="btn" onclick="collapseCrews()">Hide Crews</button>
+    <button class="btn" id="fitBtn" style="display:none" onclick="fitToScreen()">Fit to Screen</button>
+    <span class="hint" id="hintText">Hover to peek · Click to pin · Scroll to zoom · Drag to pan</span>
+  </div>
+</div>
+
+<div class="list-view active" id="listView"></div>
+<div class="tree-view" id="treeView">
+  <div class="tree-canvas" id="treeCanvas"></div>
+</div>
+<div class="zoom-controls" id="zoomControls">
+  <button class="zoom-btn" onclick="zoomIn()">+</button>
+  <div class="zoom-level" id="zoomLevel">100%</div>
+  <button class="zoom-btn" onclick="zoomOut()">−</button>
+  <button class="zoom-btn" onclick="fitToScreen()" style="font-size:13px" title="Fit to screen">⊞</button>
+</div>
+
+<script>
+const D=[{"id":"14204","name":"Jon Stanton","title":"Founder & President","email":"jon.stanton@dreamgreener.com","mobile":"412-337-2207","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2026/01/jon-2.jpg","children":[{"id":"14217","name":"Open","title":"Operations Manager","email":"","mobile":"","phone":"","image":null,"children":[{"id":"14230","name":"Tyler Charlton","title":"Maintenance Manager","email":"","mobile":"","phone":"","image":null,"children":[{"id":"14295","name":"Mowing","title":"","email":"","mobile":"","phone":"","image":null,"children":[{"id":"14277","name":"Mowing Crew 1 - Eduardo","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14280","name":"Mowing Crew 2 - Cesar","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14281","name":"Mowing Crew 3 - Open","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14282","name":"Mowing Crew 4 - Open","title":"","email":"","mobile":"","phone":"","image":null,"children":[]}]},{"id":"14296","name":"Maintenance","title":"","email":"","mobile":"","phone":"","image":null,"children":[{"id":"14283","name":"Maintenance Crew 1","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14284","name":"Maintenance Crew 2","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14285","name":"Maintenance Crew 3","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14286","name":"Maintenance Crew 4","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14287","name":"Maintenance Crew 5","title":"","email":"","mobile":"","phone":"","image":null,"children":[]}]},{"id":"14297","name":"Snow","title":"","email":"","mobile":"","phone":"","image":null,"children":[{"id":"14288","name":"Commercial Snow 1 - Brayan","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14289","name":"Commercial Snow 2 - Homer","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14290","name":"Residential Snow 1 - Eduardo","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14291","name":"Residential Snow 2 - Nestor","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14292","name":"Residential Snow 3 - Cesar","title":"","email":"","mobile":"","phone":"","image":null,"children":[]}]}]},{"id":"14235","name":"Ruth Barahona","title":"Production & Materials Coordinator","email":"ruth.barahona@dreamgreener.com","mobile":"412.370.5093","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2024/12/Ruth-B.jpg","children":[]},{"id":"14293","name":"Construction 1 - Nestor","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14294","name":"Construction Crew - Open","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14232","name":"Homer Briggs","title":"Mechanic","email":"","mobile":"304.218.4182","phone":"412.835.1035","image":null,"children":[]}]},{"id":"14215","name":"Luz Quintanar","title":"Vice President / Chief Financial Officer","email":"luz.quintanar@dreamgreener.com","mobile":"","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2026/01/Luz-2025.jpg","children":[{"id":"14216","name":"Paula Padron","title":"Office Support Specialist","email":"Paula.Padron@dreamgreener.com","mobile":"","phone":"412.835.1035","image":null,"children":[]}]},{"id":"14205","name":"Brian Baur","title":"Vice President of Sales & Customer Care","email":"brian.baur@dreamgreener.com","mobile":"412.999.6462","phone":"412.835.1035","image":"https://dreamgreener.com/wp-content/uploads/2026/01/P1190886-Edit.jpg","children":[{"id":"14233","name":"Erik McDowell","title":"Maintenance Account Manager","email":"erik.mcdowell@dreamgreener.com","mobile":"412.403.8360","phone":"412.835.1035","image":"https://dreamgreener.com/wp-content/uploads/2025/02/erik.webp","children":[]},{"id":"14234","name":"Gary Wesolowksi","title":"Customer Care Representative","email":"gary.wesolowski@dreamgreener.com","mobile":"","phone":"412.835.1035","image":"https://dreamgreener.com/wp-content/uploads/2025/02/Gary.webp","children":[]},{"id":"14236","name":"Vic Hribar","title":"Landscape Designer","email":"Vic.hribar@dreamgreener.com","mobile":"412.491.5322","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2026/01/Vic.jpg","children":[]},{"id":"14244","name":"Open","title":"Customer Care Assistant","email":"","mobile":"","phone":"","image":null,"children":[]}]},{"id":"14229","name":"Sherry Presutti","title":"Lawn & Plant Health Manager","email":"sherry.presutti@dreamgreener.com","mobile":"","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2026/01/P1190787-Edit.jpg","children":[{"id":"14298","name":"Lawn Specialist 1 - Ed","title":"","email":"","mobile":"","phone":"","image":"https://dreamgreener.com/wp-content/uploads/2024/08/Ed.jpg","children":[]},{"id":"14299","name":"Lawn Specialist 2 - Open","title":"","email":"","mobile":"","phone":"","image":null,"children":[]},{"id":"14300","name":"Plant & Pest 1 - Jake","title":"","email":"","mobile":"","phone":"","image":null,"children":[]}]}]}];
+
+const DN=['Mowing','Maintenance','Snow'],pinned=new Set(),collapsed=new Set();
+const isD=n=>DN.includes(n.name);
+const isC=n=>!isD(n)&&(n.name.includes('Crew')||(n.name.includes('Snow')&&n.name.includes('-'))||n.name.includes('Specialist')||n.name.includes('Pest')||n.name.includes('Construction'));
+const isO=n=>n.name==='Open'||n.name.includes('- Open');
+const hI=n=>n.image&&n.image!=='NULL';
+const ini=name=>{if(DN.includes(name))return name[0];return name.split(/[\s-]+/).filter(w=>w!=='Open'&&w.length>1).slice(0,2).map(w=>w[0]).join('')||'?'};
+const cnt=n=>{let c=0;if(n.children){c+=n.children.length;n.children.forEach(x=>c+=cnt(x))}return c};
+const hCo=n=>n.email||n.mobile||n.phone;
+const av=n=>hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span class=\\'avatar-initials\\'>${ini(n.name)}</span>'">`:`<span class="avatar-initials">${ini(n.name)}</span>`;
+const parentMap={},flat={};
+function bp(ns,p){ns.forEach(n=>{if(p)parentMap[n.id]=p;if(n.children)bp(n.children,n)})}
+function bf(ns){ns.forEach(n=>{flat[n.id]=n;if(n.children)bf(n.children)})}
+bp(D,null);bf(D);
+
+/* ===== PAN & ZOOM ===== */
+let zoom=1,panX=0,panY=0,isDragging=false,dragStartX,dragStartY,dragPanX,dragPanY;
+const canvas=()=>document.getElementById('treeCanvas');
+const viewport=()=>document.getElementById('treeView');
+
+function applyTransform(){
+  const c=canvas();
+  if(c)c.style.transform=`translate(${panX}px,${panY}px) scale(${zoom})`;
+  document.getElementById('zoomLevel').textContent=Math.round(zoom*100)+'%';
+}
+
+function zoomIn(){zoom=Math.min(zoom*1.2,2);applyTransform()}
+function zoomOut(){zoom=Math.max(zoom/1.2,.2);applyTransform()}
+
+function fitToScreen(){
+  const c=canvas(),v=viewport();
+  if(!c||!v)return;
+  const cr=c.children[0];
+  if(!cr)return;
+  const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
+  const vw=v.clientWidth,vh=v.clientHeight;
+  zoom=Math.min(vw/cw,vh/ch,.9);
+  panX=(vw-cw*zoom)/2;
+  panY=20;
+  applyTransform();
+}
+
+// Mouse pan
+document.addEventListener('mousedown',e=>{
+  const v=viewport();
+  if(!v||!v.classList.contains('active'))return;
+  if(e.target.closest('.nc,.tg,.contact-tip,.zoom-controls'))return;
+  isDragging=true;dragStartX=e.clientX;dragStartY=e.clientY;dragPanX=panX;dragPanY=panY;
+  e.preventDefault();
+});
+document.addEventListener('mousemove',e=>{
+  if(!isDragging)return;
+  panX=dragPanX+(e.clientX-dragStartX);
+  panY=dragPanY+(e.clientY-dragStartY);
+  applyTransform();
+});
+document.addEventListener('mouseup',()=>{isDragging=false});
+
+// Scroll zoom
+document.addEventListener('wheel',e=>{
+  const v=viewport();
+  if(!v||!v.classList.contains('active'))return;
+  if(!v.contains(e.target))return;
+  e.preventDefault();
+  const rect=v.getBoundingClientRect();
+  const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+  const oldZoom=zoom;
+  const delta=e.deltaY>0?0.9:1.1;
+  zoom=Math.max(.2,Math.min(2,zoom*delta));
+  panX=mx-(mx-panX)*(zoom/oldZoom);
+  panY=my-(my-panY)*(zoom/oldZoom);
+  applyTransform();
+},{passive:false});
+
+// Touch pan/pinch
+let touches=[],lastTouchDist=0;
+document.addEventListener('touchstart',e=>{
+  const v=viewport();if(!v||!v.classList.contains('active')||!v.contains(e.target))return;
+  touches=Array.from(e.touches);
+  if(touches.length===1){isDragging=true;dragStartX=touches[0].clientX;dragStartY=touches[0].clientY;dragPanX=panX;dragPanY=panY}
+  if(touches.length===2){lastTouchDist=Math.hypot(touches[1].clientX-touches[0].clientX,touches[1].clientY-touches[0].clientY)}
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+  const v=viewport();if(!v||!v.classList.contains('active'))return;
+  const t=Array.from(e.touches);
+  if(t.length===1&&isDragging){panX=dragPanX+(t[0].clientX-dragStartX);panY=dragPanY+(t[0].clientY-dragStartY);applyTransform()}
+  if(t.length===2){const d=Math.hypot(t[1].clientX-t[0].clientX,t[1].clientY-t[0].clientY);if(lastTouchDist){const s=d/lastTouchDist;zoom=Math.max(.2,Math.min(2,zoom*s));applyTransform()}lastTouchDist=d}
+},{passive:true});
+document.addEventListener('touchend',()=>{isDragging=false;lastTouchDist=0});
+
+/* ===== LIST VIEW ===== */
+function rL(ns,lv){
+  let h='';ns.forEach(n=>{
+    const hk=n.children&&n.children.length>0,co=collapsed.has(n.id),dc=cnt(n);
+    let cl=['org-item',`level-${lv}`];
+    if(isD(n))cl.push('is-department');if(isC(n))cl.push('is-crew');if(isO(n))cl.push('is-open');
+    h+=`<li class="${cl.join(' ')}"><div class="org-item-inner" onclick="tgList('${n.id}')">`;
+    h+=`<div class="avatar">${av(n)}</div><div class="person-info"><div class="person-name">${n.name}</div>`;
+    if(n.title)h+=`<div class="person-title">${n.title}</div>`;
+    h+=`</div>`;if(hk&&co)h+=`<span class="child-badge">${dc}</span>`;
+    if(hk)h+=`<div class="toggle-icon">${co?'+':'−'}</div>`;
+    h+=`</div>`;if(hk){h+=`<ul class="org-children${co?' collapsed':''}">${rL(n.children,lv+1)}</ul>`}h+=`</li>`;
+  });return h;
+}
+
+/* ===== TREE VIEW ===== */
+function ctip(n){
+  const par=parentMap[n.id];let h=`<div class="contact-tip" id="tip-${n.id}">`;
+  h+=`<div class="ct-name">${n.name}</div>`;
+  if(n.title)h+=`<div class="ct-title">${n.title}</div>`;
+  if(n.email)h+=`<div class="ct-row"><div class="ct-icon">✉</div><a href="mailto:${n.email}">${n.email}</a></div>`;
+  if(n.mobile)h+=`<div class="ct-row"><div class="ct-icon">📱</div><a href="tel:${n.mobile.replace(/[^\d+]/g,'')}">${n.mobile}</a></div>`;
+  if(n.phone)h+=`<div class="ct-row"><div class="ct-icon">☎</div><a href="tel:${n.phone.replace(/[^\d+]/g,'')}">${n.phone}</a></div>`;
+  if(par)h+=`<div class="ct-reports">Reports to <strong>${par.name}</strong></div>`;
+  return h+`</div>`;
+}
+
+function rT(ns,lv){
+  let h='';ns.forEach(n=>{
+    const hk=n.children&&n.children.length>0,ip=pinned.has(n.id),dc=cnt(n),st=hCo(n)||n.title;
+    let cl=[`t${lv}`];
+    if(isD(n))cl.push('td');if(isC(n))cl.push('tc');if(isO(n))cl.push('to');
+    if(hk)cl.push('has-kids');if(hk&&!ip)cl.push('is-collapsed');if(ip)cl.push('pinned');
+    h+=`<li><div class="${cl.join(' ')}" data-id="${n.id}"`;
+    if(hk)h+=` onmouseenter="hvIn('${n.id}')" onmouseleave="hvOut('${n.id}')" onclick="pin('${n.id}')"`;
+    if(!hk&&st&&!isD(n))h+=` onmouseenter="sTip('${n.id}')" onmouseleave="hTip('${n.id}')"`;
+    h+=`><div class="nc"`;
+    if(hk&&st&&!isD(n))h+=` onmouseenter="sTip('${n.id}')" onmouseleave="hTip('${n.id}')"`;
+    h+=`>`;
+    if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${n.image}" alt="${n.name}" onerror="this.parentElement.innerHTML='<span>${ini(n.name)}</span>'">`:`<span>${ini(n.name)}</span>`}</div>`;
+    h+=`<div class="tn">${n.name}</div>`;
+    if(n.title)h+=`<div class="tt">${n.title}</div>`;
+    if(hk)h+=`<div class="tg">${ip?'−':dc}</div>`;
+    if(st&&!isD(n))h+=ctip(n);
+    h+=`</div></div>`;
+    if(hk)h+=`<ul class="child-wrap ${ip?'visible':'hidden'}" id="cw-${n.id}">${rT(n.children,lv+1)}</ul>`;
+    h+=`</li>`;
+  });return h;
+}
+
+let hvT={},aH=new Set();
+function hvIn(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e){e.classList.remove('hidden');e.classList.add('visible');aH.add(id)}},150)}
+function hvOut(id){if(pinned.has(id))return;clearTimeout(hvT[id]);hvT[id]=setTimeout(()=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('visible');e.classList.add('hidden');aH.delete(id)}},350)}
+function pin(id){
+  if(pinned.has(id)){pinned.delete(id);const up=n=>{n.forEach(c=>{pinned.delete(c.id);if(c.children)up(c.children)})};up(flat[id].children||[])}
+  else pinned.add(id);renderTree();
+}
+function sTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.add('show')}
+function hTip(id){const e=document.getElementById('tip-'+id);if(e)e.classList.remove('show')}
+
+function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
+function renderTree(){
+  document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
+  aH.forEach(id=>{const e=document.getElementById('cw-'+id);if(e&&!pinned.has(id)){e.classList.remove('hidden');e.classList.add('visible')}});
+}
+function render(){renderList();renderTree()}
+function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
+
+function expandAll(){
+  if(document.getElementById('treeView').classList.contains('active')){
+    const pa=n=>{n.forEach(x=>{if(x.children&&x.children.length){pinned.add(x.id);pa(x.children)}})};pa(D);renderTree();setTimeout(fitToScreen,100);
+  }else{collapsed.clear();renderList()}
+}
+function collapseAll(){
+  if(document.getElementById('treeView').classList.contains('active')){pinned.clear();aH.clear();renderTree();setTimeout(fitToScreen,100)}
+  else{const a=n=>{n.forEach(x=>{if(x.children&&x.children.length){collapsed.add(x.id);a(x.children)}})};a(D);collapsed.delete(D[0].id);renderList()}
+}
+function collapseCrews(){
+  if(document.getElementById('treeView').classList.contains('active')){
+    pinned.clear();aH.clear();
+    const pt=(ns,l)=>{ns.forEach(n=>{if(n.children&&n.children.length&&!isD(n)&&l<3){pinned.add(n.id);pt(n.children,l+1)}})};pt(D,0);renderTree();setTimeout(fitToScreen,100);
+  }else{collapsed.clear();const f=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)f(x.children)})};f(D);renderList()}
+}
+function setView(v){
+  document.getElementById('listView').classList.toggle('active',v==='list');
+  document.getElementById('treeView').classList.toggle('active',v==='tree');
+  document.getElementById('listBtn').classList.toggle('active',v==='list');
+  document.getElementById('treeBtn').classList.toggle('active',v==='tree');
+  document.getElementById('hintText').classList.toggle('show',v==='tree');
+  document.getElementById('zoomControls').classList.toggle('show',v==='tree');
+  document.getElementById('fitBtn').style.display=v==='tree'?'inline-block':'none';
+  if(v==='tree')setTimeout(fitToScreen,50);
+}
+
+collapsed.clear();const fI=n=>{n.forEach(x=>{if(isD(x))collapsed.add(x.id);if(x.children)fI(x.children)})};fI(D);render();
+</script>
+</body>
+</html>
