@@ -488,12 +488,12 @@ function renderSpineTree(nodes){
 
 function drawSpineLines(){
   const el=document.getElementById('spineLayout');
-  if(!el)return;
-  const old=el.querySelector('.spine-lines-svg');
+  const cv=document.getElementById('treeCanvas');
+  if(!el||!cv)return;
+  const old=cv.querySelector('.spine-lines-svg');
   if(old)old.remove();
-  // Use el's own offset as reference origin
-  const eR=el.getBoundingClientRect();
-  const ox=eR.left,oy=eR.top;
+  const cvR=cv.getBoundingClientRect();
+  const ox=cvR.left,oy=cvR.top;
   const jon=el.querySelector('[data-tier="jon"] .nc');
   const reports=el.querySelector('[data-tier="reports"]');
   if(!jon||!reports)return;
@@ -513,12 +513,10 @@ function drawSpineLines(){
     if(cx<jxMid)leftCols.push(nc);
     else rightCols.push(nc);
   });
-  // Brian: diagonal from Jon's left corner to top of card
   leftCols.forEach(nc=>{
     const cR=nc.getBoundingClientRect();
     lines+=`<line x1="${jxL}" y1="${jy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
   });
-  // Right side: diagonal Jon → Ruth, then horizontal Ruth → Sherry
   if(rightCols.length>=1){
     const rR=rightCols[0].getBoundingClientRect();
     const rx=rR.left+rR.width/2-ox, ry=rR.top-oy;
@@ -529,17 +527,17 @@ function drawSpineLines(){
       lines+=`<line x1="${pR.left+pR.width/2-ox}" y1="${pR.top-oy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
     }
   }
-  // Size SVG to cover all content
-  const allRects=[jR,...leftCols.map(n=>n.getBoundingClientRect()),...rightCols.map(n=>n.getBoundingClientRect())];
-  let maxX=0,maxY=0;
-  allRects.forEach(r=>{maxX=Math.max(maxX,r.right-ox);maxY=Math.max(maxY,r.bottom-oy)});
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.classList.add('spine-lines-svg');
-  svg.setAttribute('width',maxX+20);
-  svg.setAttribute('height',maxY+20);
+  svg.style.position='absolute';
+  svg.style.top='0';
+  svg.style.left='0';
+  svg.style.width='100%';
+  svg.style.height='100%';
   svg.style.overflow='visible';
+  svg.style.pointerEvents='none';
   svg.innerHTML=lines;
-  el.appendChild(svg);
+  cv.appendChild(svg);
 }
 
 function renderTree(){
