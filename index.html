@@ -495,19 +495,51 @@ function drawSpineLines(){
   const jon=el.querySelector('[data-tier="jon"] .nc');
   const reports=el.querySelector('[data-tier="reports"]');
   if(!jon||!reports)return;
-  const cards=reports.querySelectorAll(':scope > .spine-col > div > .nc');
+  const cols=reports.querySelectorAll(':scope > .spine-col');
   const jR=jon.getBoundingClientRect();
   const jxL=jR.left-rect.left;
   const jxR=jR.right-rect.left;
   const jy=jR.bottom-rect.top;
+  const jxMid=jR.left+jR.width/2-rect.left;
   let lines='';
-  cards.forEach(c=>{
-    const cR=c.getBoundingClientRect();
+  // Separate left (Brian) and right (Ruth, Sherry) columns
+  const leftCols=[],rightCols=[];
+  cols.forEach(col=>{
+    const nc=col.querySelector('.nc');
+    if(!nc)return;
+    const cR=nc.getBoundingClientRect();
+    const cx=cR.left+cR.width/2-rect.left;
+    if(cx<jxMid)leftCols.push(nc);
+    else rightCols.push(nc);
+  });
+  // Brian: diagonal from Jon's left corner
+  leftCols.forEach(nc=>{
+    const cR=nc.getBoundingClientRect();
     const cx=cR.left+cR.width/2-rect.left;
     const cy=cR.top-rect.top;
-    const jx=cx<jR.left+jR.width/2-rect.left?jxL:jxR;
-    lines+=`<line x1="${jx}" y1="${jy}" x2="${cx}" y2="${cy}"/>`;
+    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cx}" y2="${cy}"/>`;
   });
+  // Right side: diagonal from Jon's right corner to Ruth, then horizontal to Sherry
+  if(rightCols.length>=1){
+    const ruthNc=rightCols[0];
+    const rR=ruthNc.getBoundingClientRect();
+    const rx=rR.left+rR.width/2-rect.left;
+    const ry=rR.top-rect.top;
+    // Diagonal: Jon corner → Ruth
+    lines+=`<line x1="${jxR}" y1="${jy}" x2="${rx}" y2="${ry}"/>`;
+    // Horizontal: Ruth → each subsequent card (Sherry)
+    for(let i=1;i<rightCols.length;i++){
+      const nc=rightCols[i];
+      const cR=nc.getBoundingClientRect();
+      const cx=cR.left+cR.width/2-rect.left;
+      const cy=cR.top-rect.top;
+      const prevNc=rightCols[i-1];
+      const pR=prevNc.getBoundingClientRect();
+      const px=pR.left+pR.width/2-rect.left;
+      const py=pR.top-rect.top;
+      lines+=`<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}"/>`;
+    }
+  }
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.classList.add('spine-lines-svg');
   svg.setAttribute('width',rect.width);
