@@ -760,7 +760,7 @@ function renderEditForm() {
       <input type="text" id="fName" value="${escHtml(n.name)}">
     </div>
     <div class="form-group">
-      <label for="fTitle">Title</label>
+      <label for="fTitle">Job Title</label>
       <input type="text" id="fTitle" value="${escHtml(n.title || '')}">
     </div>
     <div class="form-group">
