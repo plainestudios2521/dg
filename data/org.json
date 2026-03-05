@@ -17,8 +17,6 @@
           "mobile": "",
           "phone": "",
           "image": null,
-          "branch": "right",
-          "branchOrder": 4,
           "children": [
             {
               "id": "14230",
@@ -260,6 +258,70 @@
               ]
             },
             {
+              "id": "14235",
+              "name": "Ruth Barahona",
+              "title": "Production & Materials Coordinator",
+              "email": "ruth.barahona@dreamgreener.com",
+              "mobile": "412.370.5093",
+              "phone": "",
+              "image": "data/uploads/Ruth-B.jpg",
+              "children": [],
+              "duties": [
+                {
+                  "h": "Production Meetings",
+                  "d": "Communicate with the Operations Manager to outline pre-production schedules and material needs for specific maintenance contracts and construction projects."
+                },
+                {
+                  "h": "Scheduling",
+                  "d": "Route and dispatch construction, maintenance and snow service tickets and work orders. Coordinate calls and texts to the construction and maintenance teams regarding start times, weather-related delays, and return-to-branch notifications."
+                },
+                {
+                  "h": "Purchase Receipts",
+                  "d": "Manage field production-related purchase receipts (P.O.’s) and assist the CFO with monthly close-out processes."
+                },
+                {
+                  "h": "Production Close-Out",
+                  "d": "Work with the Managers and CFO to close out Aspire monthly."
+                },
+                {
+                  "h": "Garage Monitors",
+                  "d": "Daily update of Dak Board to include fleet, equipment, and crew assignments."
+                },
+                {
+                  "h": "Construction Support",
+                  "d": "Assist the design and sales team with material ordering, shipping, and logistics."
+                },
+                {
+                  "h": "Trucks and Equipment",
+                  "d": "Assist with the assignment of trucks, equipment, and assets."
+                },
+                {
+                  "h": "Nursery and Bulk Materials",
+                  "d": "Oversee the management and care of nursery stock and bulk material bins, ensuring cleanliness, stock oversight, pruning, and irrigation. Additionally, responsible for ordering bulk products (such as mulch, soil, and river rock) and coordinating dumpster change-outs as needed."
+                },
+                {
+                  "h": "Crew GPS Tracking",
+                  "d": "Monitor trucks to ensure they maintain safe driving standards and are not making unnecessary stops."
+                },
+                {
+                  "h": "Employee Onboarding",
+                  "d": "Assist with the hiring process, including processing paperwork, providing onboarding packages (uniforms, key fobs, locker labels, timecards, manager and crew introductions)."
+                },
+                {
+                  "h": "Translation",
+                  "d": "Help facilitate communication between team members when needed."
+                },
+                {
+                  "h": "Truck Registration and Insurance",
+                  "d": "Ensure all trucks and trailers have updated registration and insurance cards."
+                },
+                {
+                  "h": "Drivers’ Licenses and DOT Card Oversight",
+                  "d": "Ensure all employees’ driver’s licenses and DOT cards are current and compliant."
+                }
+              ]
+            },
+            {
               "id": "14293",
               "name": "Construction 1 - Nestor",
               "title": "",
@@ -393,8 +455,6 @@
           "mobile": "",
           "phone": "",
           "image": "data/uploads/Luz-2025.jpg",
-          "staff": true,
-          "spine": true,
           "children": [
             {
               "id": "14216",
@@ -404,8 +464,6 @@
               "mobile": "",
               "phone": "412.835.1035",
               "image": null,
-              "branch": "right",
-              "branchOrder": 3,
               "children": [],
               "duties": [
                 {
@@ -519,73 +577,6 @@
           ]
         },
         {
-          "id": "14235",
-          "name": "Ruth Barahona",
-          "title": "Production & Materials Coordinator",
-          "email": "ruth.barahona@dreamgreener.com",
-          "mobile": "412.370.5093",
-          "phone": "",
-          "image": "data/uploads/Ruth-B.jpg",
-          "staff": true,
-          "branch": "right",
-          "branchOrder": 1,
-          "children": [],
-          "duties": [
-            {
-              "h": "Production Meetings",
-              "d": "Communicate with the Operations Manager to outline pre-production schedules and material needs for specific maintenance contracts and construction projects."
-            },
-            {
-              "h": "Scheduling",
-              "d": "Route and dispatch construction, maintenance and snow service tickets and work orders. Coordinate calls and texts to the construction and maintenance teams regarding start times, weather-related delays, and return-to-branch notifications."
-            },
-            {
-              "h": "Purchase Receipts",
-              "d": "Manage field production-related purchase receipts (P.O.'s) and assist the CFO with monthly close-out processes."
-            },
-            {
-              "h": "Production Close-Out",
-              "d": "Work with the Managers and CFO to close out Aspire monthly."
-            },
-            {
-              "h": "Garage Monitors",
-              "d": "Daily update of Dak Board to include fleet, equipment, and crew assignments."
-            },
-            {
-              "h": "Construction Support",
-              "d": "Assist the design and sales team with material ordering, shipping, and logistics."
-            },
-            {
-              "h": "Trucks and Equipment",
-              "d": "Assist with the assignment of trucks, equipment, and assets."
-            },
-            {
-              "h": "Nursery and Bulk Materials",
-              "d": "Oversee the management and care of nursery stock and bulk material bins, ensuring cleanliness, stock oversight, pruning, and irrigation. Additionally, responsible for ordering bulk products (such as mulch, soil, and river rock) and coordinating dumpster change-outs as needed."
-            },
-            {
-              "h": "Crew GPS Tracking",
-              "d": "Monitor trucks to ensure they maintain safe driving standards and are not making unnecessary stops."
-            },
-            {
-              "h": "Employee Onboarding",
-              "d": "Assist with the hiring process, including processing paperwork, providing onboarding packages (uniforms, key fobs, locker labels, timecards, manager and crew introductions)."
-            },
-            {
-              "h": "Translation",
-              "d": "Help facilitate communication between team members when needed."
-            },
-            {
-              "h": "Truck Registration and Insurance",
-              "d": "Ensure all trucks and trailers have updated registration and insurance cards."
-            },
-            {
-              "h": "Drivers' Licenses and DOT Card Oversight",
-              "d": "Ensure all employees' driver's licenses and DOT cards are current and compliant."
-            }
-          ]
-        },
-        {
           "id": "14205",
           "name": "Brian Baur",
           "title": "Vice President of Sales & Customer Care",
@@ -593,7 +584,6 @@
           "mobile": "412.999.6462",
           "phone": "412.835.1035",
           "image": "data/uploads/P1190886-Edit.jpg",
-          "branch": "left",
           "children": [
             {
               "id": "14233",
@@ -842,8 +832,6 @@
           "mobile": "",
           "phone": "",
           "image": "data/uploads/P1190787-Edit.jpg",
-          "branch": "right",
-          "branchOrder": 2,
           "children": [
             {
               "id": "14298",

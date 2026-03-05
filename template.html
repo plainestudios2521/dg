@@ -132,13 +132,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree .tn{font-weight:600;font-size:14.5px;color:var(--text);line-height:1.3;margin:10px 12px 0}
 .tree .tt{font-size:12.5px;color:var(--text-sec);font-weight:500;margin:3px 12px 0}
 
-/* Spine layout */
-.spine{display:flex;flex-direction:column;align-items:center}
-.spine-line{width:2px;height:28px;background:var(--line)}
-.spine-stack{display:flex;flex-direction:column;align-items:center}
-.spine-stack-item{display:flex;flex-direction:column;align-items:center;position:relative}
-.spine-stack-item+.spine-stack-item{padding-top:28px}
-.spine-stack-item+.spine-stack-item::before{content:'';position:absolute;top:0;left:50%;width:2px;height:28px;background:var(--line);transform:translateX(-1px)}
 
 /* DETAIL MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
@@ -412,96 +405,8 @@ function closeModal(e){if(e)e.stopPropagation();document.getElementById('modalOv
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
-
-/* Render a node card (no <li> wrapper) */
-function rC(n,lv){
-  const eid=esc(n.id),st=hCo(n)||n.title;
-  let cl=[`t${lv}`];
-  if(isD(n))cl.push('td');if(isC(n))cl.push('tc');
-  let h=`<div class="${cl.join(' ')}" data-id="${eid}"><div class="nc"`;
-  if(st&&!isD(n))h+=` onclick="openModal(event,'${eid}')"`;
-  h+=`>`;
-  if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}" onerror="this.parentElement.innerHTML='<span>${esc(ini(n.name))}</span>'">`:`<span>${esc(ini(n.name))}</span>`}</div>`;
-  h+=`<div class="tn">${esc(n.name)}</div>`;
-  if(n.title)h+=`<div class="tt">${esc(n.title)}</div>`;
-  h+=`</div></div>`;
-  return h;
-}
-
-/* Spine tree layout */
-function renderSpineTree(nodes){
-  const root=nodes[0];if(!root)return'';
-  const kids=(root.children||[]).filter(n=>!n.hidden);
-  const spineKid=kids.find(c=>c.spine);
-  if(!spineKid)return `<div class="tree"><ul>${rT(nodes,0)}</ul></div>`;
-
-  // Collect branch nodes from root's children + spine kid's children
-  let leftKids=[],rightKids=[],normalKids=[];
-  kids.forEach(c=>{
-    if(c.spine)return;
-    if(c.branch==='left')leftKids.push(c);
-    else if(c.branch==='right')rightKids.push(c);
-    else normalKids.push(c);
-  });
-  // Check spine kid's children for branch-tagged nodes (displaced)
-  const spineChildNormal=[];
-  (spineKid.children||[]).forEach(c=>{
-    if(c.branch==='left')leftKids.push(c);
-    else if(c.branch==='right')rightKids.push(c);
-    else spineChildNormal.push(c);
-  });
-  rightKids.sort((a,b)=>(a.branchOrder||99)-(b.branchOrder||99));
-
-  let h='<div class="tree"><div class="spine">';
-  // Root card
-  h+=rC(root,0);
-  h+='<div class="spine-line"></div>';
-  // Spine card
-  h+=rC(spineKid,1);
-
-  // Build the <ul> with left and right <li>s
-  h+='<ul>';
-
-  // Left branch
-  if(leftKids.length){
-    h+='<li>';
-    leftKids.forEach(lk=>{
-      h+=rC(lk,1);
-      const lkKids=(lk.children||[]).filter(n=>!n.hidden);
-      if(lkKids.length)h+=`<ul>${rT(lkKids,2)}</ul>`;
-    });
-    h+='</li>';
-  }
-
-  // Right branch — spine stack
-  if(rightKids.length){
-    h+='<li><div class="spine-stack">';
-    rightKids.forEach(rk=>{
-      h+='<div class="spine-stack-item">';
-      h+=rC(rk,1);
-      const rkKids=(rk.children||[]).filter(n=>!n.hidden);
-      if(rkKids.length)h+=`<ul>${rT(rkKids,2)}</ul>`;
-      h+='</div>';
-    });
-    h+='</div></li>';
-  }
-
-  h+='</ul>';
-
-  // Normal (non-branch) spine children rendered below
-  if(spineChildNormal.length){
-    h+=`<ul>${rT(spineChildNormal,2)}</ul>`;
-  }
-  if(normalKids.length){
-    h+=`<ul>${rT(normalKids,1)}</ul>`;
-  }
-
-  h+='</div></div>';
-  return h;
-}
-
 function renderTree(){
-  document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
+  document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
