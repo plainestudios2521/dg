@@ -499,9 +499,9 @@ function drawSpineLines(){
   if(!jon||!reports)return;
   const cols=reports.querySelectorAll(':scope > .spine-col');
   const jR=jon.getBoundingClientRect();
-  const jxL=jR.left-ox;
-  const jxR=jR.right-ox;
-  const jy=jR.bottom-oy;
+  const jxL=jR.left-ox+4;
+  const jxR=jR.right-ox-4;
+  const jy=jR.bottom-oy-4;
   const jxMid=jR.left+jR.width/2-ox;
   let lines='';
   const leftCols=[],rightCols=[];
