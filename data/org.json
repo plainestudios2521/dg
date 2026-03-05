@@ -149,197 +149,225 @@
                     "image": "data/uploads/P1190886-Edit.jpg",
                     "children": [
                         {
-                            "id": "14233",
-                            "name": "Erik McDowell",
-                            "title": "Maintenance Account Manager",
-                            "email": "erik.mcdowell@dreamgreener.com",
-                            "mobile": "412.403.8360",
-                            "phone": "412.835.1035",
-                            "image": "data/uploads/erik.webp",
-                            "children": [],
-                            "duties": [
-                                {
-                                    "h": "Sales Goals",
-                                    "d": "Achieve a sales goal of $1.6 million for 2026. For inquiries related to enhancement and construction jobs exceeding $10,000, these will be reassigned to the landscape design team. All maintenance inquiries will be the responsibility of the maintenance account managers, and any enhancement job beyond their scope will be assigned to the designers."
-                                },
-                                {
-                                    "h": "New Business and Legacy Client Management",
-                                    "d": "Identify, cultivate, and pursue new business opportunities while maintaining and developing relationships with existing clients."
-                                },
-                                {
-                                    "h": "Proposal Creation",
-                                    "d": "Create and present lawn and landscape maintenance proposals upon request, ensuring completion within 48 hours or less of client inquiry."
-                                },
-                                {
-                                    "h": "Client Concerns",
-                                    "d": "Address and respond promptly to client concerns, proactively escalating and coordinating with operations for resolution as needed."
-                                },
-                                {
-                                    "h": "Communication Excellence",
-                                    "d": "Exhibit strong follow-through and impressive communication skills, both verbal and written, ensuring client satisfaction and operational clarity."
-                                },
-                                {
-                                    "h": "Monitor Installations and Services",
-                                    "d": "Oversee enhancement installations and maintenance services provided by the team to ensure quality and adherence to client expectations."
-                                },
-                                {
-                                    "h": "Measurements and Renewals",
-                                    "d": "Measure properties and aid with customer maintenance contract renewals to sustain a long-term client base."
-                                },
-                                {
-                                    "h": "Crew Coordination",
-                                    "d": "Work closely with the management team to confirm that all tasks are completed accurately and meet prescribed quality standards."
-                                },
-                                {
-                                    "h": "Professional Representation",
-                                    "d": "Act as a professional representative of the company, exhibiting courtesy and reinforcing the company’s reputation in all client and community interactions."
-                                }
-                            ]
-                        },
-                        {
-                            "id": "14234",
-                            "name": "Gary Wesolowksi",
-                            "title": "Customer Care Representative",
-                            "email": "gary.wesolowski@dreamgreener.com",
-                            "mobile": "",
-                            "phone": "412.835.1035",
-                            "image": "data/uploads/Gary.webp",
-                            "children": [],
-                            "duties": [
-                                {
-                                    "h": "Customer Communication",
-                                    "d": "Assist in answering and returning calls during busy periods, responding to inquiries within 1 hour during business hours and within 24 hours after business hours, ensuring exceptional customer service and satisfaction."
-                                },
-                                {
-                                    "h": "Customer Onboarding",
-                                    "d": "Oversee the onboarding process for new clients, ensuring a comprehensive understanding of services, schedules, and communication protocols."
-                                },
-                                {
-                                    "h": "Billing Inquiries",
-                                    "d": "Investigate and respond to billing-related questions."
-                                },
-                                {
-                                    "h": "Lead Tracking",
-                                    "d": "Maintain and manage updated records of leads, inquiries, complaints, reviews, and referral sources to support overall customer relationship management."
-                                },
-                                {
-                                    "h": "Client Tag Management",
-                                    "d": "Ensure that Aspire tags for clients are accurate and up to date, providing oversight for effective tracking and service provision."
-                                },
-                                {
-                                    "h": "Aspire Task Management",
-                                    "d": "Monitor and manage the progress of client-centered tasks within the Aspire system, ensuring that all tasks are aligned with client needs and company objectives."
-                                },
-                                {
-                                    "h": "Complaint Resolution",
-                                    "d": "Investigate customer issues, collaborating with operations and account managers to resolve them, and following up with clients to ensure their satisfaction and closure of issues."
-                                },
-                                {
-                                    "h": "Client Follow-Up & Reviews",
-                                    "d": "Send review links and encourage clients to document their positive experiences as 5-star reviews on Google and social media, contributing to brand reputation and visibility."
-                                },
-                                {
-                                    "h": "Cancellation Management",
-                                    "d": "Work closely with the sales team to develop strategies to retain clients considering cancellation; assist in processing cancellations and managing related communications if retention is unsuccessful."
-                                },
-                                {
-                                    "h": "Active/Inactive Properties Management",
-                                    "d": "Oversee the deactivation of properties following confirmed cancellations, ensuring no work is scheduled, and final payments are processed efficiently."
-                                },
-                                {
-                                    "h": "Customer Retention Initiatives",
-                                    "d": "Collaborate with management to develop strategies aimed at improving customer retention and increasing satisfaction, documenting customer feedback and concerns to enhance communication processes."
-                                },
-                                {
-                                    "h": "Mentorship",
-                                    "d": "Mentor Customer Care Assistants, providing guidance on handling complex customer interactions and ensuring consistent messaging."
-                                }
-                            ]
-                        },
-                        {
-                            "id": "14236",
-                            "name": "Vic Hribar",
-                            "title": "Landscape Designer",
-                            "email": "Vic.hribar@dreamgreener.com",
-                            "mobile": "412.491.5322",
-                            "phone": "",
-                            "image": "data/uploads/Vic.jpg",
-                            "children": [],
-                            "duties": [
-                                {
-                                    "h": "Sales Goal",
-                                    "d": "Achieve a sales goal of $1.2 million for 2026."
-                                },
-                                {
-                                    "h": "Project Design and Sales",
-                                    "d": "Design and sell residential or commercial landscape projects, including outdoor living areas, softscapes, hardscapes, ponds, and lighting systems, to builders, developers, homeowners, and small business owners."
-                                },
-                                {
-                                    "h": "Customer Consultations and Site Assessments",
-                                    "d": "Conduct onsite consultations and site inspections to gather requirements and assess soil type, slope, drainage, exposure, and the impact of existing structures or utilities on project development."
-                                },
-                                {
-                                    "h": "Proposal Preparation and Tracking",
-                                    "d": "Prepare and present professional proposals that align with company margins, and maintain all proposals in progress while following up to maximize sales opportunities."
-                                },
-                                {
-                                    "h": "Margin and Cost Control",
-                                    "d": "Ensure work is sold within approved margin guidelines to achieve targeted job costs and desired profit margins."
-                                },
-                                {
-                                    "h": "Inquiry Responses",
-                                    "d": "Respond promptly to all inquiries and bid requests."
-                                },
-                                {
-                                    "h": "Project Management and Client Collaboration",
-                                    "d": "Manage projects to meet desired outcomes, ensure client satisfaction, and collaborate with clients and teams for successful project completion."
-                                },
-                                {
-                                    "h": "Crew Oversight and Supervision",
-                                    "d": "Supervise job site crews to ensure proper execution from start to finish."
-                                },
-                                {
-                                    "h": "Material Coordination and Budget Tracking",
-                                    "d": "Order and schedule materials for delivery, track their usage, and monitor labor and costs to keep projects within budget."
-                                },
-                                {
-                                    "h": "Leadership and Team Collaboration",
-                                    "d": "Provide leadership and coordinate with on-site staff, subcontractors, and office teams to maintain quality and customer satisfaction."
-                                },
-                                {
-                                    "h": "Progress Monitoring and Deadline Management",
-                                    "d": "Review project progress regularly to ensure deadlines are consistently met."
-                                },
-                                {
-                                    "h": "Complaint Resolution",
-                                    "d": "Investigate and resolve customer complaints promptly."
-                                },
-                                {
-                                    "h": "Meetings",
-                                    "d": "Attend weekly management meetings to review project progress and schedules."
-                                },
-                                {
-                                    "h": "Asset Reporting and SOP Compliance",
-                                    "d": "Report any damage to company assets promptly and ensure compliance with standard operating procedures (SOPs)."
-                                },
-                                {
-                                    "h": "Maintenance and Enhancement Job Management",
-                                    "d": "Assign maintenance inquiries to maintenance account managers and manage enhancement jobs that exceed their scope."
-                                }
-                            ]
-                        },
-                        {
-                            "id": "14244",
-                            "name": "Pamela Myers ",
-                            "title": "Account Manager ",
+                            "id": "14302",
+                            "name": "Customer Care",
+                            "title": "Customer Care",
                             "email": "",
                             "mobile": "",
                             "phone": "",
-                            "image": null,
-                            "children": [],
-                            "duties": [],
                             "birthday": "",
-                            "anniversary": "2026-03-09"
+                            "anniversary": "",
+                            "image": null,
+                            "children": [
+                                {
+                                    "id": "14234",
+                                    "name": "Gary Wesolowksi",
+                                    "title": "Customer Care Representative",
+                                    "email": "gary.wesolowski@dreamgreener.com",
+                                    "mobile": "",
+                                    "phone": "412.835.1035",
+                                    "image": "data/uploads/Gary.webp",
+                                    "children": [],
+                                    "duties": [
+                                        {
+                                            "h": "Customer Communication",
+                                            "d": "Assist in answering and returning calls during busy periods, responding to inquiries within 1 hour during business hours and within 24 hours after business hours, ensuring exceptional customer service and satisfaction."
+                                        },
+                                        {
+                                            "h": "Customer Onboarding",
+                                            "d": "Oversee the onboarding process for new clients, ensuring a comprehensive understanding of services, schedules, and communication protocols."
+                                        },
+                                        {
+                                            "h": "Billing Inquiries",
+                                            "d": "Investigate and respond to billing-related questions."
+                                        },
+                                        {
+                                            "h": "Lead Tracking",
+                                            "d": "Maintain and manage updated records of leads, inquiries, complaints, reviews, and referral sources to support overall customer relationship management."
+                                        },
+                                        {
+                                            "h": "Client Tag Management",
+                                            "d": "Ensure that Aspire tags for clients are accurate and up to date, providing oversight for effective tracking and service provision."
+                                        },
+                                        {
+                                            "h": "Aspire Task Management",
+                                            "d": "Monitor and manage the progress of client-centered tasks within the Aspire system, ensuring that all tasks are aligned with client needs and company objectives."
+                                        },
+                                        {
+                                            "h": "Complaint Resolution",
+                                            "d": "Investigate customer issues, collaborating with operations and account managers to resolve them, and following up with clients to ensure their satisfaction and closure of issues."
+                                        },
+                                        {
+                                            "h": "Client Follow-Up & Reviews",
+                                            "d": "Send review links and encourage clients to document their positive experiences as 5-star reviews on Google and social media, contributing to brand reputation and visibility."
+                                        },
+                                        {
+                                            "h": "Cancellation Management",
+                                            "d": "Work closely with the sales team to develop strategies to retain clients considering cancellation; assist in processing cancellations and managing related communications if retention is unsuccessful."
+                                        },
+                                        {
+                                            "h": "Active/Inactive Properties Management",
+                                            "d": "Oversee the deactivation of properties following confirmed cancellations, ensuring no work is scheduled, and final payments are processed efficiently."
+                                        },
+                                        {
+                                            "h": "Customer Retention Initiatives",
+                                            "d": "Collaborate with management to develop strategies aimed at improving customer retention and increasing satisfaction, documenting customer feedback and concerns to enhance communication processes."
+                                        },
+                                        {
+                                            "h": "Mentorship",
+                                            "d": "Mentor Customer Care Assistants, providing guidance on handling complex customer interactions and ensuring consistent messaging."
+                                        }
+                                    ]
+                                }
+                            ],
+                            "duties": []
+                        },
+                        {
+                            "id": "14303",
+                            "name": "Sales",
+                            "title": "Sales",
+                            "email": "",
+                            "mobile": "",
+                            "phone": "",
+                            "birthday": "",
+                            "anniversary": "",
+                            "image": null,
+                            "children": [
+                                {
+                                    "id": "14233",
+                                    "name": "Erik McDowell",
+                                    "title": "Maintenance Account Manager",
+                                    "email": "erik.mcdowell@dreamgreener.com",
+                                    "mobile": "412.403.8360",
+                                    "phone": "412.835.1035",
+                                    "image": "data/uploads/erik.webp",
+                                    "children": [],
+                                    "duties": [
+                                        {
+                                            "h": "Sales Goals",
+                                            "d": "Achieve a sales goal of $1.6 million for 2026. For inquiries related to enhancement and construction jobs exceeding $10,000, these will be reassigned to the landscape design team. All maintenance inquiries will be the responsibility of the maintenance account managers, and any enhancement job beyond their scope will be assigned to the designers."
+                                        },
+                                        {
+                                            "h": "New Business and Legacy Client Management",
+                                            "d": "Identify, cultivate, and pursue new business opportunities while maintaining and developing relationships with existing clients."
+                                        },
+                                        {
+                                            "h": "Proposal Creation",
+                                            "d": "Create and present lawn and landscape maintenance proposals upon request, ensuring completion within 48 hours or less of client inquiry."
+                                        },
+                                        {
+                                            "h": "Client Concerns",
+                                            "d": "Address and respond promptly to client concerns, proactively escalating and coordinating with operations for resolution as needed."
+                                        },
+                                        {
+                                            "h": "Communication Excellence",
+                                            "d": "Exhibit strong follow-through and impressive communication skills, both verbal and written, ensuring client satisfaction and operational clarity."
+                                        },
+                                        {
+                                            "h": "Monitor Installations and Services",
+                                            "d": "Oversee enhancement installations and maintenance services provided by the team to ensure quality and adherence to client expectations."
+                                        },
+                                        {
+                                            "h": "Measurements and Renewals",
+                                            "d": "Measure properties and aid with customer maintenance contract renewals to sustain a long-term client base."
+                                        },
+                                        {
+                                            "h": "Crew Coordination",
+                                            "d": "Work closely with the management team to confirm that all tasks are completed accurately and meet prescribed quality standards."
+                                        },
+                                        {
+                                            "h": "Professional Representation",
+                                            "d": "Act as a professional representative of the company, exhibiting courtesy and reinforcing the company’s reputation in all client and community interactions."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "14236",
+                                    "name": "Vic Hribar",
+                                    "title": "Landscape Designer",
+                                    "email": "Vic.hribar@dreamgreener.com",
+                                    "mobile": "412.491.5322",
+                                    "phone": "",
+                                    "image": "data/uploads/Vic.jpg",
+                                    "children": [],
+                                    "duties": [
+                                        {
+                                            "h": "Sales Goal",
+                                            "d": "Achieve a sales goal of $1.2 million for 2026."
+                                        },
+                                        {
+                                            "h": "Project Design and Sales",
+                                            "d": "Design and sell residential or commercial landscape projects, including outdoor living areas, softscapes, hardscapes, ponds, and lighting systems, to builders, developers, homeowners, and small business owners."
+                                        },
+                                        {
+                                            "h": "Customer Consultations and Site Assessments",
+                                            "d": "Conduct onsite consultations and site inspections to gather requirements and assess soil type, slope, drainage, exposure, and the impact of existing structures or utilities on project development."
+                                        },
+                                        {
+                                            "h": "Proposal Preparation and Tracking",
+                                            "d": "Prepare and present professional proposals that align with company margins, and maintain all proposals in progress while following up to maximize sales opportunities."
+                                        },
+                                        {
+                                            "h": "Margin and Cost Control",
+                                            "d": "Ensure work is sold within approved margin guidelines to achieve targeted job costs and desired profit margins."
+                                        },
+                                        {
+                                            "h": "Inquiry Responses",
+                                            "d": "Respond promptly to all inquiries and bid requests."
+                                        },
+                                        {
+                                            "h": "Project Management and Client Collaboration",
+                                            "d": "Manage projects to meet desired outcomes, ensure client satisfaction, and collaborate with clients and teams for successful project completion."
+                                        },
+                                        {
+                                            "h": "Crew Oversight and Supervision",
+                                            "d": "Supervise job site crews to ensure proper execution from start to finish."
+                                        },
+                                        {
+                                            "h": "Material Coordination and Budget Tracking",
+                                            "d": "Order and schedule materials for delivery, track their usage, and monitor labor and costs to keep projects within budget."
+                                        },
+                                        {
+                                            "h": "Leadership and Team Collaboration",
+                                            "d": "Provide leadership and coordinate with on-site staff, subcontractors, and office teams to maintain quality and customer satisfaction."
+                                        },
+                                        {
+                                            "h": "Progress Monitoring and Deadline Management",
+                                            "d": "Review project progress regularly to ensure deadlines are consistently met."
+                                        },
+                                        {
+                                            "h": "Complaint Resolution",
+                                            "d": "Investigate and resolve customer complaints promptly."
+                                        },
+                                        {
+                                            "h": "Meetings",
+                                            "d": "Attend weekly management meetings to review project progress and schedules."
+                                        },
+                                        {
+                                            "h": "Asset Reporting and SOP Compliance",
+                                            "d": "Report any damage to company assets promptly and ensure compliance with standard operating procedures (SOPs)."
+                                        },
+                                        {
+                                            "h": "Maintenance and Enhancement Job Management",
+                                            "d": "Assign maintenance inquiries to maintenance account managers and manage enhancement jobs that exceed their scope."
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "14244",
+                                    "name": "Pamela Myers ",
+                                    "title": "Account Manager ",
+                                    "email": "",
+                                    "mobile": "",
+                                    "phone": "",
+                                    "image": null,
+                                    "children": [],
+                                    "duties": [],
+                                    "birthday": "",
+                                    "anniversary": "2026-03-09"
+                                }
+                            ],
+                            "duties": []
                         }
                     ],
                     "duties": [

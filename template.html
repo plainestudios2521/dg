@@ -229,7 +229,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 const D={{DATA}};
 
 const DUTIES={{DUTIES}};
-const DN=['Mowing','Maintenance','Snow','Construction'],collapsed=new Set();
+const DN=['Mowing','Maintenance','Snow','Construction','Customer Care','Sales'],collapsed=new Set();
 const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
 const isD=n=>DN.includes(n.name);
 const isC=n=>!isD(n)&&(n.name.includes('Crew')||(n.name.includes('Snow')&&n.name.includes('-'))||n.name.includes('Specialist')||n.name.includes('Pest'));
