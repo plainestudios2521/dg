@@ -448,11 +448,11 @@ function renderSpineTree(nodes){
   // Vertical line Jon→Luz
   h+='<div class="spine-vline"></div>';
   // Tier 1: Luz
-  h+=`<div class="spine-tier" data-tier="luz">${rC(luz,1)}`;
-  // Luz subtree (her own children, excluding displaced ones like Paula)
+  h+=`<div class="spine-tier" data-tier="luz"><div class="spine-col">${rC(luz,1)}`;
+  // Luz subtree (her children like Paula connect below Luz)
   const luzKids=(luz.children||[]).filter(n=>!n.hidden);
-  if(luzKids.length)h+=`<div class="tree-subtree"><ul>${rT(luzKids,2)}</ul></div>`;
-  h+=`</div>`;
+  if(luzKids.length)h+=`<ul>${rT(luzKids,2)}</ul>`;
+  h+=`</div></div>`;
   // Gap before tier 2
   h+='<div class="spine-tier-gap"></div>';
   // Tier 2: Brian (left), Ruth + Sherry (right)
