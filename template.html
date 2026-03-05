@@ -515,16 +515,16 @@ function drawSpineLines(){
   });
   leftCols.forEach(nc=>{
     const cR=nc.getBoundingClientRect();
-    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
+    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy+4}"/>`;
   });
   if(rightCols.length>=1){
     const rR=rightCols[0].getBoundingClientRect();
-    const rx=rR.left+rR.width/2-ox, ry=rR.top-oy;
+    const rx=rR.left+rR.width/2-ox, ry=rR.top-oy+4;
     lines+=`<line x1="${jxR}" y1="${jy}" x2="${rx}" y2="${ry}"/>`;
     for(let i=1;i<rightCols.length;i++){
       const cR=rightCols[i].getBoundingClientRect();
       const pR=rightCols[i-1].getBoundingClientRect();
-      lines+=`<line x1="${pR.left+pR.width/2-ox}" y1="${pR.top-oy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
+      lines+=`<line x1="${pR.right-ox}" y1="${pR.top-oy+pR.height/2}" x2="${cR.left-ox}" y2="${cR.top-oy+cR.height/2}"/>`;
     }
   }
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
