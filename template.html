@@ -466,7 +466,7 @@ function renderSpineTree(nodes){
     h+='</div>';
   }
   if(ruth){
-    h+='<div class="spine-col" style="margin-left:80px">';
+    h+='<div class="spine-col" style="margin-left:120px">';
     h+=rC(ruth,1);
     const rk=(ruth.children||[]).filter(n=>!n.hidden);
     if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
@@ -491,59 +491,52 @@ function drawSpineLines(){
   if(!el)return;
   const old=el.querySelector('.spine-lines-svg');
   if(old)old.remove();
-  const rect=el.getBoundingClientRect();
+  // Use el's own offset as reference origin
+  const eR=el.getBoundingClientRect();
+  const ox=eR.left,oy=eR.top;
   const jon=el.querySelector('[data-tier="jon"] .nc');
   const reports=el.querySelector('[data-tier="reports"]');
   if(!jon||!reports)return;
   const cols=reports.querySelectorAll(':scope > .spine-col');
   const jR=jon.getBoundingClientRect();
-  const jxL=jR.left-rect.left;
-  const jxR=jR.right-rect.left;
-  const jy=jR.bottom-rect.top;
-  const jxMid=jR.left+jR.width/2-rect.left;
+  const jxL=jR.left-ox;
+  const jxR=jR.right-ox;
+  const jy=jR.bottom-oy;
+  const jxMid=jR.left+jR.width/2-ox;
   let lines='';
-  // Separate left (Brian) and right (Ruth, Sherry) columns
   const leftCols=[],rightCols=[];
   cols.forEach(col=>{
     const nc=col.querySelector('.nc');
     if(!nc)return;
     const cR=nc.getBoundingClientRect();
-    const cx=cR.left+cR.width/2-rect.left;
+    const cx=cR.left+cR.width/2-ox;
     if(cx<jxMid)leftCols.push(nc);
     else rightCols.push(nc);
   });
-  // Brian: diagonal from Jon's left corner
+  // Brian: diagonal from Jon's left corner to top of card
   leftCols.forEach(nc=>{
     const cR=nc.getBoundingClientRect();
-    const cx=cR.left+cR.width/2-rect.left;
-    const cy=cR.top-rect.top;
-    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cx}" y2="${cy}"/>`;
+    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
   });
-  // Right side: diagonal from Jon's right corner to Ruth, then horizontal to Sherry
+  // Right side: diagonal Jon → Ruth, then horizontal Ruth → Sherry
   if(rightCols.length>=1){
-    const ruthNc=rightCols[0];
-    const rR=ruthNc.getBoundingClientRect();
-    const rx=rR.left+rR.width/2-rect.left;
-    const ry=rR.top-rect.top;
-    // Diagonal: Jon corner → Ruth
+    const rR=rightCols[0].getBoundingClientRect();
+    const rx=rR.left+rR.width/2-ox, ry=rR.top-oy;
     lines+=`<line x1="${jxR}" y1="${jy}" x2="${rx}" y2="${ry}"/>`;
-    // Horizontal: Ruth → each subsequent card (Sherry)
     for(let i=1;i<rightCols.length;i++){
-      const nc=rightCols[i];
-      const cR=nc.getBoundingClientRect();
-      const cx=cR.left+cR.width/2-rect.left;
-      const cy=cR.top-rect.top;
-      const prevNc=rightCols[i-1];
-      const pR=prevNc.getBoundingClientRect();
-      const px=pR.left+pR.width/2-rect.left;
-      const py=pR.top-rect.top;
-      lines+=`<line x1="${px}" y1="${py}" x2="${cx}" y2="${cy}"/>`;
+      const cR=rightCols[i].getBoundingClientRect();
+      const pR=rightCols[i-1].getBoundingClientRect();
+      lines+=`<line x1="${pR.left+pR.width/2-ox}" y1="${pR.top-oy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy}"/>`;
     }
   }
+  // Size SVG to cover all content
+  const allRects=[jR,...leftCols.map(n=>n.getBoundingClientRect()),...rightCols.map(n=>n.getBoundingClientRect())];
+  let maxX=0,maxY=0;
+  allRects.forEach(r=>{maxX=Math.max(maxX,r.right-ox);maxY=Math.max(maxY,r.bottom-oy)});
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.classList.add('spine-lines-svg');
-  svg.style.width='100%';
-  svg.style.height='100%';
+  svg.setAttribute('width',maxX+20);
+  svg.setAttribute('height',maxY+20);
   svg.style.overflow='visible';
   svg.innerHTML=lines;
   el.appendChild(svg);
