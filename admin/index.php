@@ -789,11 +789,7 @@ function renderEditForm() {
       <label for="fParent">Reports To</label>
       <select id="fParent">${parentOpts}</select>
     </div>
-    <div class="form-group" style="display:flex;align-items:center;gap:8px">
-      <input type="checkbox" id="fStaff" ${n.staff ? 'checked' : ''} style="width:auto">
-      <label for="fStaff" style="margin:0;font-weight:500">Staff Position</label>
-      <span style="font-size:12px;color:#888">(renders to the side in org chart)</span>
-    </div>
+    <input type="hidden" id="fStaff" value="${n.staff ? 'on' : ''}">
     <div class="form-group" style="display:flex;align-items:center;gap:8px">
       <input type="checkbox" id="fHidden" ${n.hidden ? 'checked' : ''} style="width:auto">
       <label for="fHidden" style="margin:0;font-weight:500">Hidden from org chart</label>
@@ -900,7 +896,7 @@ async function savePerson() {
     phone: document.getElementById('fPhone').value,
     birthday: document.getElementById('fBirthday').value,
     anniversary: document.getElementById('fAnniversary').value,
-    staff: document.getElementById('fStaff').checked,
+    staff: document.getElementById('fStaff').value === 'on',
     hidden: document.getElementById('fHidden').checked,
     department: document.getElementById('fDepartment').checked,
     image: document.getElementById('photoUrl').value || null,
