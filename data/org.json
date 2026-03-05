@@ -459,8 +459,8 @@
                                     "children": [
                                         {
                                             "id": "14277",
-                                            "name": "Mowing 1 - Eduardo",
-                                            "title": "",
+                                            "name": "Eduardo",
+                                            "title": "Mowing 1",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -472,8 +472,8 @@
                                         },
                                         {
                                             "id": "14281",
-                                            "name": "Mowing 2 - Open",
-                                            "title": "",
+                                            "name": "Open",
+                                            "title": "Mowing 2",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -485,8 +485,8 @@
                                         },
                                         {
                                             "id": "14282",
-                                            "name": "Mowing 3 - Open",
-                                            "title": "",
+                                            "name": "Open",
+                                            "title": "Mowing 3",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -574,8 +574,8 @@
                                     "children": [
                                         {
                                             "id": "14288",
-                                            "name": "Commercial 1 - Brayan",
-                                            "title": "",
+                                            "name": "Brayan",
+                                            "title": "Commercial 1",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -587,8 +587,8 @@
                                         },
                                         {
                                             "id": "14289",
-                                            "name": "Commercial 2 - Homer",
-                                            "title": "",
+                                            "name": "Homer",
+                                            "title": "Commercial 2",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -600,8 +600,8 @@
                                         },
                                         {
                                             "id": "14290",
-                                            "name": "Snow 1 - Eduardo",
-                                            "title": "",
+                                            "name": "Eduardo",
+                                            "title": "Snow 1",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -613,8 +613,8 @@
                                         },
                                         {
                                             "id": "14291",
-                                            "name": "Snow 2 - Nestor",
-                                            "title": "",
+                                            "name": "Nestor",
+                                            "title": "Snow 2",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -626,8 +626,8 @@
                                         },
                                         {
                                             "id": "14292",
-                                            "name": "Snow 3 - Cesar",
-                                            "title": "",
+                                            "name": "Cesar",
+                                            "title": "Snow 3",
                                             "email": "",
                                             "mobile": "",
                                             "phone": "",
@@ -756,19 +756,21 @@
                             "children": [
                                 {
                                     "id": "14293",
-                                    "name": "Construction 1 - Nestor",
-                                    "title": "",
+                                    "name": "Nestor",
+                                    "title": "Construction 1 ",
                                     "email": "",
                                     "mobile": "",
                                     "phone": "",
                                     "image": null,
                                     "children": [],
-                                    "duties": []
+                                    "duties": [],
+                                    "birthday": "",
+                                    "anniversary": ""
                                 },
                                 {
                                     "id": "14294",
-                                    "name": "Construction 2 - Alfredo ",
-                                    "title": "",
+                                    "name": "Alfredo ",
+                                    "title": "Construction 2",
                                     "email": "",
                                     "mobile": "",
                                     "phone": "",
@@ -838,19 +840,21 @@
                     "children": [
                         {
                             "id": "14298",
-                            "name": "Lawn Specialist 1 - Ed",
-                            "title": "",
+                            "name": "Ed Laudano",
+                            "title": "Lawn Specialist 1",
                             "email": "",
                             "mobile": "",
                             "phone": "",
                             "image": "data/uploads/Ed.jpg",
                             "children": [],
-                            "duties": []
+                            "duties": [],
+                            "birthday": "",
+                            "anniversary": ""
                         },
                         {
                             "id": "14299",
-                            "name": "Plant & Pest - Jake ",
-                            "title": "",
+                            "name": "Jake",
+                            "title": "Plant & Pest",
                             "email": "",
                             "mobile": "",
                             "phone": "",
@@ -858,8 +862,8 @@
                             "children": [
                                 {
                                     "id": "14300",
-                                    "name": "Lawn Specialisy 2 - Scott ",
-                                    "title": "",
+                                    "name": "Scott ",
+                                    "title": "Lawn Specialist 2",
                                     "email": "",
                                     "mobile": "",
                                     "phone": "",
