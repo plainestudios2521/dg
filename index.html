@@ -496,13 +496,15 @@ function drawSpineLines(){
   if(!jon||!reports)return;
   const cards=reports.querySelectorAll(':scope > .spine-col > div > .nc');
   const jR=jon.getBoundingClientRect();
-  const jx=jR.left+jR.width/2-rect.left;
+  const jxL=jR.left-rect.left;
+  const jxR=jR.right-rect.left;
   const jy=jR.bottom-rect.top;
   let lines='';
   cards.forEach(c=>{
     const cR=c.getBoundingClientRect();
     const cx=cR.left+cR.width/2-rect.left;
     const cy=cR.top-rect.top;
+    const jx=cx<jR.left+jR.width/2-rect.left?jxL:jxR;
     lines+=`<line x1="${jx}" y1="${jy}" x2="${cx}" y2="${cy}"/>`;
   });
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
