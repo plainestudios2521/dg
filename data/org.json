@@ -151,7 +151,7 @@
                         {
                             "id": "14302",
                             "name": "Customer Care",
-                            "title": "Customer Care",
+                            "title": "",
                             "email": "",
                             "mobile": "",
                             "phone": "",
@@ -218,6 +218,19 @@
                                             "d": "Mentor Customer Care Assistants, providing guidance on handling complex customer interactions and ensuring consistent messaging."
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "14304",
+                                    "name": "Open",
+                                    "title": "Customer Care Representative",
+                                    "email": "",
+                                    "mobile": "",
+                                    "phone": "",
+                                    "birthday": "",
+                                    "anniversary": "",
+                                    "image": null,
+                                    "children": [],
+                                    "duties": []
                                 }
                             ],
                             "duties": []
@@ -225,7 +238,7 @@
                         {
                             "id": "14303",
                             "name": "Sales",
-                            "title": "Sales",
+                            "title": "",
                             "email": "",
                             "mobile": "",
                             "phone": "",
@@ -629,44 +642,6 @@
                                     "birthday": "",
                                     "anniversary": "",
                                     "hidden": true
-                                },
-                                {
-                                    "id": "14301",
-                                    "name": "Construction",
-                                    "title": "",
-                                    "email": "",
-                                    "mobile": "",
-                                    "phone": "",
-                                    "birthday": "",
-                                    "anniversary": "",
-                                    "image": null,
-                                    "children": [
-                                        {
-                                            "id": "14293",
-                                            "name": "Construction 1 - Nestor",
-                                            "title": "",
-                                            "email": "",
-                                            "mobile": "",
-                                            "phone": "",
-                                            "image": null,
-                                            "children": [],
-                                            "duties": []
-                                        },
-                                        {
-                                            "id": "14294",
-                                            "name": "Construction 2 - Alfredo ",
-                                            "title": "",
-                                            "email": "",
-                                            "mobile": "",
-                                            "phone": "",
-                                            "image": null,
-                                            "children": [],
-                                            "duties": [],
-                                            "birthday": "",
-                                            "anniversary": ""
-                                        }
-                                    ],
-                                    "duties": []
                                 }
                             ],
                             "duties": [
@@ -767,6 +742,44 @@
                                     "d": "Support the transportation of assets, equipment, and materials to job sites when required."
                                 }
                             ]
+                        },
+                        {
+                            "id": "14305",
+                            "name": "Open",
+                            "title": "Construction Manager",
+                            "email": "",
+                            "mobile": "",
+                            "phone": "",
+                            "birthday": "",
+                            "anniversary": "",
+                            "image": null,
+                            "children": [
+                                {
+                                    "id": "14293",
+                                    "name": "Construction 1 - Nestor",
+                                    "title": "",
+                                    "email": "",
+                                    "mobile": "",
+                                    "phone": "",
+                                    "image": null,
+                                    "children": [],
+                                    "duties": []
+                                },
+                                {
+                                    "id": "14294",
+                                    "name": "Construction 2 - Alfredo ",
+                                    "title": "",
+                                    "email": "",
+                                    "mobile": "",
+                                    "phone": "",
+                                    "image": null,
+                                    "children": [],
+                                    "duties": [],
+                                    "birthday": "",
+                                    "anniversary": ""
+                                }
+                            ],
+                            "duties": []
                         }
                     ],
                     "duties": [
