@@ -524,7 +524,7 @@ function drawSpineLines(){
     for(let i=1;i<rightCols.length;i++){
       const cR=rightCols[i].getBoundingClientRect();
       const pR=rightCols[i-1].getBoundingClientRect();
-      lines+=`<line x1="${pR.right-ox}" y1="${pR.top-oy+pR.height/2}" x2="${cR.left-ox}" y2="${cR.top-oy+cR.height/2}"/>`;
+      lines+=`<line x1="${pR.right-ox}" y1="${pR.top-oy+4}" x2="${cR.left-ox}" y2="${cR.top-oy+4}"/>`;
     }
   }
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
