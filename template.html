@@ -133,7 +133,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree .tt{font-size:12.5px;color:var(--text-sec);font-weight:500;margin:3px 12px 0}
 
 /* Spine layout */
-.spine-layout{position:relative;display:flex;flex-direction:column;align-items:center}
+.spine-layout{position:relative;display:flex;flex-direction:column;align-items:center;overflow:visible}
 .spine-tier{display:flex;justify-content:center;align-items:flex-start;position:relative}
 .spine-tier-gap{height:0}
 .spine-tier[data-tier="reports"]{margin-top:-100px}
@@ -466,7 +466,7 @@ function renderSpineTree(nodes){
     h+='</div>';
   }
   if(ruth){
-    h+='<div class="spine-col" style="margin-left:40px">';
+    h+='<div class="spine-col" style="margin-left:80px">';
     h+=rC(ruth,1);
     const rk=(ruth.children||[]).filter(n=>!n.hidden);
     if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
@@ -542,8 +542,9 @@ function drawSpineLines(){
   }
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
   svg.classList.add('spine-lines-svg');
-  svg.setAttribute('width',rect.width);
-  svg.setAttribute('height',rect.height);
+  svg.style.width='100%';
+  svg.style.height='100%';
+  svg.style.overflow='visible';
   svg.innerHTML=lines;
   el.appendChild(svg);
 }
