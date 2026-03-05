@@ -543,6 +543,7 @@ function drawSpineLines(){
 function renderTree(){
   document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
   requestAnimationFrame(()=>requestAnimationFrame(drawSpineLines));
+  document.fonts.ready.then(()=>requestAnimationFrame(drawSpineLines));
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
