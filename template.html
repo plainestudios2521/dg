@@ -132,6 +132,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);
 .tree .tn{font-weight:600;font-size:14.5px;color:var(--text);line-height:1.3;margin:10px 12px 0}
 .tree .tt{font-size:12.5px;color:var(--text-sec);font-weight:500;margin:3px 12px 0}
 
+/* Spine layout */
+.spine-layout{position:relative;display:flex;flex-direction:column;align-items:center}
+.spine-tier{display:flex;justify-content:center;align-items:flex-start;position:relative}
+.spine-tier-gap{height:28px}
+.spine-col{display:flex;flex-direction:column;align-items:center;position:relative}
+.spine-col>.tree-subtree{display:flex;flex-direction:column;align-items:center}
+.spine-vline{width:2px;height:28px;background:var(--line);margin:0 auto}
+.spine-lines-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.spine-lines-svg line{stroke:var(--line);stroke-width:2}
+.spine-tier>*{position:relative;z-index:1}
 
 /* DETAIL MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
@@ -405,8 +415,107 @@ function closeModal(e){if(e)e.stopPropagation();document.getElementById('modalOv
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()})
 
 function renderList(){document.getElementById('listView').innerHTML=`<ul class="org-list">${rL(D,0)}</ul>`}
+
+function rC(n,lv){
+  const eid=esc(n.id),st=hCo(n)||n.title;
+  let cl=[`t${lv}`];
+  if(isD(n))cl.push('td');if(isC(n))cl.push('tc');
+  let h=`<div class="${cl.join(' ')}" data-id="${eid}"><div class="nc"`;
+  if(st&&!isD(n))h+=` onclick="openModal(event,'${eid}')"`;
+  h+=`>`;
+  if(!isD(n))h+=`<div class="ta">${hI(n)?`<img src="${esc(n.image)}" alt="${esc(n.name)}" onerror="this.parentElement.innerHTML='<span>${esc(ini(n.name))}</span>'">`:`<span>${esc(ini(n.name))}</span>`}</div>`;
+  h+=`<div class="tn">${esc(n.name)}</div>`;
+  if(n.title)h+=`<div class="tt">${esc(n.title)}</div>`;
+  h+=`</div></div>`;
+  return h;
+}
+
+const SPINE_IDS={luz:'14215',brian:'14205',ruth:'14235',sherry:'14229'};
+
+function renderSpineTree(nodes){
+  const root=nodes[0];if(!root)return'';
+  const kids=(root.children||[]).filter(n=>!n.hidden);
+  const luz=kids.find(c=>c.id===SPINE_IDS.luz);
+  if(!luz)return `<div class="tree"><ul>${rT(nodes,0)}</ul></div>`;
+  const brian=kids.find(c=>c.id===SPINE_IDS.brian);
+  const ruth=kids.find(c=>c.id===SPINE_IDS.ruth);
+  const sherry=kids.find(c=>c.id===SPINE_IDS.sherry);
+  const others=kids.filter(c=>c.id!==SPINE_IDS.luz&&c.id!==SPINE_IDS.brian&&c.id!==SPINE_IDS.ruth&&c.id!==SPINE_IDS.sherry);
+
+  let h='<div class="tree"><div class="spine-layout" id="spineLayout">';
+  // Tier 0: Jon
+  h+=`<div class="spine-tier" data-tier="jon">${rC(root,0)}</div>`;
+  // Vertical line Jon→Luz
+  h+='<div class="spine-vline"></div>';
+  // Tier 1: Luz
+  h+=`<div class="spine-tier" data-tier="luz">${rC(luz,1)}`;
+  // Luz subtree (her own children, excluding displaced ones like Paula)
+  const luzKids=(luz.children||[]).filter(n=>!n.hidden);
+  if(luzKids.length)h+=`<div class="tree-subtree"><ul>${rT(luzKids,2)}</ul></div>`;
+  h+=`</div>`;
+  // Gap before tier 2
+  h+='<div class="spine-tier-gap"></div>';
+  // Tier 2: Brian (left), Ruth + Sherry (right)
+  h+='<div class="spine-tier" data-tier="reports" style="gap:60px">';
+  if(brian){
+    h+='<div class="spine-col">';
+    h+=rC(brian,1);
+    const bk=(brian.children||[]).filter(n=>!n.hidden);
+    if(bk.length)h+=`<div class="tree-subtree"><ul>${rT(bk,2)}</ul></div>`;
+    h+='</div>';
+  }
+  if(ruth){
+    h+='<div class="spine-col">';
+    h+=rC(ruth,1);
+    const rk=(ruth.children||[]).filter(n=>!n.hidden);
+    if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
+    h+='</div>';
+  }
+  if(sherry){
+    h+='<div class="spine-col">';
+    h+=rC(sherry,1);
+    const sk=(sherry.children||[]).filter(n=>!n.hidden);
+    if(sk.length)h+=`<div class="tree-subtree"><ul>${rT(sk,2)}</ul></div>`;
+    h+='</div>';
+  }
+  h+='</div>';
+  // Remaining direct reports of Jon
+  if(others.length)h+=`<ul>${rT(others,1)}</ul>`;
+  h+='</div></div>';
+  return h;
+}
+
+function drawSpineLines(){
+  const el=document.getElementById('spineLayout');
+  if(!el)return;
+  const old=el.querySelector('.spine-lines-svg');
+  if(old)old.remove();
+  const rect=el.getBoundingClientRect();
+  const jon=el.querySelector('[data-tier="jon"] .nc');
+  const reports=el.querySelector('[data-tier="reports"]');
+  if(!jon||!reports)return;
+  const cards=reports.querySelectorAll(':scope > .spine-col > div > .nc');
+  const jR=jon.getBoundingClientRect();
+  const jx=jR.left+jR.width/2-rect.left;
+  const jy=jR.bottom-rect.top;
+  let lines='';
+  cards.forEach(c=>{
+    const cR=c.getBoundingClientRect();
+    const cx=cR.left+cR.width/2-rect.left;
+    const cy=cR.top-rect.top;
+    lines+=`<line x1="${jx}" y1="${jy}" x2="${cx}" y2="${cy}"/>`;
+  });
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.classList.add('spine-lines-svg');
+  svg.setAttribute('width',rect.width);
+  svg.setAttribute('height',rect.height);
+  svg.innerHTML=lines;
+  el.appendChild(svg);
+}
+
 function renderTree(){
-  document.getElementById('treeCanvas').innerHTML=`<div class="tree"><ul>${rT(D,0)}</ul></div>`;
+  document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
+  requestAnimationFrame(()=>requestAnimationFrame(drawSpineLines));
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
