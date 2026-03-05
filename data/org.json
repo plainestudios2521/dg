@@ -233,7 +233,8 @@
                                     "duties": []
                                 }
                             ],
-                            "duties": []
+                            "duties": [],
+                            "department": true
                         },
                         {
                             "id": "14303",
@@ -380,7 +381,8 @@
                                     "anniversary": "2026-03-09"
                                 }
                             ],
-                            "duties": []
+                            "duties": [],
+                            "department": true
                         }
                     ],
                     "duties": [
@@ -497,7 +499,8 @@
                                             "anniversary": ""
                                         }
                                     ],
-                                    "duties": []
+                                    "duties": [],
+                                    "department": true
                                 },
                                 {
                                     "id": "14296",
@@ -561,7 +564,8 @@
                                             "anniversary": ""
                                         }
                                     ],
-                                    "duties": []
+                                    "duties": [],
+                                    "department": true
                                 },
                                 {
                                     "id": "14297",
@@ -641,7 +645,8 @@
                                     "duties": [],
                                     "birthday": "",
                                     "anniversary": "",
-                                    "hidden": true
+                                    "hidden": true,
+                                    "department": true
                                 }
                             ],
                             "duties": [

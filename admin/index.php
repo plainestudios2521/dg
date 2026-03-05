@@ -285,6 +285,9 @@ function updateNode(array &$nodes, string $id, array $input): bool {
             if (array_key_exists('hidden', $input)) {
                 if ($input['hidden']) { $n['hidden'] = true; } else { unset($n['hidden']); }
             }
+            if (array_key_exists('department', $input)) {
+                if ($input['department']) { $n['department'] = true; } else { unset($n['department']); }
+            }
             if (array_key_exists('image', $input)) $n['image'] = $input['image'];
             if (array_key_exists('duties', $input)) $n['duties'] = $input['duties'];
             return true;
@@ -796,6 +799,11 @@ function renderEditForm() {
       <label for="fHidden" style="margin:0;font-weight:500">Hidden from org chart</label>
       <span style="font-size:12px;color:#888">(hides this node and its children from public view)</span>
     </div>
+    <div class="form-group" style="display:flex;align-items:center;gap:8px">
+      <input type="checkbox" id="fDepartment" ${n.department ? 'checked' : ''} style="width:auto">
+      <label for="fDepartment" style="margin:0;font-weight:500">Department / Division</label>
+      <span style="font-size:12px;color:#888">(dashed border, no photo)</span>
+    </div>
 
     <div class="duties-section">
       <div class="duties-title">Responsibilities</div>
@@ -894,6 +902,7 @@ async function savePerson() {
     anniversary: document.getElementById('fAnniversary').value,
     staff: document.getElementById('fStaff').checked,
     hidden: document.getElementById('fHidden').checked,
+    department: document.getElementById('fDepartment').checked,
     image: document.getElementById('photoUrl').value || null,
     duties: collectDuties()
   };
