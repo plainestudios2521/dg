@@ -111,6 +111,7 @@ if (isset($_GET['api'])) {
             'children' => [],
             'duties'   => []
         ];
+        if (!empty($input['department'])) $newPerson['department'] = true;
         if ($parentId) {
             $added = addChild($data['tree'], $parentId, $newPerson);
             if (!$added) {
@@ -542,6 +543,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
     <div class="sidebar-header">
       <h2>Organization</h2>
       <button class="btn-sm" onclick="addPerson()">+ Add Person</button>
+      <button class="btn-sm" onclick="addDivision()">+ Add Division</button>
     </div>
     <div class="tree-list" id="treeList"></div>
   </div>
@@ -975,6 +977,28 @@ async function addPerson() {
   if (data.ok) {
     await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
     toast('Person added & published', 'success');
+    await reload();
+    selectPerson(data.id);
+  } else {
+    toast(data.error || 'Add failed', 'error');
+  }
+}
+
+// ── Add division ──
+async function addDivision() {
+  const name = prompt('Division Name:');
+  if (!name) return;
+  const parentId = selectedId || (orgData.tree[0] ? orgData.tree[0].id : null);
+
+  const res = await fetch('?api=add', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
+    body: JSON.stringify({ parentId, name, department: true })
+  });
+  const data = await res.json();
+  if (data.ok) {
+    await fetch('?api=publish', { method: 'POST', headers: { 'X-CSRF-Token': CSRF } });
+    toast('Division added & published', 'success');
     await reload();
     selectPerson(data.id);
   } else {
