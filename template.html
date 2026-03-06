@@ -473,7 +473,6 @@ function renderSpineTree(nodes){
     if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
     h+='</div>';
   }
-  h+='<div style="flex:1"></div>';
   if(homer){
     h+='<div class="spine-col">';
     h+=rC(homer,1);
@@ -481,7 +480,6 @@ function renderSpineTree(nodes){
     if(hk.length)h+=`<div class="tree-subtree"><ul>${rT(hk,2)}</ul></div>`;
     h+='</div>';
   }
-  h+='<div style="flex:1"></div>';
   if(sherry){
     h+='<div class="spine-col">';
     h+=rC(sherry,1);
@@ -496,7 +494,25 @@ function renderSpineTree(nodes){
   return h;
 }
 
+function positionHomer(){
+  const el=document.getElementById('spineLayout');
+  if(!el)return;
+  const ruthNC=el.querySelector('[data-id="'+SPINE_IDS.ruth+'"] .nc');
+  const sherryNC=el.querySelector('[data-id="'+SPINE_IDS.sherry+'"] .nc');
+  const homerDiv=el.querySelector('[data-id="'+SPINE_IDS.homer+'"]');
+  if(!ruthNC||!sherryNC||!homerDiv)return;
+  const homerCol=homerDiv.closest('.spine-col');
+  if(!homerCol)return;
+  const rR=ruthNC.getBoundingClientRect();
+  const sR=sherryNC.getBoundingClientRect();
+  const midX=(rR.left+rR.width/2+sR.left+sR.width/2)/2;
+  homerCol.style.transform='';
+  const hR=homerCol.querySelector('.nc').getBoundingClientRect();
+  homerCol.style.transform='translateX('+(midX-hR.left-hR.width/2)+'px)';
+}
+
 function drawSpineLines(){
+  positionHomer();
   const el=document.getElementById('spineLayout');
   const cv=document.getElementById('treeCanvas');
   if(!el||!cv)return;
@@ -553,12 +569,10 @@ function drawSpineLines(){
 function renderTree(){
   document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
   requestAnimationFrame(()=>requestAnimationFrame(drawSpineLines));
-  const spineEl=document.getElementById('spineLayout');
-  if(spineEl&&window.ResizeObserver){
-    let t;const ro=new ResizeObserver(()=>{clearTimeout(t);t=setTimeout(drawSpineLines,50)});
-    spineEl.querySelectorAll('.nc').forEach(nc=>ro.observe(nc));
-    setTimeout(()=>ro.disconnect(),5000);
-  }
+  document.fonts.ready.then(()=>setTimeout(drawSpineLines,100));
+  window.addEventListener('load',()=>setTimeout(drawSpineLines,100));
+  setTimeout(drawSpineLines,500);
+  setTimeout(drawSpineLines,1500);
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
