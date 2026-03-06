@@ -432,7 +432,7 @@ body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--
 
 /* ── Layout ── */
 .layout{display:flex;height:calc(100vh - 52px)}
-.sidebar{width:300px;min-width:260px;border-right:1.5px solid var(--green-200);background:white;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar{width:400px;min-width:360px;border-right:1.5px solid var(--green-200);background:white;overflow-y:auto;display:flex;flex-direction:column}
 .sidebar-header{padding:12px 16px;border-bottom:1px solid var(--green-100);display:flex;align-items:center;justify-content:space-between}
 .sidebar-header h2{font-size:14px;color:var(--green-800)}
 .sidebar-header .btn-sm{padding:4px 12px;border-radius:6px;border:1px solid var(--green-200);background:var(--green-50);color:var(--green-800);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
