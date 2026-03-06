@@ -431,7 +431,7 @@ function rC(n,lv){
   return h;
 }
 
-const SPINE_IDS={luz:'14215',brian:'14205',ruth:'14217',sherry:'14229'};
+const SPINE_IDS={luz:'14215',brian:'14205',ruth:'14217',homer:'14232',sherry:'14229'};
 
 function renderSpineTree(nodes){
   const root=nodes[0];if(!root)return'';
@@ -440,8 +440,9 @@ function renderSpineTree(nodes){
   if(!luz)return `<div class="tree"><ul>${rT(nodes,0)}</ul></div>`;
   const brian=kids.find(c=>c.id===SPINE_IDS.brian);
   const ruth=kids.find(c=>c.id===SPINE_IDS.ruth);
+  const homer=kids.find(c=>c.id===SPINE_IDS.homer);
   const sherry=kids.find(c=>c.id===SPINE_IDS.sherry);
-  const others=kids.filter(c=>c.id!==SPINE_IDS.luz&&c.id!==SPINE_IDS.brian&&c.id!==SPINE_IDS.ruth&&c.id!==SPINE_IDS.sherry);
+  const others=kids.filter(c=>c.id!==SPINE_IDS.luz&&c.id!==SPINE_IDS.brian&&c.id!==SPINE_IDS.ruth&&c.id!==SPINE_IDS.homer&&c.id!==SPINE_IDS.sherry);
 
   let h='<div class="tree"><div class="spine-layout" id="spineLayout">';
   // Tier 0: Jon
@@ -470,6 +471,13 @@ function renderSpineTree(nodes){
     h+=rC(ruth,1);
     const rk=(ruth.children||[]).filter(n=>!n.hidden);
     if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
+    h+='</div>';
+  }
+  if(homer){
+    h+='<div class="spine-col">';
+    h+=rC(homer,1);
+    const hk=(homer.children||[]).filter(n=>!n.hidden);
+    if(hk.length)h+=`<div class="tree-subtree"><ul>${rT(hk,2)}</ul></div>`;
     h+='</div>';
   }
   if(sherry){
