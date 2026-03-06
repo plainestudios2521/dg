@@ -270,7 +270,6 @@ function fitToScreen(){
   panX=(vw-cw*zoom)/2;
   panY=20;
   applyTransform();
-  drawSpineLines();
 }
 
 // Mouse pan
@@ -571,7 +570,11 @@ function drawSpineLines(){
 
 function renderTree(){
   document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
-  document.fonts.ready.then(()=>setTimeout(drawSpineLines,50));
+  requestAnimationFrame(()=>requestAnimationFrame(drawSpineLines));
+  document.fonts.ready.then(()=>setTimeout(drawSpineLines,100));
+  window.addEventListener('load',()=>setTimeout(drawSpineLines,100));
+  setTimeout(drawSpineLines,500);
+  setTimeout(drawSpineLines,1500);
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
