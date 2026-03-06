@@ -474,7 +474,7 @@ function renderSpineTree(nodes){
     h+='</div>';
   }
   if(homer){
-    h+='<div class="spine-col">';
+    h+='<div class="spine-col" style="flex:1;min-width:0">';
     h+=rC(homer,1);
     const hk=(homer.children||[]).filter(n=>!n.hidden);
     if(hk.length)h+=`<div class="tree-subtree"><ul>${rT(hk,2)}</ul></div>`;
@@ -552,6 +552,7 @@ function renderTree(){
   document.getElementById('treeCanvas').innerHTML=renderSpineTree(D);
   requestAnimationFrame(()=>requestAnimationFrame(drawSpineLines));
   document.fonts.ready.then(()=>requestAnimationFrame(drawSpineLines));
+  window.addEventListener('load',()=>requestAnimationFrame(drawSpineLines));
 }
 function render(){renderList();renderTree()}
 function tgList(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);renderList()}
