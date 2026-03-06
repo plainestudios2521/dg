@@ -15,7 +15,7 @@ define('SESSION_TIMEOUT', 3600); // 1 hour
 // Admin password — change this value, then run on server to get hash:
 //   php -r "echo password_hash('yourpass', PASSWORD_DEFAULT);"
 // Then replace ADMIN_PASSWORD with: define('ADMIN_HASH', '$2y$10$...');
-define('ADMIN_PASSWORD', 'chris');
+define('ADMIN_PASSWORD', 'DreAmgr33ner');
 
 // Session hardening
 ini_set('session.cookie_httponly', '1');

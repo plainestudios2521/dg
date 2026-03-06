@@ -5,7 +5,7 @@ set -euo pipefail
 
 REMOTE_USER="root"
 REMOTE_HOST="198.46.87.163"
-REMOTE_PATH="/home/plaine9/public_html/DG/"
+REMOTE_PATH="/home/dreamg/public_html/org-chart/"
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -14,5 +14,5 @@ ssh "${REMOTE_USER}@${REMOTE_HOST}" "mkdir -p ${REMOTE_PATH}data/uploads"
 rsync -avz -e "ssh" \
   "$PROJECT_ROOT/data/" "${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}data/"
 
-ssh "${REMOTE_USER}@${REMOTE_HOST}" "chown -R plaine9:plaine9 ${REMOTE_PATH}data/"
+ssh "${REMOTE_USER}@${REMOTE_HOST}" "chown -R dreamg:dreamg ${REMOTE_PATH}data/"
 echo "Done. Server data initialized."

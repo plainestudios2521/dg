@@ -3,7 +3,7 @@ set -euo pipefail
 
 REMOTE_USER="root"
 REMOTE_HOST="198.46.87.163"
-REMOTE_PATH="/home/plaine9/public_html/DG/"
+REMOTE_PATH="/home/dreamg/public_html/org-chart/"
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 
@@ -22,4 +22,4 @@ rsync -avz --delete \
 ssh "${REMOTE_USER}@${REMOTE_HOST}" "mkdir -p ${REMOTE_PATH}data/uploads"
 
 # Fix ownership so Apache can serve files and PHP can write
-ssh "${REMOTE_USER}@${REMOTE_HOST}" "chown -R plaine9:plaine9 ${REMOTE_PATH}"
+ssh "${REMOTE_USER}@${REMOTE_HOST}" "chown -R dreamg:dreamg ${REMOTE_PATH}"
