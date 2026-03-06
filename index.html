@@ -503,12 +503,13 @@ function positionHomer(){
   if(!ruthNC||!sherryNC||!homerDiv)return;
   const homerCol=homerDiv.closest('.spine-col');
   if(!homerCol)return;
+  const z=zoom||1;
   const rR=ruthNC.getBoundingClientRect();
   const sR=sherryNC.getBoundingClientRect();
   const midX=(rR.left+rR.width/2+sR.left+sR.width/2)/2;
   homerCol.style.transform='';
   const hR=homerCol.querySelector('.nc').getBoundingClientRect();
-  homerCol.style.transform='translateX('+(midX-hR.left-hR.width/2)+'px)';
+  homerCol.style.transform='translateX('+((midX-hR.left-hR.width/2)/z)+'px)';
 }
 
 function drawSpineLines(){
@@ -520,37 +521,38 @@ function drawSpineLines(){
   if(old)old.remove();
   const cvR=cv.getBoundingClientRect();
   const ox=cvR.left,oy=cvR.top;
+  const z=zoom||1;
   const jon=el.querySelector('[data-tier="jon"] .nc');
   const reports=el.querySelector('[data-tier="reports"]');
   if(!jon||!reports)return;
   const cols=reports.querySelectorAll(':scope > .spine-col');
   const jR=jon.getBoundingClientRect();
-  const jxL=jR.left-ox+4;
-  const jxR=jR.right-ox-4;
-  const jy=jR.bottom-oy-4;
-  const jxMid=jR.left+jR.width/2-ox;
+  const jxL=(jR.left-ox+4)/z;
+  const jxR=(jR.right-ox-4)/z;
+  const jy=(jR.bottom-oy-4)/z;
+  const jxMid=(jR.left+jR.width/2-ox)/z;
   let lines='';
   const leftCols=[],rightCols=[];
   cols.forEach(col=>{
     const nc=col.querySelector('.nc');
     if(!nc)return;
     const cR=nc.getBoundingClientRect();
-    const cx=cR.left+cR.width/2-ox;
+    const cx=(cR.left+cR.width/2-ox)/z;
     if(cx<jxMid)leftCols.push(nc);
     else rightCols.push(nc);
   });
   leftCols.forEach(nc=>{
     const cR=nc.getBoundingClientRect();
-    lines+=`<line x1="${jxL}" y1="${jy}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy+4}"/>`;
+    lines+=`<line x1="${jxL}" y1="${jy}" x2="${(cR.left+cR.width/2-ox)/z}" y2="${(cR.top-oy+4)/z}"/>`;
   });
   if(rightCols.length>=1){
     const rR=rightCols[0].getBoundingClientRect();
-    const rx=rR.left+rR.width/2-ox, ry=rR.top-oy+4;
+    const rx=(rR.left+rR.width/2-ox)/z, ry=(rR.top-oy+4)/z;
     lines+=`<line x1="${jxR}" y1="${jy}" x2="${rx}" y2="${ry}"/>`;
     for(let i=1;i<rightCols.length;i++){
       const cR=rightCols[i].getBoundingClientRect();
       const pR=rightCols[i-1].getBoundingClientRect();
-      lines+=`<line x1="${pR.left+pR.width/2-ox}" y1="${pR.top-oy+4}" x2="${cR.left+cR.width/2-ox}" y2="${cR.top-oy+4}"/>`;
+      lines+=`<line x1="${(pR.left+pR.width/2-ox)/z}" y1="${(pR.top-oy+4)/z}" x2="${(cR.left+cR.width/2-ox)/z}" y2="${(cR.top-oy+4)/z}"/>`;
     }
   }
   const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
