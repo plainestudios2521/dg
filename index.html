@@ -268,7 +268,7 @@ function fitToScreen(){
   const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
   const vw=v.clientWidth,vh=v.clientHeight;
   zoom=Math.min(vw/cw,vh/ch,.9);
-  panX=(vw-cw*zoom)/2;
+  panX=(vw-cw*zoom)*.35;
   panY=20;
   applyTransform();
 }
