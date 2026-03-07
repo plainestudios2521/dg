@@ -468,7 +468,7 @@ function renderSpineTree(nodes){
     h+='</div>';
   }
   if(ruth){
-    h+='<div class="spine-col" style="margin-left:220px">';
+    h+='<div class="spine-col" style="margin-left:270px">';
     h+=rC(ruth,1);
     const rk=(ruth.children||[]).filter(n=>!n.hidden);
     if(rk.length)h+=`<div class="tree-subtree"><ul>${rT(rk,2)}</ul></div>`;
@@ -548,7 +548,7 @@ function drawSpineLines(){
   });
   if(rightCols.length>=1){
     const rR=rightCols[0].getBoundingClientRect();
-    const rx=(rR.left+rR.width/2-ox)/z, ry=(rR.top-oy+4)/z;
+    const rx=(rR.left-ox+4)/z, ry=(rR.top-oy+4)/z;
     lines+=`<line x1="${jxR}" y1="${jy}" x2="${rx}" y2="${ry}"/>`;
     for(let i=1;i<rightCols.length;i++){
       const cR=rightCols[i].getBoundingClientRect();
