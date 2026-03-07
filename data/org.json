@@ -647,6 +647,47 @@
                                     "anniversary": "",
                                     "hidden": true,
                                     "department": true
+                                },
+                                {
+                                    "id": "14306",
+                                    "name": "Construction",
+                                    "title": "",
+                                    "email": "",
+                                    "mobile": "",
+                                    "phone": "",
+                                    "birthday": "",
+                                    "anniversary": "",
+                                    "image": null,
+                                    "children": [
+                                        {
+                                            "id": "14293",
+                                            "name": "Nestor",
+                                            "title": "Construction 1 ",
+                                            "email": "",
+                                            "mobile": "",
+                                            "phone": "",
+                                            "image": null,
+                                            "children": [],
+                                            "duties": [],
+                                            "birthday": "",
+                                            "anniversary": ""
+                                        },
+                                        {
+                                            "id": "14294",
+                                            "name": "Alfredo ",
+                                            "title": "Construction 2",
+                                            "email": "",
+                                            "mobile": "",
+                                            "phone": "",
+                                            "image": null,
+                                            "children": [],
+                                            "duties": [],
+                                            "birthday": "",
+                                            "anniversary": ""
+                                        }
+                                    ],
+                                    "duties": [],
+                                    "department": true
                                 }
                             ],
                             "duties": [
@@ -687,106 +728,6 @@
                                     "d": "Work closely with the operations team and other departments to align maintenance services with overall business objectives and client expectations."
                                 }
                             ]
-                        },
-                        {
-                            "id": "14232",
-                            "name": "Homer Briggs",
-                            "title": "Mechanic",
-                            "email": "",
-                            "mobile": "304.218.4182",
-                            "phone": "412.835.1035",
-                            "image": null,
-                            "children": [],
-                            "duties": [
-                                {
-                                    "h": "Fleet Inspections and Readiness",
-                                    "d": "Perform pre-trip inspections and ensure all trucks, trailers, and equipment are in proper working condition, ready for operations, and compliant with safety standards."
-                                },
-                                {
-                                    "h": "Preventative Maintenance",
-                                    "d": "Collaborate with the Operations Manager to establish and adhere to a maintenance schedule for trucks and equipment."
-                                },
-                                {
-                                    "h": "Equipment Repairs",
-                                    "d": "Perform proactive and timely repairs on all trucks, trailers, and job-related equipment."
-                                },
-                                {
-                                    "h": "Inspection Compliance",
-                                    "d": "Ensure all vehicles and equipment meet safety and operational standards in accordance with local, state, and federal regulations, including DOT requirements."
-                                },
-                                {
-                                    "h": "Emergency Repairs",
-                                    "d": "Provide on-call support for emergency repairs, assisting teams on-site with troubleshooting and resolving equipment issues promptly."
-                                },
-                                {
-                                    "h": "Equipment Training",
-                                    "d": "Collaborate with the Operations team to train landscaping crews on proper equipment operation, care, and basic troubleshooting to prevent misuse and extend equipment lifespan."
-                                },
-                                {
-                                    "h": "Vendor Coordination",
-                                    "d": "Work with vendors to source parts, negotiate pricing, and ensure timely delivery of supplies to reduce repair delays."
-                                },
-                                {
-                                    "h": "Cost Efficiency",
-                                    "d": "Identify and implement cost-saving measures, such as repairing components instead of replacing them and recommending energy-efficient or low-maintenance equipment upgrades."
-                                },
-                                {
-                                    "h": "Purchase Order System",
-                                    "d": "Utilize the company’s purchase order system for all purchases and obtain sign-off from the Operations Manager before making any purchases."
-                                },
-                                {
-                                    "h": "Maintenance Records",
-                                    "d": "Keep accurate and up-to-date records of fleet maintenance and repairs for compliance and reporting purposes."
-                                },
-                                {
-                                    "h": "Yard Operations and Waste Management",
-                                    "d": "Assist with loading/unloading materials, manage green waste disposal, and transport hardscape spoils offsite as needed to support overall yard operations."
-                                },
-                                {
-                                    "h": "Transportation Assistance",
-                                    "d": "Support the transportation of assets, equipment, and materials to job sites when required."
-                                }
-                            ]
-                        },
-                        {
-                            "id": "14305",
-                            "name": "Open",
-                            "title": "Construction Manager",
-                            "email": "",
-                            "mobile": "",
-                            "phone": "",
-                            "birthday": "",
-                            "anniversary": "",
-                            "image": null,
-                            "children": [
-                                {
-                                    "id": "14293",
-                                    "name": "Nestor",
-                                    "title": "Construction 1 ",
-                                    "email": "",
-                                    "mobile": "",
-                                    "phone": "",
-                                    "image": null,
-                                    "children": [],
-                                    "duties": [],
-                                    "birthday": "",
-                                    "anniversary": ""
-                                },
-                                {
-                                    "id": "14294",
-                                    "name": "Alfredo ",
-                                    "title": "Construction 2",
-                                    "email": "",
-                                    "mobile": "",
-                                    "phone": "",
-                                    "image": null,
-                                    "children": [],
-                                    "duties": [],
-                                    "birthday": "",
-                                    "anniversary": ""
-                                }
-                            ],
-                            "duties": []
                         }
                     ],
                     "duties": [
@@ -932,6 +873,66 @@
                         {
                             "h": "Inventory Management",
                             "d": "Weekly documentation of inventory of supplies, including fertilizers, pesticides, and herbicides, ensuring proper storage and weekly updates."
+                        }
+                    ]
+                },
+                {
+                    "id": "14232",
+                    "name": "Homer Briggs",
+                    "title": "Mechanic",
+                    "email": "",
+                    "mobile": "304.218.4182",
+                    "phone": "412.835.1035",
+                    "image": null,
+                    "children": [],
+                    "duties": [
+                        {
+                            "h": "Fleet Inspections and Readiness",
+                            "d": "Perform pre-trip inspections and ensure all trucks, trailers, and equipment are in proper working condition, ready for operations, and compliant with safety standards."
+                        },
+                        {
+                            "h": "Preventative Maintenance",
+                            "d": "Collaborate with the Operations Manager to establish and adhere to a maintenance schedule for trucks and equipment."
+                        },
+                        {
+                            "h": "Equipment Repairs",
+                            "d": "Perform proactive and timely repairs on all trucks, trailers, and job-related equipment."
+                        },
+                        {
+                            "h": "Inspection Compliance",
+                            "d": "Ensure all vehicles and equipment meet safety and operational standards in accordance with local, state, and federal regulations, including DOT requirements."
+                        },
+                        {
+                            "h": "Emergency Repairs",
+                            "d": "Provide on-call support for emergency repairs, assisting teams on-site with troubleshooting and resolving equipment issues promptly."
+                        },
+                        {
+                            "h": "Equipment Training",
+                            "d": "Collaborate with the Operations team to train landscaping crews on proper equipment operation, care, and basic troubleshooting to prevent misuse and extend equipment lifespan."
+                        },
+                        {
+                            "h": "Vendor Coordination",
+                            "d": "Work with vendors to source parts, negotiate pricing, and ensure timely delivery of supplies to reduce repair delays."
+                        },
+                        {
+                            "h": "Cost Efficiency",
+                            "d": "Identify and implement cost-saving measures, such as repairing components instead of replacing them and recommending energy-efficient or low-maintenance equipment upgrades."
+                        },
+                        {
+                            "h": "Purchase Order System",
+                            "d": "Utilize the company’s purchase order system for all purchases and obtain sign-off from the Operations Manager before making any purchases."
+                        },
+                        {
+                            "h": "Maintenance Records",
+                            "d": "Keep accurate and up-to-date records of fleet maintenance and repairs for compliance and reporting purposes."
+                        },
+                        {
+                            "h": "Yard Operations and Waste Management",
+                            "d": "Assist with loading/unloading materials, manage green waste disposal, and transport hardscape spoils offsite as needed to support overall yard operations."
+                        },
+                        {
+                            "h": "Transportation Assistance",
+                            "d": "Support the transportation of assets, equipment, and materials to job sites when required."
                         }
                     ]
                 }
