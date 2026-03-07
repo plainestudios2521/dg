@@ -461,7 +461,7 @@ function renderSpineTree(nodes){
   // Tier 2: Brian (left), Ruth + Sherry (right)
   h+='<div class="spine-tier" data-tier="reports" style="gap:30px">';
   if(brian){
-    h+='<div class="spine-col">';
+    h+='<div class="spine-col" style="margin-left:300px">';
     h+=rC(brian,1);
     const bk=(brian.children||[]).filter(n=>!n.hidden);
     if(bk.length)h+=`<div class="tree-subtree"><ul>${rT(bk,2)}</ul></div>`;
