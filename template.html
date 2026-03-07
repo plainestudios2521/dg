@@ -265,10 +265,22 @@ function fitToScreen(){
   if(!c||!v)return;
   const cr=c.children[0];
   if(!cr)return;
-  const cw=cr.scrollWidth+160,ch=cr.scrollHeight+120;
   const vw=v.clientWidth,vh=v.clientHeight;
+  // Measure visual bounds at scale=1 (accounts for CSS transforms like translateX)
+  c.style.transform='translate(0px,0px) scale(1)';
+  const cR=c.getBoundingClientRect();
+  const cards=cr.querySelectorAll('.nc');
+  let l=Infinity,r=-Infinity,b=-Infinity;
+  cards.forEach(nc=>{
+    const br=nc.getBoundingClientRect();
+    l=Math.min(l,br.left-cR.left);
+    r=Math.max(r,br.right-cR.left);
+    b=Math.max(b,br.bottom-cR.top);
+  });
+  if(!isFinite(l)){zoom=.9;panX=0;panY=20;applyTransform();return;}
+  const cw=r-l+160,ch=b+120;
   zoom=Math.min(vw/cw,vh/ch,.9);
-  panX=(vw-cw*zoom)/2;
+  panX=(vw-cw*zoom)/2-(l-80)*zoom;
   panY=20;
   applyTransform();
 }
